@@ -1,5 +1,5 @@
 #!/bin/bash
-# Live view of every running ThermBench simulation on all four machines (laptop, lab, pc3, pc4).
+# Live view of every running ThermalStorageBench simulation on all four machines (laptop, lab, pc3, pc4).
 # Run in an Ubuntu (WSL) window on the laptop:
 #   bash "/mnt/d/Lund PhD Application/04_Publications/Research_Paper_RP4_ThermBench/scripts/tb_monitor.sh"
 # Refreshes every 60 s. Ctrl+C closes the view only; nothing is started or stopped.
@@ -20,7 +20,7 @@ for m in ("laptop", "lab", "pc3", "pc4"):
     try: lines += [l.rstrip("\n").split("|") for l in open(f"{T}/{m}") if "|" in l]
     except OSError: lines.append(["OFF", m])
 import time
-print(f" ThermBench runs, all machines   {time.strftime('%a %d %b %H:%M:%S')} (local)   refresh 60 s, Ctrl+C to close\n")
+print(f" ThermalStorageBench runs, all machines   {time.strftime('%a %d %b %H:%M:%S')} (local)   refresh 60 s, Ctrl+C to close\n")
 for m in ("laptop", "lab", "pc3", "pc4"):
     off = any(l[0] == "OFF" and l[1] == m for l in lines)
     h = [l for l in lines if l[0] == "HOST" and l[1] == m]

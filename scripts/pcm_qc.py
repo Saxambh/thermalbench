@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Quality checks on finished ThermBench PCM cases (directories with DONE and thermbench.h5).
+"""Quality checks on finished ThermalStorageBench PCM cases (directories with DONE and thermbench.h5).
 
 Per case, writes <case>/qc.json once (skipped on later passes unless --redo), then writes
 <root>/qc_report.csv over all checked cases and prints the WARN/FAIL ones.

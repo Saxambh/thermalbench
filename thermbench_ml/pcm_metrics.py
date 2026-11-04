@@ -1,4 +1,4 @@
-"""ThermBench PCM scoring. Predictions and truth are theta = (T - T0)/(Tw - T0) and liquid
+"""ThermalStorageBench PCM scoring. Predictions and truth are theta = (T - T0)/(Tw - T0) and liquid
 fraction alpha, each [n, ny, nx] on the run's native grid, at the run's snapshot times.
 
 Per run (averaged over the scored snapshots), then averaged over runs:

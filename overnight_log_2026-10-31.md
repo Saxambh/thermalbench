@@ -1,4 +1,4 @@
-# ThermBench overnight log, 31 Oct to 1 Nov 2026
+# ThermalStorageBench overnight log, 31 Oct to 1 Nov 2026
 
 Saxam gave full authority to run and amend until he wakes up.
 

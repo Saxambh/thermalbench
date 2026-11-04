@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export a finished ThermBench tank case to one compact file plus metrics.
+"""Export a finished ThermalStorageBench tank case to one compact file plus metrics.
 
 Reads case.json (written by make_tank_case.py), every time directory and the
 function-object logs, and writes into the case directory:

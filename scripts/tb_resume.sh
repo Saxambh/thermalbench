@@ -1,5 +1,5 @@
 #!/bin/bash
-# After a reboot or power cut: restart whatever ThermBench work on this machine is unfinished.
+# After a reboot or power cut: restart whatever ThermalStorageBench work on this machine is unfinished.
 # Run at boot by tb-resume.service (tb_resume_install.sh); safe to run by hand any time, since a
 # job that is already running is left alone. Finished runs (DONE) are skipped by the batch
 # scripts; unfinished ones start again from scratch (tank, PCM) or from the last saved time (3D).

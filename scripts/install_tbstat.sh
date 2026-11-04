@@ -6,7 +6,7 @@ mkdir -p ~/bin ~/thermbench
 cp $S/tbstat.py ~/thermbench/tbstat.py
 cat > ~/bin/tbstat <<'EOF'
 #!/bin/bash
-# ThermBench progress on both machines. Live view: tbstat -w  (Ctrl+C to leave)
+# ThermalStorageBench progress on both machines. Live view: tbstat -w  (Ctrl+C to leave)
 unset LD_LIBRARY_PATH
 if [ "$1" = "-w" ]; then exec watch -n 30 -t "$0"; fi
 python3 ~/thermbench/tbstat.py

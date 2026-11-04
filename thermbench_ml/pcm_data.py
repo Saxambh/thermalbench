@@ -1,4 +1,4 @@
-"""ThermBench PCM family: data access (runs written by make_pcm_case.py + export_pcm_case.py).
+"""ThermalStorageBench PCM family: data access (runs written by make_pcm_case.py + export_pcm_case.py).
 
 A run is one directory with DONE and thermbench.h5:
   fields/T, fields/alpha, fields/ux, fields/uy  [time, ny, nx] on the uniform grid

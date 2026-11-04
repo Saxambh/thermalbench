@@ -1,4 +1,4 @@
-# ThermBench: PCM melting family, parameter plan (DRAFT, 2026-11-01)
+# ThermalStorageBench: PCM melting family, parameter plan (DRAFT, 2026-11-01)
 
 **Status.** Draft. Decisions 1, 2 and 4 were taken on 2026-11-01 (section 7). Nothing in this plan has been run except the validation runs listed in section 8, which are still running.
 

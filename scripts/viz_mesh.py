@@ -1,4 +1,4 @@
-# pvbatch script: geometry and mesh pictures of the ThermBench 2D tanks and the 3D Lou tank.
+# pvbatch script: geometry and mesh pictures of the ThermalStorageBench 2D tanks and the 3D Lou tank.
 # Usage: pvbatch viz_mesh.py <viz_dir>
 import os
 import sys

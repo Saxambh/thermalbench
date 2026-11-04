@@ -1,5 +1,5 @@
 #!/bin/bash
-# Live on-screen status of the ThermBench simulations on pc4 (refreshes every 20 s).
+# Live on-screen status of the ThermalStorageBench simulations on pc4 (refreshes every 20 s).
 # Run in pc4's Ubuntu window: bash ~/thermbench/scripts/pc4_screen.sh   (Ctrl+C closes the view only)
 P=~/of_runs/pcm_full/runs; PL=~/thermbench/pcm_full_pc4.csv
 while true; do

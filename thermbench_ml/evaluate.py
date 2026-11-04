@@ -1,4 +1,4 @@
-"""Score predictors on a ThermBench split.
+"""Score predictors on a ThermalStorageBench split.
 
   python evaluate.py --split random --stride 10            # all machines' runs (data.DEFAULT_ROOTS)
   python evaluate.py --roots ~/of_runs/full_h5mm --split random

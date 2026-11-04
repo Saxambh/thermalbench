@@ -1,4 +1,4 @@
-"""Train and score a neural baseline on a ThermBench PCM split.
+"""Train and score a neural baseline on a ThermalStorageBench PCM split.
 
   python pcm_train.py --model fno --split random --epochs 60 [--seed 1] [--hybrid]
 Input channels: box mask, PCM mask (0 on fins), fin map, heated-wall map, tau = t / t_ref,

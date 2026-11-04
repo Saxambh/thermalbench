@@ -1,4 +1,4 @@
-"""Non-neural reference predictors for the ThermBench forward task:
+"""Non-neural reference predictors for the ThermalStorageBench forward task:
 given a run's inputs (case.json) and snapshot times, predict the theta field at each time.
 
   Initial         no change: the initial field at every time (lower bar)

@@ -1,4 +1,4 @@
-"""ThermBench dashboard probe: status of this machine as one JSON object on stdout.
+"""ThermalStorageBench dashboard probe: status of this machine as one JSON object on stdout.
 Run locally or over ssh (python3 - < tb_dash_probe.py); standard library only.
 Batch lists per machine are listed in LISTS; runs moved to another machine (MOVED_TO_*
 placeholders) are not counted on this one."""

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Start the ThermBench dashboard on the laptop (safe to rerun): collector + local web server.
+# Start the ThermalStorageBench dashboard on the laptop (safe to rerun): collector + local web server.
 # Open http://localhost:8765 in the browser on the laptop. Read-only; stops nothing.
 S="$(dirname "$(readlink -f "$0")")"
 mkdir -p ~/tb_dash && cp "$S/tb_dash.html" ~/tb_dash/index.html

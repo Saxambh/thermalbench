@@ -1,4 +1,4 @@
-"""ThermBench data access: run index, field loading, canonical padded grid.
+"""ThermalStorageBench data access: run index, field loading, canonical padded grid.
 
 A run is one directory with DONE and thermbench.h5 (written by export_case.py).
 Temperatures are also given in normalised form theta = (T - Tc) / (Th - Tc) in [0, 1],

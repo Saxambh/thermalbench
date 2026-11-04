@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ThermBench progress on this machine: every OpenFOAM run under ~/of_runs that is
+"""ThermalStorageBench progress on this machine: every OpenFOAM run under ~/of_runs that is
 running now (log written in the last 5 min) plus finished/failed counts per batch."""
 import csv
 import glob

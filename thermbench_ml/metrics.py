@@ -1,4 +1,4 @@
-"""ThermBench scoring. All functions take predicted and true temperature fields in theta form
+"""ThermalStorageBench scoring. All functions take predicted and true temperature fields in theta form
 (theta = (T - Tc)/(Th - Tc)), shape [n, ny, nx] on the run's native grid (unpadded).
 
 Headline metrics, averaged over the scored snapshots of each test run, then over runs:

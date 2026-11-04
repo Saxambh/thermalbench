@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ThermBench PCM family: design tables (full Sobol design and the corner pilot).
+"""ThermalStorageBench PCM family: design tables (full Sobol design and the corner pilot).
 
 Every case is one make_pcm_case.py command line. Ranges, mesh and model settings are at the
 top (SETTINGS / RANGES); the lauric-acid and fin settings were frozen on 2026-11-02 after the

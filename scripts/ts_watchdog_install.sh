@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install a Tailscale watchdog (systemd timer, every 5 min) on a ThermBench machine (pc3, pc4).
+# Install a Tailscale watchdog (systemd timer, every 5 min) on a ThermalStorageBench machine (pc3, pc4).
 # Run once per machine:  sudo bash ~/thermbench/scripts/ts_watchdog_install.sh
 # Check: Tailscale says this machine is online AND the lab PC or the laptop answers a tailscale
 # ping. After 2 failed checks in a row (~10 min) it restarts tailscaled; simulations are not touched.
@@ -26,7 +26,7 @@ W
 chmod 755 /usr/local/sbin/ts_watchdog.sh
 cat > /etc/systemd/system/ts-watchdog.service <<'U'
 [Unit]
-Description=Restart tailscaled when this machine drops off the tailnet (ThermBench)
+Description=Restart tailscaled when this machine drops off the tailnet (ThermalStorageBench)
 [Service]
 Type=oneshot
 ExecStart=/usr/local/sbin/ts_watchdog.sh

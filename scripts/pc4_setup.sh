@@ -1,5 +1,5 @@
 #!/bin/bash
-# One-time setup of a new ThermBench machine (pc4), same as pc3: run INSIDE its Ubuntu 24.04 (WSL)
+# One-time setup of a new ThermalStorageBench machine (pc4), same as pc3: run INSIDE its Ubuntu 24.04 (WSL)
 # window as user saxam:   bash pc4_setup.sh
 # Installs: OpenFOAM v2606 (pinned to 2606.0~rc2-1, the lab/pc3 build, so results are identical),
 # compiler, python3 numpy + h5py, OpenSSH server, Tailscale; enables systemd; adds the laptop's

@@ -111,7 +111,7 @@ from matplotlib.patches import Rectangle, Circle, FancyArrowPatch
 RED, BLUE, ORANGE, GREEN, GREY = "#c62828", "#1f4fbf", "#e69a1f", "#1b8a4a", "#334"
 plt.rcParams.update({"font.size": 13, "font.family": "DejaVu Sans"})
 fig = plt.figure(figsize=(26, 16), dpi=100)
-fig.suptitle("ThermBench 3D validation case: Lou et al. (2023) stratified tank with perforated baffles",
+fig.suptitle("ThermalStorageBench 3D validation case: Lou et al. (2023) stratified tank with perforated baffles",
              fontsize=22, fontweight="bold", y=0.985)
 
 # (a) 3D view

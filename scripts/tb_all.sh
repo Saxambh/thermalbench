@@ -1,5 +1,5 @@
 #!/bin/bash
-# Live view of the ThermBench batch on all three PCs (laptop, lab, pc3). Refreshes every 60 s.
+# Live view of the ThermalStorageBench batch on all three PCs (laptop, lab, pc3). Refreshes every 60 s.
 # Run in a laptop Ubuntu window:  bash "/mnt/d/Lund PhD Application/04_Publications/Research_Paper_RP4_ThermBench/scripts/tb_all.sh"
 # Ctrl+C closes the view only; the simulations are not affected.
 unset LD_LIBRARY_PATH
@@ -7,7 +7,7 @@ D="$(dirname "$(readlink -f "$0")")"
 R="$(dirname "$D")"
 while true; do
   out="$(
-    echo "  ThermBench batch, all PCs        $(date '+%a %d %b %H:%M:%S')"
+    echo "  ThermalStorageBench batch, all PCs        $(date '+%a %d %b %H:%M:%S')"
     echo
     echo "  LAPTOP  $(bash "$D/tb_one.sh" "$R/design_v2_full_laptop_n2.csv" 2>/dev/null)"
     echo

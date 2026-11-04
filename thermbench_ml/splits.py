@@ -1,4 +1,4 @@
-"""Fixed ThermBench splits. Assignment is by design point (case_id), so the laminar and SST
+"""Fixed ThermalStorageBench splits. Assignment is by design point (case_id), so the laminar and SST
 twins of one design point never sit on both sides of a split, and it does not depend on
 which runs have finished: a case's side is decided by its parameters or a hash of its id.
 

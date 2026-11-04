@@ -1,4 +1,4 @@
-"""ThermBench dashboard collector (runs on the laptop): every 60 s asks all four machines for
+"""ThermalStorageBench dashboard collector (runs on the laptop): every 60 s asks all four machines for
 their status (tb_dash_probe.py, over ssh in parallel) and writes ~/tb_dash/status.json, with a
 progress history (every 10 min) for the chart. Served by tb_dash.sh with tb_dash.html."""
 import json, os, subprocess, time

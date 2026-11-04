@@ -1,4 +1,4 @@
-"""Neural baselines for the ThermBench forward task (PyTorch).
+"""Neural baselines for the ThermalStorageBench forward task (PyTorch).
 
 Input  [B, C_in, ny, nx_max]: initial theta field, tank mask, inlet map, outlet map, t*, and
        the standardised scalar parameters, each broadcast to a constant channel.

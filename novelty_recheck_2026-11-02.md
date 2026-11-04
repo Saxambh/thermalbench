@@ -1,4 +1,4 @@
-# ThermBench novelty recheck (2026-11-02)
+# ThermalStorageBench novelty recheck (2026-11-02)
 
 **Purpose.** The PCM parameter plan asked for a recheck, before the paper claims it, that no comparable open, validated simulation dataset or ML benchmark exists for thermal storage, including PCM melting. This extends the general Scopus search of 2026-10-30.
 
@@ -44,14 +44,14 @@
 | BubbleML | NeurIPS 2023 D&B | boiling (phase change) | **79** simulations (Flash-X), validated against experimental trends |
 | CFDBench | arXiv 2023 | 4 canonical flows | **739** cases in total (302k frames) |
 | The Well, `rayleigh_benard` | NeurIPS 2024 D&B | Rayleigh-Benard convection | **1,750** trajectories (512 × 128, 200 steps) |
-| **ThermBench (ours)** | | tank charging/discharging + PCM melting | **1,217** tank runs (+153 fine-mesh) + **500** PCM cases, every family validated against experiments |
+| **ThermalStorageBench (ours)** | | tank charging/discharging + PCM melting | **1,217** tank runs (+153 fine-mesh) + **500** PCM cases, every family validated against experiments |
 
 ## Conclusion
 
 No open, validated, multi-case simulation dataset with ML benchmark tasks exists for **thermal energy storage**, either for stratified tanks or for PCM melting.
 - **PCM ML studies:** each trains on its own few simulations (3 in the closest one) with no shared splits or baselines.
 - **The nearest dataset efforts:** the UFRGS dissertation (12 cases, no ML) and BubbleML (boiling, 79 runs, a different application).
-- **ThermBench's scale:** at 1,717 distinct cases, larger than AirfRANS (1,000), CFDBench (739) and BubbleML (79), and of the same order as The Well's Rayleigh-Benard set.
+- **ThermalStorageBench's scale:** at 1,717 distinct cases, larger than AirfRANS (1,000), CFDBench (739) and BubbleML (79), and of the same order as The Well's Rayleigh-Benard set.
 
 **Safe wording for the paper:** "to our knowledge, the first open benchmark for ML in thermal energy storage". Cite BubbleML as the closest phase-change ML benchmark, and the UFRGS dissertation and Shen et al. 2025 as the closest PCM efforts.
 

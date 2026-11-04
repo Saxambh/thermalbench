@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ThermBench tank family: build the case list (design) as CSV.
+"""ThermalStorageBench tank family: build the case list (design) as CSV.
 
 Full design: scrambled Sobol sample (fixed seed) over
   u_in 0.005-0.2 m/s (log), dT 5-50 K, slot s 20-80 mm, port offset 0-0.2 H,

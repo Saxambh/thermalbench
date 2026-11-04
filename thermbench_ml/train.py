@@ -1,4 +1,4 @@
-"""Train and score a neural baseline on a ThermBench split.
+"""Train and score a neural baseline on a ThermalStorageBench split.
 
   python train.py --model fno --split random --epochs 50 [--seed 1] [--hybrid]
 --hybrid: the network gets the plug-flow field as an extra input and predicts only the

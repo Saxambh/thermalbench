@@ -1,4 +1,4 @@
-"""Fixed ThermBench PCM splits. A case's side depends only on its parameters or a hash of its
+"""Fixed ThermalStorageBench PCM splits. A case's side depends only on its parameters or a hash of its
 id, never on which runs have finished.
 
   random        80 / 10 / 10 by hash of case_id                      (interpolation)

@@ -1,5 +1,5 @@
 #!/bin/bash
-# ThermBench progress on both machines (laptop + lab PC).
+# ThermalStorageBench progress on both machines (laptop + lab PC).
 # Live view, refreshing every 30 s:  tbstat -w   (Ctrl+C to leave)
 unset LD_LIBRARY_PATH
 HERE="$(cd "$(dirname "$0")" && pwd)"

@@ -1,4 +1,5 @@
 # Windows part of the power-cut recovery (run once per machine in PowerShell AS ADMINISTRATOR).
+# (The task keeps its original name "ThermBench keep Ubuntu running": it is registered under that name on all machines. Project renamed ThermalStorageBench 2026-11-05.)
 # Registers a task that starts the ThermBench Ubuntu at Windows startup, without anyone logging
 # in, and keeps it running (so systemd starts tailscaled, ssh and tb-resume.service).
 # Set $d to the distro that runs the simulations (wsl -l -v): laptop Ubuntu, pc4 Ubuntu-24.04.

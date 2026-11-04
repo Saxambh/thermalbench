@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install the boot-time resume service on a ThermBench machine (run as root, once per machine):
+# Install the boot-time resume service on a ThermalStorageBench machine (run as root, once per machine):
 #   inside Ubuntu:       sudo bash ~/thermbench/scripts/tb_resume_install.sh <laptop|lab|pc3|pc4>
 #   from PowerShell:     wsl -d <distro> -u root bash /home/saxam/thermbench/scripts/tb_resume_install.sh <machine>
 # 60 s after Ubuntu starts, runs tb_resume.sh <machine> as saxam (log ~saxam/tb_resume.log).
@@ -9,7 +9,7 @@ M=${1:?machine: laptop, lab, pc3 or pc4}
 [ "$(id -u)" = 0 ] || { echo "run as root (sudo)"; exit 1; }
 cat > /etc/systemd/system/tb-resume.service <<U
 [Unit]
-Description=Resume unfinished ThermBench simulations after a reboot ($M)
+Description=Resume unfinished ThermalStorageBench simulations after a reboot ($M)
 After=network-online.target
 Wants=network-online.target
 

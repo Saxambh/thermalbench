@@ -1,4 +1,4 @@
-"""Score predictors on a ThermBench PCM split.
+"""Score predictors on a ThermalStorageBench PCM split.
 
   python pcm_evaluate.py --split random                       # roots: pcm_data.DEFAULT_ROOTS
   python pcm_evaluate.py --roots ~/of_runs/pcm_mini/runs --split ood_fins

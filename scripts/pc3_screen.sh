@@ -1,5 +1,5 @@
 #!/bin/bash
-# Live on-screen status of the ThermBench simulations on pc3 (refreshes every 20 s; Ctrl+C closes the view only).
+# Live on-screen status of the ThermalStorageBench simulations on pc3 (refreshes every 20 s; Ctrl+C closes the view only).
 # Phase 1: tank CFD (~/of_runs/full_h5mm). Phase 2 (from about 4 Nov): PCM melting CFD (~/of_runs/pcm_full/runs).
 T=~/of_runs/full_h5mm; TL=~/thermbench/design_v2_full_pc3_n2.csv
 P=~/of_runs/pcm_full/runs; PL=~/thermbench/pcm_full_pc3.csv

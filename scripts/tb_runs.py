@@ -1,4 +1,4 @@
-"""List every running ThermBench simulation on this machine, one line each (used by tb_monitor.sh;
+"""List every running ThermalStorageBench simulation on this machine, one line each (used by tb_monitor.sh;
 read from stdin over ssh, so it needs only python3). Also counts finished runs per batch folder."""
 import glob, os, re, socket, subprocess, time
 

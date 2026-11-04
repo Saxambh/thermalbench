@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Quality checks on finished ThermBench runs (directories with DONE and thermbench.h5).
+"""Quality checks on finished ThermalStorageBench runs (directories with DONE and thermbench.h5).
 
 Per run, writes <case>/qc.json once (skipped on later passes), then prints a summary
 and writes <batch>/qc_report.csv over all checked runs.

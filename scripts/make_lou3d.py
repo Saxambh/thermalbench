@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """3D validation case: Lou et al. (2023) J. Energy Storage 71:108017, uniform orifice baffles,
-Qin = 1 L/min, Th = 60 C into Tc = 20 C. Same physics as the ThermBench production runs
+Qin = 1 L/min, Th = 60 C into Tc = 20 C. Same physics as the ThermalStorageBench production runs
 (real water properties, buoyantPimpleFoam, GAMG, 2 outer correctors, fixedMean outlet).
 
 Quarter domain (symmetry planes x = 0 and z = 0, tank axis on the y axis, y up, bottom y = 0):

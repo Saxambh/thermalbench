@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run a ThermBench design CSV: generate, mesh, solve, export, then delete the raw
+"""Run a ThermalStorageBench design CSV: generate, mesh, solve, export, then delete the raw
 time directories once the export is verified. Restartable: finished runs are skipped.
 
 Usage: run_batch.py <design.csv> <out_dir> [--jobs 16] [--only P00_lam,P03_sst]
