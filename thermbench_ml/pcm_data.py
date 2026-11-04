@@ -145,7 +145,7 @@ def index(roots, manifest=None):
 
 
 DEFAULT_ROOTS = ["~/of_runs/pcm_full/runs", "~/tb_data/laptop/pcm_full", "~/tb_data/lab/pcm_full",
-                 "~/tb_data/pc3/pcm_full", "~/tb_data/pc4/pcm_full"]
+                 "~/tb_data/pc3/pcm_full", "~/tb_data/pc4/pcm_full", "~/tb_data/pc5/pcm_full"]
 
 
 def nx_max(h):

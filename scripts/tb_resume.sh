@@ -55,6 +55,12 @@ pcm() {  # jobs; tanks_done (0/1): start the PCM batch, or its after-tank watche
     start pcm_watch "pcm_after_tank.sh $M" ~ bash $TS/pcm_after_tank.sh $M $J
   fi
 }
+more() {  # jobs: this machine's share of pc4's queue (pcm_rebalance.py 2026-11-04), after its tank runs
+  local csv=~/thermbench/pcm_more_$M.csv
+  [ -f $csv ] || return
+  if alldone case_id $csv ~/of_runs/pcm_full/runs; then log "pcm_more: finished"; return; fi
+  start pcm_more "pcm_more.sh $M" ~ bash $TS/pcm_more.sh $M $1 after_tank
+}
 log "=== resume check (boot $(uptime -s))"
 case $M in
   laptop)
@@ -63,6 +69,7 @@ case $M in
     tank tankx "$R/design_v2_full_laptopx_n2.csv" ~/of_runs/full_h5mm_x ~ python3 $SB/run_batch.py "$R/design_v2_full_laptopx_n2.csv" ~/of_runs/full_h5mm_x --jobs 8 || t=1
     lou_done ~/of_runs/lou3d/sst && log "lou3d sst: finished" || start lou3d "lou3d_run.sh" ~/of_runs/lou3d bash $SB/lou3d_run.sh
     pcm 16 $t
+    more 8
     start sync "pcm_sync_qc.sh" ~ bash "$R/scripts/pcm_sync_qc.sh"
     start dash "tb_dash_collect.py" ~ bash "$R/scripts/tb_dash.sh" ;;
   lab)
@@ -77,11 +84,12 @@ case $M in
     if lou_done ~/of_runs/lou3d/sst_finelow; then log "lou3d finelow: finished"
     elif [ $t = 0 ]; then start lou3d "lou3d_run_lab.sh" ~ bash $TS/lou3d_run_lab.sh
     else start pcm_watch "pcm_after_tank.sh lab" ~ bash $TS/pcm_after_tank.sh lab 12; fi   # resumes lou3d after the tanks
+    more 12
     ;;
   pc3)
     QCL=$TS/qc_loop.sh; QCR=$TS/qc_runs.py; t=0
     tank tank ~/thermbench/design_v2_full_pc3_n2.csv ~/of_runs/full_h5mm ~/thermbench python3 scripts/run_batch.py design_v2_full_pc3_n2.csv ~/of_runs/full_h5mm --jobs 16 || t=1
-    pcm 24 0 ;;   # pc3 runs PCM alongside its tank runs from 2026-11-03 (split 2)
+    pcm 24 0; more 16 ;;   # pc3 runs PCM alongside its tank runs from 2026-11-03 (split 2)
   pc4)
     pcm 30 0 ;;
   *) echo "usage: tb_resume.sh <laptop|lab|pc3|pc4> [--dry]"; exit 1 ;;

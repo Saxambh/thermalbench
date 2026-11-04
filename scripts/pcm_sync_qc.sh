@@ -21,8 +21,11 @@ while true; do
   pull saxam@pc4 of_runs/pcm_full/runs ~/tb_data/pc4/pcm_full
   pull saxam@pc3 of_runs/pcm_full/runs ~/tb_data/pc3/pcm_full
   pull labpc of_runs/pcm_pilot ~/tb_data/lab/pcm_pilot
+  # 2026-11-04 pcm_rebalance.py: the lab and pc5 also run pc4 cases (pcm_more.sh)
+  pull labpc of_runs/pcm_full/runs ~/tb_data/lab/pcm_full
+  pull pc5 of_runs/pcm_full/runs ~/tb_data/pc5/pcm_full
   [ -f ~/of_runs/pcm_full/runs/batch.log ] && echo "  laptop: $(ls ~/of_runs/pcm_full/runs/*/DONE 2>/dev/null | wc -l) finished, $(grep -c FAIL ~/of_runs/pcm_full/runs/batch.log) batch failures" >> $LOG
-  nice -n 10 python3 "$QC" ~/tb_data/pc4/pcm_full ~/tb_data/pc3/pcm_full ~/of_runs/pcm_full/runs ~/tb_data/lab/pcm_pilot 2>&1 \
+  nice -n 10 python3 "$QC" ~/tb_data/pc4/pcm_full ~/tb_data/pc3/pcm_full ~/of_runs/pcm_full/runs ~/tb_data/lab/pcm_pilot ~/tb_data/lab/pcm_full ~/tb_data/pc5/pcm_full 2>&1 \
     | grep -v "No such file\|no finished cases" | sed 's/^/  qc /' >> $LOG
   sleep 7200
 done
