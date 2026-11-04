@@ -89,7 +89,7 @@ case $M in
   pc3)
     QCL=$TS/qc_loop.sh; QCR=$TS/qc_runs.py; t=0
     tank tank ~/thermbench/design_v2_full_pc3_n2.csv ~/of_runs/full_h5mm ~/thermbench python3 scripts/run_batch.py design_v2_full_pc3_n2.csv ~/of_runs/full_h5mm --jobs 16 || t=1
-    pcm 24 0; more 16 ;;   # pc3 runs PCM alongside its tank runs from 2026-11-03 (split 2)
+    pcm 24 0; more 4 ;;   # extra list 4 jobs: 28 PCM jobs on 28 threads after the tanks (2026-11-04)   # pc3 runs PCM alongside its tank runs from 2026-11-03 (split 2)
   pc4)
     pcm 30 0 ;;
   *) echo "usage: tb_resume.sh <laptop|lab|pc3|pc4> [--dry]"; exit 1 ;;
