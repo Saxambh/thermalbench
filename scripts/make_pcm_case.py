@@ -595,7 +595,14 @@ snGradSchemes
         // and hits 1000 GAMG iterations (1e-8 at 0.5 mm, 1e-7 at 0.25 mm). Stop at a
         // 1000-fold residual drop or 1e-7, whichever comes first: mesh-independent
         tolerance       1e-7;
-        relTol          1e-3;
+        // 2026-11-04 (Saxam, option A, all PCM cases): relTol 0 + maxIter 200 instead of relTol
+        // 1e-3. The residual left by relTol 1e-3 collected at the pressure reference cell once it
+        // melted and heated it up to +16-19 K above T_wall (QC "T out of bounds"); with relTol 0
+        // there is no overshoot and the melt curve is unchanged (P0329: liquid fraction within
+        // 0.005), ~25 % more run time (pc4 ~/pcm_fixtest/V1_tight). maxIter keeps the stiff
+        // Darcy-sink solve from stalling at 1000 GAMG iterations.
+        relTol          0;
+        maxIter         200;
     }
     "rho.*"
     {
