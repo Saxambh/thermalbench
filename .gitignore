@@ -1,0 +1,7 @@
+# model checkpoints (~22 MB each, rebuilt by training)
+*.pt
+__pycache__/
+*.pyc
+# local logs and archives
+*.log
+*.tgz

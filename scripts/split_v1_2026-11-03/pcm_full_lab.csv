@@ -1,0 +1,1 @@
+case_id,material,superheat_K,subcooling_K,W_m,nfins,fin_len_m,fin_t_m,tilt_deg,h_m,maxdt_s,Ra_H,t_melt_est_h,core_h_est,args

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThermBench Runs</title>
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --ink: #1c2330; --muted: #677285; --line: #e2e6ec;
+  --track: #e9edf2; --tank: #2f6fde; --pcm: #d9822b; --three: #8a55c9; --ok: #2e9d5b; --bad: #d14343; --warn: #c99a12;
+  --shadow: 0 1px 2px rgba(20, 30, 50, .06), 0 2px 8px rgba(20, 30, 50, .05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151c; --card: #1a2029; --ink: #e6eaf0; --muted: #94a0b2; --line: #2a323e;
+    --track: #262e3a; --tank: #5b93f0; --pcm: #f0a04f; --three: #ad84e6; --ok: #48c07a; --bad: #f06a6a; --warn: #e5bd3c;
+    --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151c; --card: #1a2029; --ink: #e6eaf0; --muted: #94a0b2; --line: #2a323e;
+  --track: #262e3a; --tank: #5b93f0; --pcm: #f0a04f; --three: #ad84e6; --ok: #48c07a; --bad: #f06a6a; --warn: #e5bd3c;
+  --shadow: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between; padding: 20px 24px 8px; }
+h1 { font-size: 20px; margin: 0; letter-spacing: -.01em; }
+.sub { color: var(--muted); font-size: 13px; }
+.stale { color: var(--bad); font-weight: 600; }
+main { padding: 8px 24px 32px; max-width: 1500px; margin: 0 auto; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.tile, .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+.tile { padding: 12px 14px; }
+.tile .k { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.tile .v { font-size: 24px; font-weight: 650; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.tile .v small { font-size: 13px; color: var(--muted); font-weight: 500; }
+.bar { height: 8px; background: var(--track); border-radius: 99px; overflow: hidden; margin-top: 8px; }
+.bar > i { display: block; height: 100%; border-radius: 99px; }
+.chart { padding: 12px 14px; margin-bottom: 14px; }
+.chart svg { width: 100%; height: 150px; display: block; }
+.legend { display: flex; gap: 16px; font-size: 12px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 12px; }
+.controls button { border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 5px 12px; border-radius: 99px; cursor: pointer; font: inherit; font-size: 13px; }
+.controls button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.controls input { border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 5px 10px; border-radius: 8px; font: inherit; font-size: 13px; min-width: 180px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(560px, 1fr)); gap: 14px; }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr; } main, header { padding-left: 16px; padding-right: 16px; } }
+.card { padding: 14px 16px; min-width: 0; }
+.card h2 { margin: 0; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); display: inline-block; }
+.dot.off { background: var(--bad); }
+.meta { color: var(--muted); font-size: 12.5px; margin: 4px 0 10px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.lists { display: grid; gap: 8px; margin-bottom: 12px; }
+.lrow { display: grid; grid-template-columns: 120px 1fr 120px; gap: 10px; align-items: center; font-size: 13px; }
+.lrow .bar { margin: 0; }
+.lrow .n { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.fail { color: var(--bad); font-weight: 600; }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+th { text-align: left; color: var(--muted); font-weight: 500; padding: 4px 6px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 4px 6px; border-bottom: 1px solid var(--line); vertical-align: middle; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+.tag { font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; color: #fff; }
+.mini { width: 110px; height: 6px; background: var(--track); border-radius: 99px; overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 6px; }
+.mini > i { display: block; height: 100%; }
+.name { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 12px; }
+.empty { color: var(--muted); font-size: 13px; padding: 6px 0; }
+.scroll { max-height: 520px; overflow: auto; }
+.theme { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px; padding: 4px 10px; cursor: pointer; font: inherit; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <div><h1>ThermBench Runs</h1><div class="sub">Every simulation on the laptop, lab, pc3 and pc4. Read-only; refreshes every 30 s.</div></div>
+  <div class="sub"><span id="upd">loading…</span> &nbsp; <button class="theme" id="theme">theme</button></div>
+</header>
+<main>
+  <section class="tiles" id="tiles"></section>
+  <section class="card chart">
+    <div class="legend"><b style="color:var(--ink);font-weight:600">Finished over time</b>
+      <span style="--c:var(--tank)">Tank</span><span style="--c:var(--pcm)">PCM</span><span style="--c:var(--three)">PCM pilot</span></div>
+    <svg id="chart" viewBox="0 0 1000 150" preserveAspectRatio="none"></svg>
+    <div class="sub" id="chartnote"></div>
+  </section>
+  <div class="controls" id="controls">
+    <button data-k="all" class="on">All</button><button data-k="Tank">Tank</button><button data-k="PCM">PCM</button><button data-k="3D">3D</button>
+    <input id="q" placeholder="filter by run name, e.g. T0449 or P01">
+  </div>
+  <section class="grid" id="grid"></section>
+</main>
+<script>
+const COLORS = { Tank: "var(--tank)", PCM: "var(--pcm)", "PCM pilot": "var(--three)", "3D": "var(--three)" };
+const ORDER = ["laptop", "lab", "pc3", "pc4"];
+let kindFilter = "all", query = "", data = null;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (a, b) => b ? 100 * a / b : 0;
+const fmtH = h => h == null ? "?" : h < 1 ? `${Math.round(h * 60)} min` : `${h.toFixed(1)} h`;
+
+try { const t = localStorage.getItem("tbtheme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+document.getElementById("theme").onclick = () => {
+  const r = document.documentElement, cur = r.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  r.dataset.theme = cur === "dark" ? "light" : "dark";
+  try { localStorage.setItem("tbtheme", r.dataset.theme); } catch (e) {}
+};
+document.getElementById("controls").onclick = e => {
+  if (e.target.dataset.k) { kindFilter = e.target.dataset.k; document.querySelectorAll("#controls button").forEach(b => b.classList.toggle("on", b === e.target)); render(); }
+};
+document.getElementById("q").oninput = e => { query = e.target.value.trim().toLowerCase(); render(); };
+
+function tiles(hosts) {
+  const fam = {};
+  let running = 0, online = 0;
+  for (const h of Object.values(hosts)) {
+    if (h.ok) { online++; running += h.runs.length; }
+    for (const l of h.lists || []) { const f = fam[l.family] ||= { d: 0, t: 0, f: 0 }; f.d += l.done; f.t += l.total; f.f += l.failed; }
+  }
+  const t = (k, v, sub, p, c) => `<div class="tile"><div class="k">${k}</div><div class="v">${v} <small>${sub}</small></div>${p != null ? `<div class="bar"><i style="width:${p}%;background:${c}"></i></div>` : ""}</div>`;
+  let h = "";
+  for (const k of ["Tank", "PCM", "PCM pilot"]) if (fam[k]) h += t(`${k} finished`, `${pct(fam[k].d, fam[k].t).toFixed(1)} %`, `${fam[k].d} / ${fam[k].t}${fam[k].f ? ` · <span class="fail">${fam[k].f} failed</span>` : ""}`, pct(fam[k].d, fam[k].t), COLORS[k]);
+  h += t("Running now", running, "simulations");
+  h += t("Machines online", `${online} / ${ORDER.length}`, online < ORDER.length ? '<span class="fail">check offline</span>' : "all reachable");
+  document.getElementById("tiles").innerHTML = h;
+}
+
+function chart(hist) {
+  const svg = document.getElementById("chart"), note = document.getElementById("chartnote");
+  if (!hist || hist.length < 2) { svg.innerHTML = ""; note.textContent = "The chart fills in as history builds up (a point every 10 min)."; return; }
+  const t0 = hist[0].t, t1 = hist[hist.length - 1].t, keys = ["Tank", "PCM", "PCM pilot"];
+  const ymax = Math.max(1, ...hist.flatMap(p => keys.map(k => p[k] || 0)));
+  const X = t => 10 + 980 * (t - t0) / Math.max(1, t1 - t0), Y = v => 140 - 130 * v / ymax;
+  let g = "";
+  for (let i = 0; i <= 4; i++) g += `<line x1="10" x2="990" y1="${Y(ymax * i / 4)}" y2="${Y(ymax * i / 4)}" stroke="var(--line)" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
+  for (const k of keys) {
+    if (!hist.some(p => p[k])) continue;
+    g += `<polyline fill="none" stroke="${COLORS[k]}" stroke-width="2.2" vector-effect="non-scaling-stroke" points="${hist.map(p => `${X(p.t).toFixed(1)},${Y(p[k] || 0).toFixed(1)}`).join(" ")}"/>`;
+  }
+  svg.innerHTML = g;
+  const d = new Date(t0 * 1000), last = hist[hist.length - 1];
+  note.textContent = `Since ${d.toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" })} · top line = ${ymax} runs · now: ` + keys.filter(k => last[k] != null).map(k => `${k} ${last[k]}`).join(", ");
+}
+
+function card(name, h) {
+  const off = !h.ok;
+  let meta = off ? `<span class="fail">not reachable</span>${h.last_ok ? ` · last seen ${new Date(h.last_ok * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}` : ""}`
+    : `<span>load ${h.load.toFixed(1)} / ${h.threads} threads</span><span>memory free ${h.mem_avail_gb} / ${h.mem_total_gb} GB</span><span>Ubuntu up ${fmtH(h.uptime_h)}</span><span>${h.runs.length} running</span>`;
+  let lists = (h.lists || []).map(l => `<div class="lrow"><div>${esc(l.family)} <span class="sub">${esc(l.name)}</span></div>
+      <div class="bar"><i style="width:${pct(l.done, l.total)}%;background:${COLORS[l.family]}"></i></div>
+      <div class="n">${l.done} / ${l.total}${l.failed ? ` <span class="fail">· ${l.failed} failed</span>` : ""}</div></div>`).join("");
+  let runs = (h.runs || []).filter(r => (kindFilter === "all" || r.kind === kindFilter) && (!query || r.name.toLowerCase().includes(query) || r.batch.toLowerCase().includes(query)))
+    .sort((a, b) => a.kind.localeCompare(b.kind) || b.frac - a.frac);
+  let table = off ? "" : runs.length ? `<div class="scroll"><table><thead><tr><th>Type</th><th>Run</th><th>Progress</th><th>Detail</th><th>Running</th><th>Left (rough)</th></tr></thead><tbody>` +
+    runs.map(r => `<tr><td><span class="tag" style="background:${COLORS[r.kind]}">${r.kind}</span></td>
+      <td class="name">${esc(r.name)}${r.np > 1 ? ` <span class="sub">×${r.np}</span>` : ""}<div class="sub">${esc(r.batch)}</div></td>
+      <td><span class="mini"><i style="width:${(100 * r.frac).toFixed(1)}%;background:${COLORS[r.kind]}"></i></span>${(100 * r.frac).toFixed(1)} %</td>
+      <td class="sub">${esc(r.info)}</td><td>${fmtH(r.elapsed_h)}</td><td>${r.left_h == null ? "?" : "~" + fmtH(r.left_h)}</td></tr>`).join("") + `</tbody></table></div>`
+    : `<div class="empty">${(h.runs || []).length ? "No runs match the filter." : "Nothing running."}</div>`;
+  return `<article class="card"><h2><span class="dot ${off ? "off" : ""}"></span>${name}</h2><div class="meta">${meta}</div><div class="lists">${lists}</div>${table}</article>`;
+}
+
+function render() {
+  if (!data) return;
+  tiles(data.hosts); chart(data.history);
+  document.getElementById("grid").innerHTML = ORDER.filter(n => data.hosts[n]).map(n => card(n, data.hosts[n])).join("");
+  const age = (Date.now() / 1000 - data.updated);
+  document.getElementById("upd").innerHTML = age > 180 ? `<span class="stale">data is ${Math.round(age / 60)} min old: is the collector running?</span>`
+    : `updated ${new Date(data.updated * 1000).toLocaleTimeString()}`;
+}
+
+async function load() {
+  try { const r = await fetch("status.json?" + Date.now(), { cache: "no-store" }); data = await r.json(); render(); }
+  catch (e) { document.getElementById("upd").innerHTML = '<span class="stale">cannot read status.json: is tb_dash.sh running?</span>'; }
+}
+load(); setInterval(load, 30000);
+</script>
+</body>
+</html>
