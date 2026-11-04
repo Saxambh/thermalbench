@@ -20,14 +20,14 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 FAMILY = {
     "tank": {
-        "order": ["initial", "ideal_stratified", "knn", "fno", "fno_canon", "fno_hybrid", "fno_hybrid_canon",
+        "order": ["initial", "ideal_stratified", "knn", "nn", "idw", "rbf", "fno", "fno_canon", "fno_hybrid", "fno_hybrid_canon",
                   "unet", "unet_canon", "unet_hybrid", "unet_hybrid_canon"],
         "units": {"rmse_K": "K", "rmse_theta": "-", "profile_rmse": "-", "y_mid_err_m": "m",
                   "energy_err": "fraction of full capacity", "T_out_err_K": "K"},
         "note": "Field errors below ~0.65-2 K are within the CFD noise floor (chaotic buoyant jet).",
     },
     "pcm": {
-        "order": ["initial", "stefan", "front", "knn", "fno", "fno_hybrid", "unet", "unet_hybrid"],
+        "order": ["initial", "stefan", "front", "knn", "nn", "idw", "rbf", "fno", "fno_hybrid", "unet", "unet_hybrid"],
         "units": {"rmse_K": "K", "alpha_rmse": "-", "liquid_iou": "- (higher is better)", "melt_frac_err": "-",
                   "energy_err": "fraction of full charge", "t90_err": "fraction of t90"},
         "note": "",

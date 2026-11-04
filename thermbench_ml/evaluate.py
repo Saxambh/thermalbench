@@ -52,7 +52,7 @@ def main():
     ap.add_argument("--roots", nargs="+", default=DEFAULT_ROOTS)
     ap.add_argument("--split", default="random", choices=SPLITS)
     ap.add_argument("--stride", type=int, default=10)
-    ap.add_argument("--models", nargs="+", default=["initial", "ideal_stratified", "knn"])
+    ap.add_argument("--models", nargs="+", default=["initial", "ideal_stratified", "knn", "nn", "idw", "rbf"])
     ap.add_argument("--manifest", default=None, help="frozen run list (freeze_manifest.py)")
     ap.add_argument("--outdir", default="results", help="results folder (merged into <outdir>/<split>.json)")
     a = ap.parse_args()
@@ -64,7 +64,7 @@ def main():
         print("no test runs yet for this split")
         return
     makers = {"initial": baselines.Initial, "ideal_stratified": baselines.IdealStratified,
-              "knn": baselines.KNN}
+              "knn": baselines.KNN, "nn": baselines.NN, "idw": baselines.IDW, "rbf": baselines.RBF}
     print(f"{'model':18s} " + " ".join(f"{c:>12s}" for c in COLS) + "     time")
     for name in a.models:
         t0 = time.time()

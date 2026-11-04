@@ -158,21 +158,45 @@ class KNN:
         self.taus = [r.times()[1] for r in train]
         return self
 
+    def weights(self, q):
+        near = np.argsort(np.linalg.norm(self.X - q, axis=1))[: self.k]
+        return near, np.full(len(near), 1.0 / len(near))
+
     def predict(self, run, idx):
-        d = np.linalg.norm(self.X - (run.params() - self.mu) / self.sd, axis=1)
-        near = np.argsort(d)[: self.k]
+        near, w = self.weights((run.params() - self.mu) / self.sd)
         tau = run.times()[1][np.atleast_1d(idx)]
         ny, nx = run.mask().shape
         th = np.zeros((len(tau), ny, nx), np.float32)
         al = np.zeros_like(th)
-        for j in near:
+        for j, wj in zip(near, w):
             nb, nt = self.train[j], self.taus[j]
             k = np.abs(nt[None, :] - tau[:, None]).argmin(axis=1)   # nearest snapshot in tau
             u = np.unique(k)
             sel = np.searchsorted(u, k)
-            th += stretch_x(nb.field("T", idx=u, theta=True)[sel], nx)
-            al += stretch_x(nb.field("alpha", idx=u)[sel], nx)
-        return th / len(near), al / len(near)
+            th += wj * stretch_x(nb.field("T", idx=u, theta=True)[sel], nx)
+            al += wj * stretch_x(nb.field("alpha", idx=u)[sel], nx)
+        return th, al
 
 
-MAKERS = {"initial": Initial, "stefan": Stefan, "front": Front, "knn": KNN}
+class _Interp(KNN):
+    """Interpolation baselines in parameter space (interp_weights.py): nn, idw, rbf."""
+    method = None
+
+    def weights(self, q):
+        import interp_weights
+        return interp_weights.weights(self.X, q, self.method)
+
+
+class NN(_Interp):
+    name, method = "nn", "nn"
+
+
+class IDW(_Interp):
+    name, method = "idw", "idw"
+
+
+class RBF(_Interp):
+    name, method = "rbf", "rbf"
+
+
+MAKERS = {"initial": Initial, "stefan": Stefan, "front": Front, "knn": KNN, "nn": NN, "idw": IDW, "rbf": RBF}

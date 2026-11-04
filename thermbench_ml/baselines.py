@@ -10,6 +10,7 @@ All predictors expose predict(run, idx) -> theta [len(idx), ny, nx].
 """
 import numpy as np
 
+import interp_weights
 from data import PARAMS
 
 
@@ -83,15 +84,39 @@ class KNN:
         self.tstars = [r.times()[1] for r in train]
         return self
 
+    def weights(self, q):
+        """(training-run indices, weights) for the standardised query q: equal weights over k nearest."""
+        near = np.argsort(np.linalg.norm(self.X - q, axis=1))[: self.k]
+        return near, np.full(len(near), 1.0 / len(near))
+
     def predict(self, run, idx):
-        d = np.linalg.norm(self.X - (self._x(run) - self.mu) / self.sd, axis=1)
-        near = np.argsort(d)[: self.k]
+        near, w = self.weights((self._x(run) - self.mu) / self.sd)
         ts = _tstar(run, idx)
         out = np.zeros((len(ts), run.meta["ny"], run.meta["nx"]), np.float32)
-        for j in near:
+        for j, wj in zip(near, w):
             nb, nt = self.train[j], self.tstars[j]
             # nearest neighbour snapshot in t* (snapshots past its end time: use the last)
             k = np.abs(nt[None, :] - ts[:, None]).argmin(axis=1)
-            out += stretch_x(nb.field("T", idx=np.unique(k), theta=True)[
+            out += wj * stretch_x(nb.field("T", idx=np.unique(k), theta=True)[
                 np.searchsorted(np.unique(k), k)], run.meta["nx"])
-        return out / len(near)
+        return out
+
+
+class _Interp(KNN):
+    """Interpolation baselines in parameter space (interp_weights.py): nn, idw, rbf."""
+    method = None
+
+    def weights(self, q):
+        return interp_weights.weights(self.X, q, self.method)
+
+
+class NN(_Interp):
+    name, method = "nn", "nn"
+
+
+class IDW(_Interp):
+    name, method = "idw", "idw"
+
+
+class RBF(_Interp):
+    name, method = "rbf", "rbf"
