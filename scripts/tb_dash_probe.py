@@ -4,22 +4,27 @@ Batch lists per machine are listed in LISTS; runs moved to another machine (MOVE
 placeholders) are not counted on this one."""
 import csv, glob, json, os, re, socket, subprocess, time
 
-HOSTS = {"Saxam": "laptop", "DESKTOP-HK82PPA": "lab", "SoRrYnAh": "pc3", "GHLAB-SERVER": "pc4"}
+HOSTS = {"Saxam": "laptop", "DESKTOP-HK82PPA": "lab", "SoRrYnAh": "pc3", "GHLAB-SERVER": "pc4", "sure": "pc5"}
 host = HOSTS.get(socket.gethostname(), socket.gethostname())
 R = "/mnt/d/Lund PhD Application/04_Publications/Research_Paper_RP4_ThermBench"
 LISTS = {
     "laptop": [("Tank", "main", "run_id", f"{R}/design_v2_full_laptop_n2.csv", "~/of_runs/full_h5mm"),
                ("Tank", "extra", "run_id", f"{R}/design_v2_full_laptopx_n2.csv", "~/of_runs/full_h5mm_x"),
-               ("PCM", "full", "case_id", "~/thermbench/pcm_full_laptop.csv", "~/of_runs/pcm_full/runs")],
+               ("PCM", "full", "case_id", "~/thermbench/pcm_full_laptop.csv", "~/of_runs/pcm_full/runs"),
+               ("PCM", "from pc4", "case_id", "~/thermbench/pcm_more_laptop.csv", "~/of_runs/pcm_full/runs")],
     "lab": [("Tank", "main", "run_id", "~/thermbench/design_v2_full_lab_n2.csv", "~/of_runs/full_h5mm"),
             ("Tank", "extra", "run_id", "~/thermbench/design_v2_full_labx_n2.csv", "~/of_runs/full_h5mm_x"),
             ("Tank", "moved in", "run_id", "~/thermbench/design_v2_full_laby_n2.csv", "~/of_runs/full_h5mm_x"),
             ("Tank", "moved in 2", "run_id", "~/thermbench/design_v2_full_labz_n2.csv", "~/of_runs/full_h5mm_x"),
             ("PCM pilot", "", "case_id", "~/thermbench/scripts/pcm_pilot.csv", "~/of_runs/pcm_pilot"),
-            ("PCM", "full", "case_id", "~/thermbench/pcm_full_lab.csv", "~/of_runs/pcm_full/runs")],
+            ("PCM", "full", "case_id", "~/thermbench/pcm_full_lab.csv", "~/of_runs/pcm_full/runs"),
+            ("PCM", "from pc4", "case_id", "~/thermbench/pcm_more_lab.csv", "~/of_runs/pcm_full/runs")],
     "pc3": [("Tank", "main", "run_id", "~/thermbench/design_v2_full_pc3_n2.csv", "~/of_runs/full_h5mm"),
-            ("PCM", "full", "case_id", "~/thermbench/pcm_full_pc3.csv", "~/of_runs/pcm_full/runs")],
+            ("PCM", "full", "case_id", "~/thermbench/pcm_full_pc3.csv", "~/of_runs/pcm_full/runs"),
+            ("PCM", "from pc4", "case_id", "~/thermbench/pcm_more_pc3.csv", "~/of_runs/pcm_full/runs")],
     "pc4": [("PCM", "full", "case_id", "~/thermbench/pcm_full_pc4.csv", "~/of_runs/pcm_full/runs")],
+    # pc5 (friend's PC, 2026-11-04): pc4 cases moved by pcm_rebalance.py, solver in the ofbox container
+    "pc5": [("PCM", "from pc4", "case_id", "~/thermbench/pcm_more_pc5.csv", "~/of_runs/pcm_full/runs")],
 }
 ex = os.path.expanduser
 

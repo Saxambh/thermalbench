@@ -44,7 +44,7 @@ state = dict(l.split() for l in sh("saxam@pc4", "cd ~/of_runs/pcm_full/runs && f
              "if [ -f $d/DONE ]; then echo $d done; else echo $d started; fi; done").splitlines() if l.strip())
 queued = [r for r in rows if r["case_id"] not in state]
 dash = json.load(open(os.path.expanduser("~/tb_dash/status.json")))
-left = sorted(r["left_h"] for r in dash["hosts"]["pc4"]["runs"] if r["batch"] == "runs")
+left = sorted(r["left_h"] if r["left_h"] is not None else 4.0 for r in dash["hosts"]["pc4"]["runs"] if r["batch"] == "runs")   # None: just started
 print(f"pc4: {len(rows)} in list, {sum(v == 'done' for v in state.values())} done, "
       f"{sum(v == 'started' for v in state.values())} started, {len(queued)} queued; "
       f"dashboard {(time.time() - dash['updated']) / 60:.0f} min old")

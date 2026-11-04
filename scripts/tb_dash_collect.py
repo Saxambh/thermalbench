@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROBE = os.path.join(HERE, "tb_dash_probe.py")
 OUT = os.path.expanduser("~/tb_dash"); os.makedirs(OUT, exist_ok=True)
-HOSTS = {"laptop": None, "lab": "labpc", "pc3": "saxam@pc3", "pc4": "saxam@pc4"}
+HOSTS = {"laptop": None, "lab": "labpc", "pc3": "saxam@pc3", "pc4": "saxam@pc4", "pc5": "pc5"}
 HIST = f"{OUT}/history.jsonl"
 last = {}
 
@@ -27,7 +27,7 @@ def probe(name):
 
 t_hist = 0
 while True:
-    with ThreadPoolExecutor(4) as ex:
+    with ThreadPoolExecutor(len(HOSTS)) as ex:
         res = dict(ex.map(probe, HOSTS))
     for k, v in res.items():
         if v["ok"]:
