@@ -21,7 +21,8 @@ for w in $W; do
     # pc5 runs from its git clone ~/thermalbench (Saxam, 2026-11-04): pull the pushed code over the
     # laptop's forwarded GitHub key (no repo key stored on pc5). The laptop's code must be committed and pushed.
     G="$(dirname "$HERE")"
-    if [ -n "$(git -C "$G" status --porcelain)" ] || [ "$(git -C "$G" rev-parse HEAD)" != "$(git -C "$G" rev-parse origin/main 2>/dev/null)" ]; then
+    # the frozen manifests and training results are written at freeze time and go by scp, not git
+    if [ -n "$(git -C "$G" status --porcelain | grep -v -E 'manifest_[a-z0-9_]*\.json|results')" ] || [ "$(git -C "$G" rev-parse HEAD)" != "$(git -C "$G" rev-parse origin/main 2>/dev/null)" ]; then
       echo "pc5: STOP, uncommitted or unpushed code in $G (git add -A; git commit; git push), pc5 not updated"; exit 1
     fi
     eval $(ssh-agent -s) > /dev/null; ssh-add -q ~/.ssh/id_ed25519_github

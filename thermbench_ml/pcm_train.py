@@ -159,7 +159,9 @@ def main():
     print(f"pcm {name}: {sum(p.numel() for p in net.parameters()) / 1e6:.2f} M parameters, {ntr} train / {nva} val samples", flush=True)
     opt = torch.optim.AdamW(net.parameters(), lr=a.lr, weight_decay=1e-4)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, a.lr, total_steps=a.epochs * -(-ntr // a.batch))
-    ckpt = os.path.join(HERE, f"ckpt_pcm_{name}_{a.split}.pt")
+    # per outdir and seed (2026-11-04): two workers on one machine (pc5a/pc5b) must not share a checkpoint
+    os.makedirs(os.path.join(HERE, a.outdir, "ckpt"), exist_ok=True)
+    ckpt = os.path.join(HERE, a.outdir, "ckpt", f"ckpt_pcm_{name}{f'_s{a.seed}' if a.seed else ''}_{a.split}.pt")
     best = float("inf")
     for ep in range(a.epochs):
         t0 = time.time()

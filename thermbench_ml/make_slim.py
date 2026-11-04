@@ -13,6 +13,8 @@ import h5py
 import numpy as np
 
 KEEP = ("fields/T", "times_s", "tstar")
+# PCM runs (2026-11-04): pcm_data/pcm_train also read the liquid fraction and the fin mask
+KEEP_PCM = ("fields/T", "fields/alpha", "mask", "times_s", "tstar")
 SIDE = ("DONE", "case.json", "metrics.json", "qc.json")
 
 
@@ -25,20 +27,27 @@ def md5(path):
 
 
 def target(root):
-    """laptop ~/of_runs/<batch> -> laptop/<batch>; ~/tb_data/<origin>/<batch> stays <origin>/<batch>."""
+    """laptop ~/of_runs/<batch> -> laptop/<batch> (PCM: ~/of_runs/pcm_full/runs -> laptop/pcm_full);
+    ~/tb_data/<origin>/<batch> stays <origin>/<batch>."""
     parts = os.path.normpath(root).split(os.sep)
-    return os.path.join("laptop", parts[-1]) if parts[-2] == "of_runs" else os.path.join(parts[-2], parts[-1])
+    if "of_runs" in parts:
+        return os.path.join("laptop", parts[parts.index("of_runs") + 1])
+    return os.path.join(parts[-2], parts[-1])
 
 
 def slim(src, dst):
+    with h5py.File(src, "r") as a:
+        keep = KEEP_PCM if "fields/alpha" in a else KEEP
     with h5py.File(src, "r") as a, h5py.File(dst, "w") as b:
-        for k in KEEP:
+        for k, v in a.attrs.items():
+            b.attrs[k] = v
+        for k in keep:
             d = a[k]
             b.create_dataset(k, data=d[:], chunks=d.chunks, compression=d.compression,
                              compression_opts=d.compression_opts, shuffle=d.shuffle)
         a.copy("metrics", b)
     with h5py.File(src, "r") as a, h5py.File(dst, "r") as b:
-        for k in KEEP + tuple(f"metrics/{m}" for m in a["metrics"]):
+        for k in keep + tuple(f"metrics/{m}" for m in a["metrics"]):
             if not np.array_equal(a[k][:], b[k][:], equal_nan=True):   # MIX can hold NaN
                 raise RuntimeError(f"{dst}: {k} differs from the source")
 
@@ -62,7 +71,7 @@ def main():
             if os.path.exists(os.path.join(src, f)):
                 shutil.copy2(os.path.join(src, f), dst)
         slim(os.path.join(src, "thermbench.h5"), os.path.join(dst, "thermbench.h5"))
-        json.dump({"src_md5": e["h5_md5"], "slim_md5": md5(os.path.join(dst, "thermbench.h5")), "kept": KEEP + ("metrics",)},
+        json.dump({"src_md5": e["h5_md5"], "slim_md5": md5(os.path.join(dst, "thermbench.h5")), "kept": "make_slim KEEP or KEEP_PCM + metrics"},
                   open(side, "w"))
         made += 1
         full += os.path.getsize(os.path.join(src, "thermbench.h5"))
