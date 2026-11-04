@@ -17,7 +17,17 @@ for w in $W; do
   if [[ " $STEPS " == *" venv "* ]] && [ $m != pc3 ] && [ $m != pc5 ]; then
     ssh -o BatchMode=yes $h 'mkdir -p ~/venvs' < /dev/null; $R ~/venvs/tbml-gpu/ $h:venvs/tbml-gpu/ && echo "$m: venv $(ssh -o BatchMode=yes $h '~/venvs/tbml-gpu/bin/python -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"' < /dev/null)"
   fi
-  if [[ " $STEPS " == *" code "* ]]; then
+  if [[ " $STEPS " == *" code "* ]] && [ $m = pc5 ]; then
+    # pc5 runs from its git clone ~/thermalbench (Saxam, 2026-11-04): pull the pushed code over the
+    # laptop's forwarded GitHub key (no repo key stored on pc5). The laptop's code must be committed and pushed.
+    G="$(dirname "$HERE")"
+    if [ -n "$(git -C "$G" status --porcelain)" ] || [ "$(git -C "$G" rev-parse HEAD)" != "$(git -C "$G" rev-parse origin/main 2>/dev/null)" ]; then
+      echo "pc5: STOP, uncommitted or unpushed code in $G (git add -A; git commit; git push), pc5 not updated"; exit 1
+    fi
+    eval $(ssh-agent -s) > /dev/null; ssh-add -q ~/.ssh/id_ed25519_github
+    ssh -A -o BatchMode=yes $h 'export GIT_SSH_COMMAND="ssh -o IdentitiesOnly=no -o IdentityFile=/dev/null"; cd ~/thermalbench && git pull -q --ff-only && git log --oneline -1' < /dev/null | sed "s/^/pc5: code at /"
+    ssh-agent -k > /dev/null
+  elif [[ " $STEPS " == *" code "* ]]; then
     $R --delete --exclude "*.pt" --exclude "results*" --exclude "__pycache__" --exclude "manifest_*.json" "$HERE/" $h:thermbench_ml/ && echo "$m: code synced"
   fi
   # pc5 sits behind Tailscale's relay (~0.3 MB/s): it gets temperature-only copies instead (make_slim.py, freeze_all.sh step 5)

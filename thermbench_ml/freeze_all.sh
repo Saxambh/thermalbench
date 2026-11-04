@@ -65,16 +65,18 @@ say "5. stage code + data to lab, pc3, pc4, pc5; copy the manifest"
 bash "$ML/stage_ml.sh" code data || die "staging"
 nice -n 10 $PY "$ML/make_slim.py" "$MAN" || die "slim copies for pc5"
 rsync -a ~/tb_slim/ pc5:tb_data/ || die "slim copies to pc5"
-for h in labpc saxam@pc3 saxam@pc4 pc5; do scp -q "$MAN" $h:thermbench_ml/ || die "manifest to $h"; done
+# pc5 runs from its git clone (~/thermalbench/thermbench_ml), the others from ~/thermbench_ml
+for h in labpc:thermbench_ml saxam@pc3:thermbench_ml saxam@pc4:thermbench_ml pc5:thermalbench/thermbench_ml; do scp -q "$MAN" $h/ || die "manifest to ${h%%:*}"; done
 echo "manifest md5 $(md5sum "$MAN" | cut -c1-12) on all machines"
 
 say "6. start training on the six GPUs (pc5 has two)"
 cd "$ML" && setsid nohup bash run_final.sh laptop > ~/run_final_laptop.out 2>&1 < /dev/null &
 for w in labpc:lab saxam@pc3:pc3 saxam@pc4:pc4 pc5:pc5a pc5:pc5b; do
+  D=thermbench_ml; [ ${w%%:*} = pc5 ] && D=thermalbench/thermbench_ml
   # a backgrounded remote job can keep the ssh channel open: cap the call, then check the log below
-  timeout 30 ssh -o BatchMode=yes ${w%%:*} "cd ~/thermbench_ml && setsid nohup bash run_final.sh ${w##*:} > ~/run_final_${w##*:}.out 2>&1 < /dev/null &" < /dev/null; echo "started ${w##*:}"
+  timeout 30 ssh -o BatchMode=yes ${w%%:*} "cd ~/$D && setsid nohup bash run_final.sh ${w##*:} > ~/run_final_${w##*:}.out 2>&1 < /dev/null &" < /dev/null; echo "started ${w##*:}"
 done
 sleep 120
-for w in labpc:results saxam@pc3:results saxam@pc4:results pc5:results_pc5a pc5:results_pc5b; do echo "$w: $(rsh ${w%%:*} "tail -2 ~/thermbench_ml/${w##*:}/run_final.log")"; done
+for w in labpc:thermbench_ml/results saxam@pc3:thermbench_ml/results saxam@pc4:thermbench_ml/results pc5:thermalbench/thermbench_ml/results_pc5a pc5:thermalbench/thermbench_ml/results_pc5b; do echo "$w: $(rsh ${w%%:*} "tail -2 ~/${w##*:}/run_final.log")"; done
 echo "laptop: $(tail -2 "$ML/results/run_final.log")"
 say "freeze done, training running (results in each machine's thermbench_ml/results/)"
