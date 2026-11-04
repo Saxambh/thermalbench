@@ -26,8 +26,10 @@ import heapq, sys
 # speed vs laptop, GB. Measured 2026-11-04 (1-epoch test, rehearsal set, machines busy with CFD):
 # lab FNO 43 s / U-Net 46 s, pc4 65 s / 70 s, laptop 48 s / 63 s. pc3 not yet measured.
 GPUS = {"laptop": (1.0, 8), "pc3": (1.0, 8), "lab": (1.25, 12), "pc4": (0.8, 12),
-        # pc5 (friend's PC, added 2026-11-04): 2x RTX 3080 Ti 12 GB, one worker per GPU; speed provisional
-        "pc5a": (1.2, 12), "pc5b": (1.2, 12)}
+        # pc5 (friend's PC, added 2026-11-04): 2x RTX 3080 Ti 12 GB, one worker per GPU. 1-epoch test on
+        # 102 runs: FNO 4.0, U-Net 3.6 ms/sample (laptop 8.0 / 10.4 on the rehearsal set) = 2.0x / 2.9x;
+        # 1.8 used (small set, both GPUs busy at once)
+        "pc5a": (1.8, 12), "pc5b": (1.8, 12)}
 FRAC = {"random": 0.80, "ood_flow": 0.81, "ood_geom": 0.76, "ood_mode": 0.45}          # share of runs in train
 EPOCH_H = {"fno": 81 / 3600 / 0.80, "unet": 107 / 3600 / 0.80}   # h per epoch at train share 1 (measured 2026-11-03)
 jobs = []
