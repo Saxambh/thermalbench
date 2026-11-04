@@ -63,8 +63,8 @@ PY
 
 say "5. stage code + data to lab, pc3, pc4, pc5; copy the manifest"
 bash "$ML/stage_ml.sh" code data || die "staging"
-nice -n 10 $PY "$ML/make_slim.py" "$MAN" || die "slim copies for pc5"
-rsync -a ~/tb_slim/ pc5:tb_data/ || die "slim copies to pc5"
+# pc5 gets temperature-only copies through GitHub (relay too slow): make_slim + push + pull + check
+bash "$ML/pc5_data.sh" "$MAN" || die "pc5 data via GitHub"
 # pc5 runs from its git clone (~/thermalbench/thermbench_ml), the others from ~/thermbench_ml
 for h in labpc:thermbench_ml saxam@pc3:thermbench_ml saxam@pc4:thermbench_ml pc5:thermalbench/thermbench_ml; do scp -q "$MAN" $h/ || die "manifest to ${h%%:*}"; done
 echo "manifest md5 $(md5sum "$MAN" | cut -c1-12) on all machines"
