@@ -69,7 +69,7 @@ show() {
   echo
   if [ "$MODE" = all ]; then
     block
-    for x in lab:labpc:thermbench_ml pc3:saxam@pc3:thermbench_ml pc4:saxam@pc4:thermbench_ml pc5:pc5:thermalbench/thermbench_ml; do
+    for x in lab:labpc:thermbench_ml pc3:saxam@pc3:thermbench_ml pc4:saxam@pc4:thermbench_ml pc6:saxam@pc6:thermbench_ml pc5:pc5:thermalbench/thermbench_ml; do
       IFS=: read -r w h d <<< "$x"; echo
       timeout 40 ssh -o BatchMode=yes -o ConnectTimeout=10 $h "bash ~/$d/watch_training.sh once | tail -n +3" < /dev/null 2>/dev/null \
         || echo "== $w not reachable (PC off or asleep, or its Ubuntu window closed)"

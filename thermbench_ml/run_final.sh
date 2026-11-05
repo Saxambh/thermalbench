@@ -78,7 +78,11 @@ W=${1:?worker: laptop, pc3, lab, pc4, pc5a or pc5b}
 echo "=== run_final worker $W $(date -u '+%F %H:%M') UTC on $(hostname), manifest md5 $(md5sum $M | cut -c1-12)"
 python3 check_data.py $M || { echo "data check failed: not all frozen runs are here and intact"; exit 1; }
 if [ "$W" = laptop ]; then
-  for split in random ood_flow ood_geom ood_mode; do $PY evaluate.py --split $split --manifest $M; done
+  # baselines already scored (a restarted worker, 2026-11-05) are not run again (~2 h of CPU)
+  for split in random ood_flow ood_geom ood_mode; do
+    if [ -f $OUT/$split.json ] && python3 -c "import json,sys; r=json.load(open('$OUT/$split.json'))['results']; sys.exit(0 if {'initial','knn','nn','idw','rbf'} <= set(r) else 1)"; then
+      echo "--- $split: baselines already scored, skipped"; continue; fi
+    $PY evaluate.py --split $split --manifest $M; done
 fi
 mapfile -t JOBS < <(plan $W)
 echo "${#JOBS[@]} jobs for $W"

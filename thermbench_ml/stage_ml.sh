@@ -7,7 +7,7 @@
 unset LD_LIBRARY_PATH
 HERE="$(dirname "$(readlink -f "$0")")"
 # pc5 (friend's PC, Ubuntu 26.04, user sure, ssh alias pc5) has its own venv built there (Python 3.14)
-W=${STAGE_TO:-"labpc:lab saxam@pc3:pc3 saxam@pc4:pc4 pc5:pc5"}   # STAGE_TO="pc5:pc5" stages one machine only
+W=${STAGE_TO:-"labpc:lab saxam@pc3:pc3 saxam@pc4:pc4 saxam@pc6:pc6 pc5:pc5"}   # pc6 added 2026-11-05   # STAGE_TO="pc5:pc5" stages one machine only
 STEPS=${@:-venv code data}
 R="ionice -c3 nice -n 10 rsync -a"
 light() { sed 's|$|/DONE|; p; s|DONE$|case.json|; p; s|case.json$|metrics.json|; p; s|metrics.json$|qc.json|; p; s|qc.json$|thermbench.h5|'; }

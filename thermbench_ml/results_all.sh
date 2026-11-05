@@ -9,7 +9,7 @@ F=${1:?tank or pcm}
 cd "$(dirname "$(readlink -f "$0")")"
 if [ $F = tank ]; then P=results; W=results_workers; else P=results_pcm; W=results_workers_pcm; fi
 mkdir -p $W
-for x in laptop: lab:labpc:thermbench_ml/$P pc3:saxam@pc3:thermbench_ml/$P pc4:saxam@pc4:thermbench_ml/$P \
+for x in laptop: lab:labpc:thermbench_ml/$P pc3:saxam@pc3:thermbench_ml/$P pc4:saxam@pc4:thermbench_ml/$P pc6:saxam@pc6:thermbench_ml/$P \
          pc5a:pc5:thermalbench/thermbench_ml/${P}_pc5a pc5b:pc5:thermalbench/thermbench_ml/${P}_pc5b; do
   IFS=: read -r w h d <<< "$x"
   mkdir -p $W/$w
@@ -22,7 +22,7 @@ OUT=${P}_merged
 # each seed was trained on one worker, so they are only together after this copy
 if [ $F = tank ]; then CK="ckpt_fno_hybrid_canon_*.pt"; else CK="ckpt_pcm_fno_hybrid_*.pt"; fi
 mkdir -p $OUT/ckpt
-for x in laptop: lab:labpc:thermbench_ml/$P pc3:saxam@pc3:thermbench_ml/$P pc4:saxam@pc4:thermbench_ml/$P \
+for x in laptop: lab:labpc:thermbench_ml/$P pc3:saxam@pc3:thermbench_ml/$P pc4:saxam@pc4:thermbench_ml/$P pc6:saxam@pc6:thermbench_ml/$P \
          pc5a:pc5:thermalbench/thermbench_ml/${P}_pc5a pc5b:pc5:thermalbench/thermbench_ml/${P}_pc5b; do
   IFS=: read -r w h d <<< "$x"
   if [ -z "$h" ]; then cp $P/ckpt/$CK $OUT/ckpt/ 2>/dev/null || true

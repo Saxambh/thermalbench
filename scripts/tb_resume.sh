@@ -3,12 +3,12 @@
 # Run at boot by tb-resume.service (tb_resume_install.sh); safe to run by hand any time, since a
 # job that is already running is left alone. Finished runs (DONE) are skipped by the batch
 # scripts; unfinished ones start again from scratch (tank, PCM) or from the last saved time (3D).
-#   tb_resume.sh <laptop|lab|pc3|pc4> [--dry]        log: ~/tb_resume.log
+#   tb_resume.sh <laptop|lab|pc3|pc4|pc6> [--dry]        log: ~/tb_resume.log
 M=$1; DRY=$2; LOG=~/tb_resume.log
 R="/mnt/d/Lund PhD Application/04_Publications/Research_Paper_RP4_ThermBench"
 SB=/mnt/c/Users/Saxam/AppData/Local/Temp/claude/C--Users-Saxam/9b6c9561-2c28-4e96-aceb-94a1b7f26d31/scratchpad/thermbench
 TS=~/thermbench/scripts
-log() { echo "$(date -u '+%F %H:%M') [$M] $*" >> $LOG; [ -n "$DRY" ] && echo "$*"; }
+log() { echo "$(date -u '+%F %H:%M') [$M] $*" >> $LOG; [ -n "$DRY" ] && echo "$*"; return 0; }   # 0: "done && log || start" must not start (2026-11-05)
 running() {  # any process (not a shell wrapper or this script) whose command line matches $1
   for p in $(pgrep -f -- "$1"); do
     [ "$p" = $$ ] && continue
@@ -92,6 +92,8 @@ case $M in
     pcm 24 0; more 4 ;;   # extra list 4 jobs: 28 PCM jobs on 28 threads after the tanks (2026-11-04)   # pc3 runs PCM alongside its tank runs from 2026-11-03 (split 2)
   pc4)
     pcm 30 0 ;;
-  *) echo "usage: tb_resume.sh <laptop|lab|pc3|pc4> [--dry]"; exit 1 ;;
+  pc6)   # added 2026-11-05: runs moved cases only (pcm_more_pc6.csv, 24 jobs)
+    more 24 ;;
+  *) echo "usage: tb_resume.sh <laptop|lab|pc3|pc4|pc6> [--dry]"; exit 1 ;;
 esac
 log "=== done"

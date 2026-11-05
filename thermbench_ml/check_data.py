@@ -5,7 +5,7 @@ import glob, hashlib, json, os, sys
 ROOTS = ["~/of_runs/full_h5mm", "~/of_runs/full_h5mm_x", "~/tb_data/laptop/full_h5mm", "~/tb_data/laptop/full_h5mm_x",
          "~/tb_data/lab/full_h5mm", "~/tb_data/lab/full_h5mm_x", "~/tb_data/pc3/full_h5mm"]   # as data.DEFAULT_ROOTS
 PCM_ROOTS = ["~/of_runs/pcm_full/runs", "~/tb_data/laptop/pcm_full", "~/tb_data/lab/pcm_full", "~/tb_data/pc3/pcm_full",
-             "~/tb_data/pc4/pcm_full", "~/tb_data/pc5/pcm_full"]   # as pcm_data.DEFAULT_ROOTS
+             "~/tb_data/pc4/pcm_full", "~/tb_data/pc5/pcm_full", "~/tb_data/pc6/pcm_full"]   # as pcm_data.DEFAULT_ROOTS
 m = json.load(open(sys.argv[1]))
 if m.get("family") == "pcm":   # PCM manifest (pcm_freeze_manifest.py)
     ROOTS = PCM_ROOTS
