@@ -88,7 +88,8 @@ mapfile -t JOBS < <(plan $W)
 echo "${#JOBS[@]} jobs for $W"
 for j in "${JOBS[@]}"; do
   read -r model split seed ep flags <<< "$j"
-  name=$model$( [[ $flags == *hybrid* ]] && echo _hybrid )$( [[ $flags == *canon* ]] && echo _canon )$( [ $seed != 0 ] && echo _s$seed )
+  # || true: under set -e a seed-0 job made this assignment fail and ended the worker (2026-11-05)
+  name=$model$( [[ $flags == *hybrid* ]] && echo _hybrid )$( [[ $flags == *canon* ]] && echo _canon )$( [ $seed != 0 ] && echo _s$seed || true )
   if [ -f $OUT/$split.json ] && python3 -c "import json,sys; sys.exit(0 if '$name' in json.load(open('$OUT/$split.json'))['results'] else 1)"; then
     echo "--- $split: $name already done, skipped"; continue
   fi
