@@ -90,7 +90,8 @@ cd ..
 wall=$(( $(date +%s) - t0 ))
 f=$(ls $c/postProcessing/liquidFraction/*/volFieldValue.dat | head -1)
 lf=$(awk '!/^#/{x=$2; t=$1} END{printf "%.4f at %.0f s", x, t}' $f)
-python3 $SCR/export_pcm_case.py $c > $c/export.log 2>&1 || { echo "$c EXPORT_FAIL" >> $LOG; exit 1; }
+# exit 2 = solved but not exported (pcm_batch.sh then keeps the case instead of starting over)
+python3 $SCR/export_pcm_case.py $c > $c/export.log 2>&1 || { echo "$c EXPORT_FAIL" >> $LOG; exit 2; }
 find $c -mindepth 1 -maxdepth 1 -type d -regex '.*/[0-9][0-9.e+-]*' ! -name 0 -exec rm -rf {} +
 gzip -f $c/log.solver
 rm -rf $c/dynamicCode
