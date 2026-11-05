@@ -74,6 +74,30 @@ Origin, resolved from Fig. 3: the x-y axes start at the LOWER face of the upper 
 - Appendix A: PIV vs CFD velocity profiles at several heights and times.
 - Water properties (Table 2) are polynomials in T (293 to 333 K). Ours (IAPWS fits) are used instead.
 
+## Result: 3D OpenFOAM run vs PIV (2026-11-05)
+
+**Run.** `~/of_runs/lou3d/sst` on the laptop:
+- quarter-symmetry 3D, 230,156 cells, kOmegaSST, buoyantPimpleFoam, max Co 2;
+- baffle holes r = 8.00 mm (upper) and 8.12 mm (lower), open-area ratio 1.006 and 1.010 of the target;
+- simulated to 750 s.
+
+h_j from `scripts/lou3d_hj.py`: centreline v_y averaged over ±6.25 s, as in Lou's PIV.
+
+| t (s) | 50 | 100 | 150 | 200 | 250 | 300 | 350 | 400 | 450 | 500 | 550 | 600 | 650 | 700 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| PIV mean (mm) | 108 | 114.5 | 129 | 133.5 | 138 | 147.5 | 160 | 166 | 172 | 177 | 181 | 189 | 201 | 211 |
+| Lou CFD (Fluent) | 74 | 85 | 92 | 100 | 108 | 116 | 125 | 133 | 142 | 150 | 158 | 168 | 176 | 185 |
+| **ours (3D SST)** | 105.8 | 113.7 | 120.5 | 128.5 | 138.1 | 146.3 | 156.1 | 165.5 | 173.8 | 183.7 | 193.1 | 202.0 | 211.5 | 222.5 |
+
+**Agreement with the PIV mean over 14 times**
+- **Ours:** bias +2.4 mm, RMS 7.2 mm. Up to 450 s it is within ±9 mm (mostly within ±4); after that it runs 7 to 12 mm deeper.
+- **Lou's own Fluent CFD:** bias −29.7 mm.
+- The two PIV tests differ by up to 18 mm, so our deviation is within the measurement spread.
+
+**What it shows.** The same solver and turbulence choices as the tank dataset (buoyantPimpleFoam, kOmegaSST with the corrected buoyancy source, real water properties) reproduce a measured buoyant jet in a real tank in 3D. They do so better than the original authors' CFD.
+
+**Still to do.** The finer-mesh run `sst_finelow` on the lab gives the mesh sensitivity of h_j. At 04:20 UTC on 2026-11-05 it was at 114 of 750 s, about 29 h left. Then the outlet-temperature comparison with Section 4.
+
 ## Plan
 - 3D OpenFOAM case, quarter or eighth symmetry: buoyantPimpleFoam, real properties, kOmegaSST + buoyancyTurbSource (compressible path, correct sign), and laminar for comparison. Baffles as solid zones (chtMultiRegionFoam) or as thin adiabatic walls first.
 - Compare h_j(t) with PIV, and outlet temperature and charging efficiency with Section 4.

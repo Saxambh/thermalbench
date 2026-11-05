@@ -261,6 +261,45 @@ On that small case the real 43.5–48.2 range melts slightly *faster* than isoth
 
 **Decision:** settings frozen as above. We report the fin deviation openly rather than tuning parameters to remove it. A 0.25 mm run of the 3-fin case would quantify how much is mesh. It is optional, at roughly 8 times the cost of a 0.5 mm run.
 
+## Re-run with the final solver set-up (2026-11-05, interim at 05:30 UTC)
+
+**Why.** All 500 PCM cases were rerun with the pressure fix (p_rghFinal relTol 0 + maxIter 200, option A, 2026-11-04). These re-runs check that the validation still holds.
+
+**Runs.** On pc4 (`scripts/pcm_validate_fix.sh`): 0.5 mm, melting range 43.5 to 48.2 °C, conducting Al fins (k = 130), wall 70 °C. Compared with `scripts/valfix_compare.py`.
+
+**One setting differs from the dataset: mushy constant 1e6, not the frozen 5e6.** The script's base arguments set `--Cu 1e6`. The 2026-11-02 runs showed this changes the plain wall by about 0.01 in melt fraction (Cu 1e6 melts slightly faster: 0.23 vs 0.22 at 30 min, 0.59 vs 0.58 at 80 min).
+
+**Liquid fraction, re-run vs experiment (Fig. 6 and inclination Fig. 11)**
+
+| Case | Mean abs. dev. | Mean dev. | Largest | Full melt | Before the fix (Cu 5e6) |
+|---|---|---|---|---|---|
+| plain wall | 0.036 | +0.033 | +0.067 at 50 min | running (0.954 at 165 min) | 0.03 mean abs., 195 min |
+| 1 fin | 0.090 | +0.090 | +0.148 at 50 min | running (0.896 at 111 min) | 0.07, 161 min |
+| 3 fins | 0.080 | +0.080 | +0.125 at 30 min | **112 vs ~125 min (−10 %)** | 0.07, 115 min |
+| 45° | 0.040 | −0.040 | −0.082 at 120 min | running (0.963 at 134 min) | |
+| heated from below | 0.036 | +0.024 | +0.064 at 20 min | running (0.938 at 91 min) | |
+
+Plain wall, point by point (min: experiment / before the fix / re-run):
+- 10: 0.06 / 0.09 / 0.087
+- 30: 0.18 / 0.22 / 0.233
+- 50: 0.32 / 0.37 / 0.387
+- 80: 0.55 / 0.58 / 0.592
+- 120: 0.80 / 0.79 / 0.806
+- 160: 0.95 / 0.93 / 0.942
+
+**What it shows**
+- **The fix itself barely moves the curves.** The re-runs sit 0.01 to 0.03 above the pre-fix runs at every point. That is the size and direction expected from Cu 1e6 vs 5e6, and the fix test (pc4 `~/pcm_fixtest/V1_tight`) showed the fix alone moves the melt curve by less than 0.005.
+- **Validation conclusions are unchanged.**
+  - Plain wall: within about ±0.07.
+  - Finned walls: still about 0.1 too fast in the first hour, then converging. 3 fins melts fully at 112 min against about 125.
+  - The tilted cases are within ±0.08.
+  - The early fin excess was already documented above and is not caused by the fix.
+- **No temperature overshoot in any re-run:** max T − T_wall is −0.000 K (n0, n1, n3), −0.018 K (45°) and −0.55 K (from below), over all snapshots.
+
+**Open (optional):** one plain-wall run with exactly the dataset's settings (Cu 5e6 plus the fix) would remove the Cu caveat. It costs about 5 h on one core.
+
+**Final numbers:** fill in the full-melt times when n0, n1, 45° and from-below finish (all above 0.89 at 05:30 UTC). Rerun `python3 scripts/valfix_compare.py` after copying postProcessing from pc4 `~/of_runs/pcm_valfix`.
+
 ## Our model and expected deviations (original plan, 2026-11-01; superseded by the section above)
 
 **Material set in `make_pcm_case.py`**

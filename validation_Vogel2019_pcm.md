@@ -59,3 +59,20 @@ B-3D simulation: f_l = 0.33, 0.56, 0.74, 0.87, 0.95 and 0.99 at t = 0.5, 1, 1.5,
 ### Notes for the comparison
 - B-2D reaches full melt at about 3.5 h. The experiment and B-3D reach it at about 3.1 h, because the real cell gains heat through its other walls and the top.
 - The ideal-boundary 2D model is therefore checked code-to-code against B-2D (Fig. 7). The experiment is a secondary check, where a 2D model with ideal walls is expected to melt somewhat slower.
+
+## Re-run with the final solver set-up (2026-11-05)
+
+**Why.** All 500 PCM cases were rerun with the pressure fix (p_rghFinal relTol 0 + maxIter 200, option A, 2026-11-04). This re-run checks that the validation still holds with exactly that set-up.
+
+**Run.** `vogel_fix` on pc4 (`scripts/pcm_validate_fix.sh`, make_pcm_case md5 917e2754): 0.5 mm, dt 0.1 s, melting range 27.99 to 28.01 °C, mushy constant 1e6, end 3.5 h. Compared with `scripts/valfix_compare.py`.
+
+| t (h) | 0.25 | 0.5 | 1.0 | 1.5 | 2.0 | 2.5 | 3.0 |
+|---|---|---|---|---|---|---|---|
+| B-2D (Fig. 7) | 0.16 | 0.27 | 0.47 | 0.66 | 0.80 | 0.90 | 0.965 |
+| **re-run** | 0.154 | 0.259 | 0.475 | 0.665 | 0.814 | 0.915 | 0.974 |
+
+- **Against B-2D:** mean absolute deviation 0.009, mean +0.004, largest +0.015 at 2.5 h. Inside the ±0.02 digitising accuracy. Full melt (0.995) at 201 min, against about 210 min for B-2D.
+- **Against the experiment (Fig. 11):** mean absolute deviation 0.030, mean −0.016. The largest gap, +0.09, is at the first point (10 min), where the experiment's heater is still warming up. After that the re-run runs slightly slow, as expected for ideal 2D walls (see the notes above).
+- **No temperature overshoot:** across all 42 snapshots the highest temperature is at the wall temperature (max T − T_wall = +0.000 K). Before the fix, production cases reached +16 to 19 K.
+
+**Verdict:** the fix leaves the Vogel validation unchanged, and the overshoot is gone.
