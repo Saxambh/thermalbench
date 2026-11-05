@@ -180,7 +180,8 @@ def figure(path, run, th, al, frac, energy, sd_frac, true=None):
             im = ax.imshow(T0 + fth[k] * (Tw - T0), origin="lower", extent=ext, cmap=cmap, vmin=T0, vmax=Tw, aspect="equal")
             ax.imshow(fin, origin="lower", extent=ext, cmap=matplotlib.colors.ListedColormap([GREY]), aspect="equal")
             if 0 < fal[k].max() and fal[k].min() < 1:
-                ax.contour(fal[k], levels=[0.5], origin="lower", extent=ext, colors=BLUE, linewidths=1.2)
+                ax.contour(np.ma.masked_where(run.mask() < 0.5, fal[k]), levels=[0.5], origin="lower", extent=ext,
+                           colors=BLUE, linewidths=1.2)        # fins masked: their alpha 0 is not a melt front
             ax.plot([0, 0], [0, m["H_m"] * 1000], color="#a8401a", lw=4, solid_capstyle="butt", clip_on=False)
             ax.set_title(f"{lab}, {t_min[k]:.0f} min", color=INK, fontsize=8.5)
             ax.set_xticks([0, round(m["W_m"] * 1000)]); ax.set_yticks([0, 100] if j == 0 else [])
@@ -188,7 +189,8 @@ def figure(path, run, th, al, frac, energy, sd_frac, true=None):
                 ax.set_ylabel("mm")
     cb = fig.colorbar(im, ax=fig.axes[:4 * rows], fraction=0.02, pad=0.03)
     cb.set_label("T (C)")
-    ax = fig.add_subplot(gs[rows, 0:2])
+    low = gs[rows, :].subgridspec(1, 2, wspace=0.28)
+    ax = fig.add_subplot(low[0])
     if sd_frac is not None:
         ax.fill_between(t_min, frac - sd_frac, frac + sd_frac, color=BLUE, alpha=0.18, lw=0, label="seed spread (1 sd)")
     if true is not None:
@@ -196,7 +198,7 @@ def figure(path, run, th, al, frac, energy, sd_frac, true=None):
     ax.plot(t_min, frac, color=BLUE, lw=2, label="predicted")
     ax.set_xlabel("t (min)"); ax.set_ylabel("melted fraction"); ax.set_ylim(0, 1.02); ax.grid(color=GRID, lw=0.6)
     ax.legend(frameon=False, fontsize=7.5)
-    ax = fig.add_subplot(gs[rows, 2:4])
+    ax = fig.add_subplot(low[1])
     if true is not None:
         ax.plot(t_min, true[3], color=INK2, lw=2, label="CFD")
     ax.plot(t_min, energy, color=ORANGE, lw=2, label="predicted")
@@ -223,12 +225,14 @@ def main():
     g.add_argument("--nfins", type=int, default=0, help="fins on the heated wall, dataset 0 to 5")
     g.add_argument("--fin-len", type=float, default=0.0, help="fin length (m), dataset 0.2 to 0.8 of W")
     g.add_argument("--fin-t", type=float, default=0.0, help="fin thickness (m), dataset 0.001 to 0.004")
-    g.add_argument("--tilt", type=float, default=0.0, help="0 side heating, 45, 90 heated from below")
+    g.add_argument("--tilt", type=float, default=0.0, choices=[0.0, 45.0, 90.0],
+                   help="0 side heating, 45, 90 heated from below (the dataset's three; the a priori time scale "
+                        "and the design mapping are defined for these only)")
     g.add_argument("--name", default="new_pcm_case")
     ap.add_argument("--from-run", help="a dataset run_id: predict it and score against its CFD")
     ap.add_argument("--model", default="fno_hybrid")
     ap.add_argument("--split", default="random", choices=SPLITS)
-    ap.add_argument("--results", default="results_pcm", help="results folder holding ckpt/ (merged final results)")
+    ap.add_argument("--results", default="results_pcm_merged", help="results folder holding ckpt/ (results_all.sh pcm collects the main model there)")
     ap.add_argument("--manifest", default=os.path.join(HERE, "manifest_pcm.json"))
     ap.add_argument("--device", default="cpu")
     ap.add_argument("--out", default=os.path.join(HERE, "predictions_pcm"))
@@ -248,12 +252,14 @@ def main():
             ap.error(f"--W must be in [0.002, {W_MAX:g}] m: the networks' grid holds boxes up to {W_MAX * 1000:g} mm wide")
         if not 0 <= a.nfins <= 9 or (a.nfins and not (0 < a.fin_len < a.W and a.fin_t > 0)):
             ap.error("with --nfins > 0 give --fin-len (0 < fin-len < W) and --fin-t > 0")
-        if a.tilt not in (0, 45, 90):
-            print(f"WARNING: tilt {a.tilt:g} deg; the dataset has 0, 45 and 90 only")
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()):     # pcm_budget prints its calibration on import
+            import pcm_design as D
+        ts, tl = D.SETTINGS[a.material]["melt_range"]
+        if a.tw <= 0.5 * (ts + tl) or a.t0 >= ts:
+            ap.error(f"need --tw above {0.5 * (ts + tl):g} C (the melting point / range midpoint) and --t0 below "
+                     f"{ts:g} C (the solidus: the PCM starts solid)")
         run, name = VirtualPCMRun(make_meta(a)), a.name
-        m = run.meta
-        if m["T_wall_K"] <= m["Tmelt_K"] or m["T_init_K"] >= m.get("T_solidus_K", m["Tmelt_K"]):
-            ap.error("need --tw above the melting point and --t0 below the solidus (the PCM starts solid)")
 
     hybrid = "hybrid" in a.model
     arch = a.model.split("_")[0]

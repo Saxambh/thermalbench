@@ -18,6 +18,17 @@ for x in laptop: lab:labpc:thermbench_ml/$P pc3:saxam@pc3:thermbench_ml/$P pc4:s
   echo "  $w: $(ls $W/$w/*.json 2>/dev/null | wc -l) split files"
 done
 OUT=${P}_merged
+# the main model's checkpoints (every split and seed) for predict.py / pcm_predict.py (added 2026-11-05):
+# each seed was trained on one worker, so they are only together after this copy
+if [ $F = tank ]; then CK="ckpt_fno_hybrid_canon_*.pt"; else CK="ckpt_pcm_fno_hybrid_*.pt"; fi
+mkdir -p $OUT/ckpt
+for x in laptop: lab:labpc:thermbench_ml/$P pc3:saxam@pc3:thermbench_ml/$P pc4:saxam@pc4:thermbench_ml/$P \
+         pc5a:pc5:thermalbench/thermbench_ml/${P}_pc5a pc5b:pc5:thermalbench/thermbench_ml/${P}_pc5b; do
+  IFS=: read -r w h d <<< "$x"
+  if [ -z "$h" ]; then cp $P/ckpt/$CK $OUT/ckpt/ 2>/dev/null || true
+  else scp -q "$h:$d/ckpt/$CK" $OUT/ckpt/ 2>/dev/null || true; fi
+done
+echo "  checkpoints of the main model: $(ls $OUT/ckpt/*.pt 2>/dev/null | wc -l) in $OUT/ckpt"
 python3 - $W $OUT <<'PY'
 import glob, json, os, sys
 W, OUT = sys.argv[1], sys.argv[2]

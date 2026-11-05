@@ -226,7 +226,7 @@ def main():
     ap.add_argument("--from-run", help="a dataset run_id: predict it and score against its CFD")
     ap.add_argument("--model", default="fno_hybrid_canon")
     ap.add_argument("--split", default="random", choices=SPLITS)
-    ap.add_argument("--results", default="results", help="results folder holding ckpt/ (merged final results)")
+    ap.add_argument("--results", default="results_merged", help="results folder holding ckpt/ (results_all.sh tank collects the main model there)")
     ap.add_argument("--manifest", default=os.path.join(HERE, "manifest_full_h5mm.json"))
     ap.add_argument("--device", default="cpu")
     ap.add_argument("--out", default=os.path.join(HERE, "predictions"))
