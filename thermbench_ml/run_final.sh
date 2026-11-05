@@ -74,7 +74,7 @@ if [ "$1" = check ]; then
   exit 0
 fi
 
-W=${1:?worker: laptop, pc3, lab, pc4, pc5a or pc5b}
+W=${1:?worker: laptop, pc3, lab, pc4, pc5a, pc5b or pc6}
 echo "=== run_final worker $W $(date -u '+%F %H:%M') UTC on $(hostname), manifest md5 $(md5sum $M | cut -c1-12)"
 python3 check_data.py $M || { echo "data check failed: not all frozen runs are here and intact"; exit 1; }
 if [ "$W" = laptop ]; then
@@ -84,10 +84,16 @@ if [ "$W" = laptop ]; then
       echo "--- $split: baselines already scored, skipped"; continue; fi
     $PY evaluate.py --split $split --manifest $M; done
 fi
-mapfile -t JOBS < <(plan $W)
+# Rebalanced list (2026-11-05: pc5's GPU 0 failed and the laptop dropped out, rebalance_final.py):
+# jobs_<worker>.txt, if present, replaces the planned list. Before each job the worker waits until
+# its GPU is free (a job of an earlier copy of this worker, or pc6's data-efficiency study), so a
+# worker can be switched to a new list while its current job finishes.
+if [ -f jobs_$W.txt ]; then mapfile -t JOBS < <(grep . jobs_$W.txt); else mapfile -t JOBS < <(plan $W); fi
+busy() { if [[ $W == pc5? ]]; then pgrep -f -- "--outdir $OUT\$" > /dev/null; else pgrep -f "train.py|dataeff.sh" > /dev/null; fi; }
 echo "${#JOBS[@]} jobs for $W"
 for j in "${JOBS[@]}"; do
   read -r model split seed ep flags <<< "$j"
+  while busy; do sleep 60; done
   # || true: under set -e a seed-0 job made this assignment fail and ended the worker (2026-11-05)
   name=$model$( [[ $flags == *hybrid* ]] && echo _hybrid )$( [[ $flags == *canon* ]] && echo _canon )$( [ $seed != 0 ] && echo _s$seed || true )
   if [ -f $OUT/$split.json ] && python3 -c "import json,sys; sys.exit(0 if '$name' in json.load(open('$OUT/$split.json'))['results'] else 1)"; then

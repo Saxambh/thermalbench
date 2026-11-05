@@ -1,0 +1,12 @@
+unet ood_geom 1 100 --hybrid --canon
+unet ood_geom 0 100 --hybrid
+unet ood_mode 0 100 --hybrid --canon
+unet ood_mode 2 100 --canon
+fno ood_flow 1 60 --hybrid --canon
+fno ood_flow 1 60
+fno random 1 60
+fno random 2 60
+fno ood_geom 2 60
+fno ood_geom 2 60 --hybrid
+fno ood_mode 1 60
+fno ood_mode 2 60 --canon
