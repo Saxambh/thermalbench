@@ -178,9 +178,8 @@ def figure(path, run, theta, sd, mets, plug_th, true=None, true_mets=None):
                 else:
                     yv = m["H_m"] if side == "top" else 0
                     ax.plot([lo, hi], [yv, yv], color=c, lw=3, solid_capstyle="butt", clip_on=False)
-    cb = fig.colorbar(im, ax=fig.axes[:4 * rows], fraction=0.015, pad=0.01)
+    cb = fig.colorbar(im, ax=fig.axes[:4 * rows], fraction=0.015, pad=0.045)
     cb.set_label("T (C)")
-    E_full = None
     import export_case
     full = export_case.metrics(np.full((m["ny"], m["nx"]), run.Th), m, m["mesh_h_m"] ** 2)["E_J"]
     ax = fig.add_subplot(gs[rows, 0:2])
@@ -204,7 +203,7 @@ def figure(path, run, theta, sd, mets, plug_th, true=None, true_mets=None):
     ax.legend(frameon=False, fontsize=7.5)
     fig.suptitle(f"{m['case']}: {m['mode']}, type {m['inlet_type']}, W {m['W_m']:g} m, u_in {m['u_in_m_s']:g} m/s, "
                  f"{Tc:.1f} to {Th:.1f} C, {m['turbulence']}, Re {m['Re_in']:.0f}, Ri {m['Ri_H']:.3g}",
-                 color=INK, fontsize=9, y=0.995)
+                 color=INK, fontsize=9, y=0.94 if rows == 2 else 0.97)
     fig.savefig(path, dpi=170, bbox_inches="tight")
     plt.close(fig)
 
@@ -243,6 +242,11 @@ def main():
         need = [k for k in ("uin", "tin", "t0", "W", "s") if getattr(a, k) is None]
         if need:
             ap.error("missing " + ", ".join("--" + k for k in need) + " (or use --from-run)")
+        # the networks work on a fixed 1 m x 1 m grid of 5 mm cells: a wider tank does not fit
+        if not 0 < a.W <= 1.0:
+            ap.error("--W must be in (0, 1] m: the networks' grid holds tanks up to 1 m wide")
+        if a.uin <= 0 or a.s <= 0 or a.tin == a.t0 or a.tstar <= 0:
+            ap.error("need --uin > 0, --s > 0, --tstar > 0 and --tin different from --t0")
         run, name = VirtualRun(make_meta(a)), a.name
 
     hybrid, canon = "hybrid" in a.model, "canon" in a.model
