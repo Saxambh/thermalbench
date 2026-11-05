@@ -1,5 +1,7 @@
 # model checkpoints (~22 MB each, rebuilt by training)
 *.pt
+# input-scaling caches written next to checkpoints by predict.py / pcm_predict.py
+*.encoder.json
 __pycache__/
 *.pyc
 # local logs and archives
