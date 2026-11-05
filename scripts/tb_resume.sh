@@ -92,8 +92,8 @@ case $M in
     pcm 24 0; more 4 ;;   # extra list 4 jobs: 28 PCM jobs on 28 threads after the tanks (2026-11-04)   # pc3 runs PCM alongside its tank runs from 2026-11-03 (split 2)
   pc4)
     pcm 30 0 ;;
-  pc6)   # added 2026-11-05: runs moved cases only (pcm_more_pc6.csv, 24 jobs)
-    more 24 ;;
+  pc6)   # added 2026-11-05: runs moved cases only (pcm_more_pc6.csv: pc3, pc5 and pc4 cases), 28 jobs = all threads
+    more 28 ;;
   *) echo "usage: tb_resume.sh <laptop|lab|pc3|pc4|pc6> [--dry]"; exit 1 ;;
 esac
 log "=== done"
