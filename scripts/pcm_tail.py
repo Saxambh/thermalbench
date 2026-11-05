@@ -7,7 +7,8 @@ than physical cores), not by the total work. Runs on each PCM machine, every 10 
 1. Priority. Running cases are ranked by estimated hours left, from the recent rate of the melted
    fraction (the stopAtMelt line in the solver log; cases stop at 0.995). The longest cases, up to
    the physical cores not used by GPU training or other CFD, keep their priority (nice 5, as
-   started); a case outside them with less than 24 h left is lowered to nice 15. Numerics and
+   started); a case outside them with less than 24 h left and at least half melted (earlier
+   estimates are too optimistic, melting slows down) is lowered to nice 15. Numerics and
    results are unchanged; only the CPU share moves to the cases that set the end date. A lowered
    case cannot be raised again without root, so only clearly short cases are lowered.
 2. Parallel restart. When at least 3 physical cores are idle, the longest serial case with more
@@ -123,7 +124,7 @@ def status(act=False):
         used += len(ps)
         keep = used <= budget
         nice = min(n for _, n, _ in ps)
-        tag = "keep" if keep or left >= SHORT_H else ("low" if nice >= LOW_NICE else "lower")
+        tag = "keep" if keep or left >= SHORT_H or not s or s[2] < 0.5 else ("low" if nice >= LOW_NICE else "lower")
         if not act:
             print(f"{os.path.basename(c):7s} {len(ps)} proc nice {nice:2d}  "
                   + (f"t {s[0]:7.0f}/{s[1]:.0f}  melted {s[2]:.3f}  ~{left:6.1f} h left" if s else "no rate yet") + f"  {tag}")
@@ -142,7 +143,7 @@ def status(act=False):
     pending = [p for p in procs() if "pcm_tail.py switch" in p[5]]   # a switch still waiting or running
     if idle >= 3 and not pending:
         cand = [(left, c, ps) for left, c, ps, s in rows
-                if s and left > LONG_H and len(ps) == 1 and not ps[0][2] and ps[0][1] < LOW_NICE]
+                if s and left > LONG_H and len(ps) == 1 and not ps[0][2]]   # a lowered case restarts at nice 5
         if cand:
             left, c, ps = cand[0]
             np_ = min(MAX_NP, idle + 1)
