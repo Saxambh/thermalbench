@@ -91,7 +91,8 @@ case $M in
     tank tank ~/thermbench/design_v2_full_pc3_n2.csv ~/of_runs/full_h5mm ~/thermbench python3 scripts/run_batch.py design_v2_full_pc3_n2.csv ~/of_runs/full_h5mm --jobs 16 || t=1
     pcm 24 0; more 4 ;;   # extra list 4 jobs: 28 PCM jobs on 28 threads after the tanks (2026-11-04)   # pc3 runs PCM alongside its tank runs from 2026-11-03 (split 2)
   pc4)
-    pcm 30 0 ;;
+    pcm 30 0
+    more 28 ;;   # 2026-11-06: half of pc6's queue (pcm_more_pc4.csv)
   pc6)   # added 2026-11-05: runs moved cases only (pcm_more_pc6.csv: pc3, pc5 and pc4 cases), 28 jobs = all threads
     more 28 ;;
   pc7)   # added 2026-11-06: moved cases only (pcm_more_pc7.csv), 11 jobs (14 cores, GPU training uses 2)
