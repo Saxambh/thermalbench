@@ -6,6 +6,8 @@
 #   n4    PIMPLE nOuterCorrectors 4 instead of 2
 #   co25  maxCo 0.25 instead of 0.5
 #   rep   production settings with the inlet velocity x (1 + 1e-4): noise floor of the unsteady flow
+#   h25   production settings on a 2.5 mm mesh (h / 2; 2026-11-06 mesh check, Saxam: "lets do mesh check first")
+#   h10   production settings on a 10 mm mesh (2 h; only designs whose geometry sits on a 10 mm grid)
 # Serial, as the dataset runs. Raw time directories are deleted after a verified export (as run_batch.py).
 #   tank_verify.sh <run_id> <variant> <design.csv> <out_dir>     log line: <out_dir>/batch.log
 unset LD_LIBRARY_PATH
@@ -22,6 +24,7 @@ import csv, sys, shlex
 csvf, rid, v = sys.argv[1:]
 r = next(x for x in csv.DictReader(open(csvf)) if x["run_id"] == rid)
 u = float(r["u_in"]) * (1 + 1e-4 if v == "rep" else 1)
+r["h"] = {"h25": "0.0025", "h10": "0.01"}.get(v, r["h"])
 a = ["--props", "real", "--h", r["h"], "--uin", repr(u), "--tin", r["T_in"], "--t0", r["T_0"], "--W", r["W"],
      "--H", r["H"], "--s", r["s"], "--off", r["off"], "--inlet-type", r["inlet_type"], "--mode", r["mode"],
      "--tstar", r["tstar"], "--nsnap", "120"]          # as make_design.args_for
@@ -36,7 +39,7 @@ cd $C
 case $V in
   n4)   foamDictionary system/fvSolution -entry PIMPLE/nOuterCorrectors -set 4 > /dev/null ;;
   co25) foamDictionary system/controlDict -entry maxCo -set 0.25 > /dev/null ;;
-  p2|rep) ;;
+  p2|rep|h25|h10) ;;
   *) echo "unknown variant $V"; exit 1 ;;
 esac
 # check what the run will use (foamDictionary -expand prints the whole file in v2606, read it with awk)

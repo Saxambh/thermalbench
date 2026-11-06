@@ -1,0 +1,8 @@
+case_id,core_h_est,args
+G131_h025,20,"--material lauric --W 0.022 --H 0.1 --right wall --top wall --tw 70.89 --t0 26.8 --h 0.00025 --tilt 0 --melt-range 43.5,48.2 --Cu 5e+06 --maxdt 0.5 --end 10458 --write 42 --stop-at 0.995"
+G131_h050,3,"--material lauric --W 0.022 --H 0.1 --right wall --top wall --tw 70.89 --t0 26.8 --h 0.0005 --tilt 0 --melt-range 43.5,48.2 --Cu 5e+06 --maxdt 0.5 --end 10458 --write 42 --stop-at 0.995"
+G131_h100,1,"--material lauric --W 0.022 --H 0.1 --right wall --top wall --tw 70.89 --t0 26.8 --h 0.001 --tilt 0 --melt-range 43.5,48.2 --Cu 5e+06 --maxdt 0.5 --end 10458 --write 42 --stop-at 0.995"
+G301_h025,20,"--material octadecane --W 0.026 --H 0.1 --right wall --top wall --tw 54.7 --t0 13.27 --h 0.00025 --tilt 0 --melt-range 27.99,28.01 --Cu 1e+06 --maxdt 0.5 --end 9920 --write 40 --stop-at 0.995"
+G301_h050,3,"--material octadecane --W 0.026 --H 0.1 --right wall --top wall --tw 54.7 --t0 13.27 --h 0.0005 --tilt 0 --melt-range 27.99,28.01 --Cu 1e+06 --maxdt 0.5 --end 9920 --write 40 --stop-at 0.995"
+G301_h100,1,"--material octadecane --W 0.026 --H 0.1 --right wall --top wall --tw 54.7 --t0 13.27 --h 0.001 --tilt 0 --melt-range 27.99,28.01 --Cu 1e+06 --maxdt 0.5 --end 9920 --write 40 --stop-at 0.995"
+G021_h100,1,"--material octadecane --W 0.021 --H 0.1 --right wall --top wall --tw 53.67 --t0 21.29 --h 0.001 --tilt 90 --melt-range 27.99,28.01 --Cu 1e+06 --maxdt 0.5 --end 3720 --write 15 --stop-at 0.995"
