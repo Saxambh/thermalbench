@@ -65,3 +65,25 @@ pre-registered quantities and carry no pass/fail limit, so they cannot be tuned 
   - melt-front position difference (mean and 95th percentile, mm);
   - share of the squared temperature error lying in the mushy/front band, against that band's share of
     the area.
+
+## Addendum 2026-11-07, about 01:30 Nepal: event windows and WARN sensitivity (collaborator note of 7 Nov)
+
+**Event windows (tank).**
+- A quantity within its limit over the whole run but above it in any time window (before, around or
+  after the outlet event) is classified **borderline (event window)**, not pass.
+- First instance: T0408, 2.5 vs 5 mm, outlet temperature 2.03 % of ΔT in the outlet-event window.
+
+**WARN sensitivity (PCM), fixed before any of these reruns exists.**
+- **Sample:** six accepted cases with solver-QC WARN, the most severe two of each kind:
+  - capped iterations with a high residual: P0075 and P0048;
+  - capped iterations only: P0319 and P0007 (thin fins);
+  - high residual only: P0164 and P0376.
+- **Test:** rerun each with PCG + DIC for both pressure solves and compare with the accepted dataset run.
+- **Material change**, in any one of:
+  - field RMSE > 2 % of ΔT (half the smallest 0.5 vs 0.25 mm mesh discrepancy seen, 4.2 %);
+  - mean melt-front shift > 0.5 mm (one cell);
+  - t99 change > 1 %.
+- **Rule:**
+  - if no case shows a material change, all WARN cases are kept;
+  - if cases of one kind do, every WARN case of that kind is rerun;
+  - if the changes are spread over the kinds, all 59 WARN cases are rerun.
