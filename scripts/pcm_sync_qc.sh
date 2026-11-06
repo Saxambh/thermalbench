@@ -25,8 +25,9 @@ while true; do
   pull labpc of_runs/pcm_full/runs ~/tb_data/lab/pcm_full
   pull pc5 of_runs/pcm_full/runs ~/tb_data/pc5/pcm_full
   pull saxam@pc6 of_runs/pcm_full/runs ~/tb_data/pc6/pcm_full    # pc6 added 2026-11-05
+  pull saxam@pc7 of_runs/pcm_full/runs ~/tb_data/pc7/pcm_full    # pc7 added 2026-11-06
   [ -f ~/of_runs/pcm_full/runs/batch.log ] && echo "  laptop: $(ls ~/of_runs/pcm_full/runs/*/DONE 2>/dev/null | wc -l) finished, $(grep -c FAIL ~/of_runs/pcm_full/runs/batch.log) batch failures" >> $LOG
-  nice -n 10 python3 "$QC" ~/tb_data/pc4/pcm_full ~/tb_data/pc3/pcm_full ~/of_runs/pcm_full/runs ~/tb_data/lab/pcm_pilot ~/tb_data/lab/pcm_full ~/tb_data/pc5/pcm_full ~/tb_data/pc6/pcm_full 2>&1 \
+  nice -n 10 python3 "$QC" ~/tb_data/pc4/pcm_full ~/tb_data/pc3/pcm_full ~/of_runs/pcm_full/runs ~/tb_data/lab/pcm_pilot ~/tb_data/lab/pcm_full ~/tb_data/pc5/pcm_full ~/tb_data/pc6/pcm_full ~/tb_data/pc7/pcm_full 2>&1 \
     | grep -v "No such file\|no finished cases" | sed 's/^/  qc /' >> $LOG
   sleep 7200
 done

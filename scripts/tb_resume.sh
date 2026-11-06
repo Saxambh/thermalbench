@@ -3,7 +3,7 @@
 # Run at boot by tb-resume.service (tb_resume_install.sh); safe to run by hand any time, since a
 # job that is already running is left alone. Finished runs (DONE) are skipped by the batch
 # scripts; unfinished ones start again from scratch (tank, PCM) or from the last saved time (3D).
-#   tb_resume.sh <laptop|lab|pc3|pc4|pc6> [--dry]        log: ~/tb_resume.log
+#   tb_resume.sh <laptop|lab|pc3|pc4|pc6|pc7> [--dry]        log: ~/tb_resume.log
 M=$1; DRY=$2; LOG=~/tb_resume.log
 R="/mnt/d/Lund PhD Application/04_Publications/Research_Paper_RP4_ThermBench"
 SB=/mnt/c/Users/Saxam/AppData/Local/Temp/claude/C--Users-Saxam/9b6c9561-2c28-4e96-aceb-94a1b7f26d31/scratchpad/thermbench
@@ -94,6 +94,8 @@ case $M in
     pcm 30 0 ;;
   pc6)   # added 2026-11-05: runs moved cases only (pcm_more_pc6.csv: pc3, pc5 and pc4 cases), 28 jobs = all threads
     more 28 ;;
-  *) echo "usage: tb_resume.sh <laptop|lab|pc3|pc4|pc6> [--dry]"; exit 1 ;;
+  pc7)   # added 2026-11-06: moved cases only (pcm_more_pc7.csv), 11 jobs (14 cores, GPU training uses 2)
+    more 11 ;;
+  *) echo "usage: tb_resume.sh <laptop|lab|pc3|pc4|pc6|pc7> [--dry]"; exit 1 ;;
 esac
 log "=== done"

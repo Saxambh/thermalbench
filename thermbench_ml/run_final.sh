@@ -74,7 +74,7 @@ if [ "$1" = check ]; then
   exit 0
 fi
 
-W=${1:?worker: laptop, pc3, lab, pc4, pc5a, pc5b or pc6}
+W=${1:?worker: laptop, pc3, lab, pc4, pc5a, pc5b, pc6 or pc7}
 echo "=== run_final worker $W $(date -u '+%F %H:%M') UTC on $(hostname), manifest md5 $(md5sum $M | cut -c1-12)"
 python3 check_data.py $M || { echo "data check failed: not all frozen runs are here and intact"; exit 1; }
 if [ "$W" = laptop ]; then
