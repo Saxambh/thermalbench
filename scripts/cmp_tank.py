@@ -36,7 +36,24 @@ for spec in sys.argv[3:]:
         To = np.interp(sb, sa, a["series/T_out_K"][:]) - b["series/T_out_K"][:]
         ya, yb = np.interp(tb, ta, a["metrics/y_mid_m"][:]), b["metrics/y_mid_m"][:]
         ok = np.isfinite(ya) & np.isfinite(yb)
-        row = dict(pair=lab, snapshots=len(sel), time_offset_s=float(np.max(np.abs(np.interp(tb[sel], ta, ta) - tb[sel]))) if len(ta) else 0,
+        # event windows from the reference run: outlet event = outlet T has moved 10 % of its total change
+        To_ref = b["series/T_out_K"][:]; ch = np.abs(To_ref - To_ref[0]); tot = ch.max()
+        t_ev = float(sb[np.argmax(ch > 0.1 * tot)]) if tot > 0 else float("nan")
+        t_end = float(tb[-1]); ts = tb[sel]
+        wins = {"early": ts < t_ev, "event": (ts >= t_ev) & (ts < t_ev + 0.2 * t_end), "late": ts >= t_ev + 0.2 * t_end}
+        def wstat(m):
+            if not m.any(): return None
+            so = (sb >= ts[m][0]) & (sb <= ts[m][-1])
+            return dict(n=int(m.sum()), t_from=float(ts[m][0]), t_to=float(ts[m][-1]),
+                        field_pct=float(100 * np.sqrt(np.mean(d[m] ** 2)) / dT),
+                        profile_pct=float(100 * np.sqrt(np.mean((A[m].mean(2) - B[m].mean(2)) ** 2)) / dT),
+                        Tout_pct=float(100 * np.sqrt(np.mean(To[so] ** 2)) / dT) if so.any() else None)
+        series = dict(t=ts.tolist(), field_pct=(100 * np.sqrt((d ** 2).mean((1, 2))) / dT).tolist(),
+                      profile_pct=(100 * np.sqrt(((A.mean(2) - B.mean(2)) ** 2).mean(1)) / dT).tolist(),
+                      dE_pct=(100 * (Ea - Eb)[sel] / max(np.max(np.abs(Eb - Eb[0])), 1e-30)).tolist(),
+                      dymid_mm=(1000 * (ya - yb)[sel]).tolist(), tout_t=sb.tolist(), tout_ref=To_ref.tolist(),
+                      tout_test=np.interp(sb, sa, a["series/T_out_K"][:]).tolist())
+        row = dict(pair=lab, t_event_s=t_ev, windows={k: wstat(m) for k, m in wins.items()}, series=series, snapshots=len(sel), time_offset_s=float(np.max(np.abs(np.interp(tb[sel], ta, ta) - tb[sel]))) if len(ta) else 0,
                    grid=f"{a['fields/T'].shape[1:]} vs {b['fields/T'].shape[1:]}",
                    field_rms_pct=float(100 * np.sqrt(np.mean(d ** 2)) / dT),
                    mean_field_pct=float(100 * np.sqrt(np.mean(d.mean(0) ** 2)) / dT),
@@ -50,6 +67,9 @@ for spec in sys.argv[3:]:
                    ymid_undef_mismatch=float(np.mean(np.isfinite(ya) != np.isfinite(yb))),
                    t_end_s=float(tb[sel][-1]) if sel else 0)
     out.append(row)
+    w = row["windows"]; print("   windows (field / profile / outlet, % dT): " + "  ".join(
+        f"{k} {v['t_from']:.0f}-{v['t_to']:.0f} s: {v['field_pct']:.2f} / {v['profile_pct']:.2f} / {v['Tout_pct'] if v['Tout_pct'] is None else round(v['Tout_pct'], 2)}"
+        for k, v in w.items() if v) + f"   (outlet event {row['t_event_s']:.0f} s)")
     print(f"{lab:28s} n={row['snapshots']:3d} field {row['field_rms_pct']:6.2f} % ({row['field_rms_K']:.2f} K) quarters {[round(x,1) for x in row['field_rms_pct_quarters']]} profile {row['profile_rms_pct']:5.2f} %  mean-field {row['mean_field_pct']:6.2f} %  max {row['max_abs_K']:6.2f} K  "
           f"E {row['E_pct']:6.2f} %  Tout {row['Tout_rms_pct']:6.2f} %  ymid {row['ymid_mm'] if row['ymid_mm'] is None else round(row['ymid_mm'],1)} mm  t_end {row['t_end_s']:.0f}  {row['grid']}")
 json.dump(out, open(sys.argv[2], "w"), indent=1)
