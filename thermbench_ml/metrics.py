@@ -18,10 +18,12 @@ Headline metrics, averaged over the scored snapshots of each test run, then over
 For pooled statistics across runs (analysis/r2_report.py), each run also returns, per scored
 snapshot, the true and predicted stored-energy fraction, thermocline height and outlet theta,
 and the field sums needed for a pooled R2 (keys starting with '_'; lists are not averaged).
-Reference: two CFD solutions of the same case that differ only in solver settings drift
-apart by about 0.65 K RMS within 60 s (chaotic sensitivity of the buoyant jet), and
-by 1 to 2 K over a few minutes. Field errors below that "noise floor" are not meaningful;
-y_mid, energy and profile errors are much less affected.
+Reference: two CFD solutions of the same case that differ only in solver settings drifted
+apart by about 0.65 K RMS within 60 s, and by 1 to 2 K over a few minutes, in early tests
+(sensitivity of the buoyant jet to small changes). This is a measured sensitivity of the CFD
+solution, not a numerical-noise floor. The 2026-11-06 verification found much smaller
+sensitivity for production settings in the cases tested (see verification_criteria_2026-11-06.md).
+y_mid, energy and profile errors are less affected than pointwise field errors.
 """
 import numpy as np
 

@@ -48,3 +48,20 @@ outlet breakthrough had occurred in that interval. It supports only a claim abou
 The 10 mm tank grid and the 1.0 mm PCM grid are diagnostic. An observed order or GCI is reported only if
 the three levels converge monotonically and the observed order lies between 0.5 and 3; otherwise the
 inter-grid differences are reported as they are.
+
+## Addendum 2026-11-07, about 00:50 Nepal: extra diagnostics (no pass limits)
+
+Added at the collaborator's request, after the limits above were fixed. They are reported next to the
+pre-registered quantities and carry no pass/fail limit, so they cannot be tuned to the results:
+
+- **Tank:**
+  - thermocline thickness, MIX and stratification number (mean and maximum difference where both runs
+    define them, and the share of snapshots defined in only one run);
+  - outlet backflow (share of outlet cells with velocity into the tank);
+  - solver indicators (time steps, mean time step, p_rgh residual and iterations, maximum Courant number,
+    execution time);
+  - error-field maps at three moments (before, at and after the outlet event).
+- **PCM:**
+  - melt-front position difference (mean and 95th percentile, mm);
+  - share of the squared temperature error lying in the mushy/front band, against that band's share of
+    the area.

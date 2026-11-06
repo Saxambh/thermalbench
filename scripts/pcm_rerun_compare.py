@@ -2,7 +2,9 @@
 Same grid; rerun fields interpolated linearly in time onto the original snapshot times.
 usage: pcm_cmp.py design.csv out.json case:rerun.h5:orig.h5 ..."""
 import csv, json, sys
-import numpy as np, h5py
+import numpy as np, h5py, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pcm_front import front_metrics
 D = {r["case_id"]: r for r in csv.DictReader(open(sys.argv[1]))}
 def t99(lf, t):
     i = np.nonzero(lf >= 0.99)[0]; return float(t[i[0]]) if i.size else float("nan")
@@ -26,5 +28,7 @@ for spec in sys.argv[3:]:
                    melt_curve_maxdiff=float(np.max(np.abs(np.interp(tmb, tma, lfa) - lfb))),
                    t99_rerun=t99(lfa, tma), t99_orig=t99(lfb, tmb))
         row["t99_diff_pct"] = 100 * (row["t99_rerun"] - row["t99_orig"]) / row["t99_orig"]
+        h = __import__("json").loads(b.attrs["case_json"])["mesh_h_m"]; mk = b["mask"][:] > 0 if "mask" in b else None
+        row.update(front_metrics(at(a["fields/alpha"]), b["fields/alpha"][sel], at(a["fields/T"]), b["fields/T"][sel], h, mk))
     out.append(row); print(json.dumps({k: round(v, 4) if isinstance(v, float) else v for k, v in row.items()}))
 json.dump(out, open(sys.argv[2], "w"), indent=1)

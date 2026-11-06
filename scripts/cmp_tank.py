@@ -7,6 +7,10 @@ reference snapshot times (test fields interpolated linearly in time), t > 0 only
   E_pct             max |E_test - E_ref| / max |E_ref - E_ref(0)|, %   (stored energy)
   Tout_rms_pct      outlet temperature series, RMS difference, % of dT
   ymid_mm           mean |y_mid difference| where both defined, mm; ymid_undef_mismatch share
+  extra             thermocline thickness, MIX and stratification number (mean / max |difference| where both
+                    are defined, share of snapshots defined in only one run), outlet backflow (share of outlet
+                    cells with velocity into the tank, per snapshot; mean over snapshots, share of snapshots with any)
+  windows           field / profile / outlet error before, around (+0.2 t_end) and after the outlet event
 usage: cmp_tank.py design.csv out.json  label:test.h5:ref.h5 ..."""
 import csv, json, sys
 import numpy as np, h5py
@@ -14,6 +18,21 @@ D = {r["run_id"]: r for r in csv.DictReader(open(sys.argv[1]))}
 def coarsen(a, k):
     t, ny, nx = a.shape
     return a.reshape(t, ny // k, k, nx // k, k).mean((2, 4))
+def backflow_share(f):
+    """Share of the outlet-adjacent cells whose velocity points into the tank, per snapshot."""
+    cj = json.loads(f.attrs["case_json"]); side, a0, b0 = cj["outlet_port"]; h = cj["mesh_h_m"]
+    ny, nx = f["fields/T"].shape[1:]; ux, uy = f["fields/ux"], f["fields/uy"]
+    if side in ("left", "right"):
+        j = [k for k in range(ny) if a0 < (k + 0.5) * h < b0]; i = nx - 1 if side == "right" else 0
+        u = ux[:, j, i] * (1 if side == "right" else -1)
+    else:
+        i = [k for k in range(nx) if a0 < (k + 0.5) * h < b0]; j = ny - 1 if side == "top" else 0
+        u = uy[:, j, :][:, i] * (1 if side == "top" else -1)
+    return (u < 0).mean(axis=1)
+def pair_stats(x, y):
+    ok = np.isfinite(x) & np.isfinite(y)
+    return (float(np.mean(np.abs(x[ok] - y[ok]))) if ok.any() else None, float(np.max(np.abs(x[ok] - y[ok]))) if ok.any() else None,
+            float(np.mean(np.isfinite(x) != np.isfinite(y))))
 out = []
 for spec in sys.argv[3:]:
     lab, ft, fr = spec.split(":")
@@ -52,8 +71,23 @@ for spec in sys.argv[3:]:
                       profile_pct=(100 * np.sqrt(((A.mean(2) - B.mean(2)) ** 2).mean(1)) / dT).tolist(),
                       dE_pct=(100 * (Ea - Eb)[sel] / max(np.max(np.abs(Eb - Eb[0])), 1e-30)).tolist(),
                       dymid_mm=(1000 * (ya - yb)[sel]).tolist(), tout_t=sb.tolist(), tout_ref=To_ref.tolist(),
-                      tout_test=np.interp(sb, sa, a["series/T_out_K"][:]).tolist())
-        row = dict(pair=lab, t_event_s=t_ev, windows={k: wstat(m) for k, m in wins.items()}, series=series, snapshots=len(sel), time_offset_s=float(np.max(np.abs(np.interp(tb[sel], ta, ta) - tb[sel]))) if len(ta) else 0,
+                      tout_test=np.interp(sb, sa, a["series/T_out_K"][:]).tolist(),
+                      dthick_mm=(1000 * (np.interp(tb, ta, a["metrics/thick_m"][:]) - b["metrics/thick_m"][:])[sel]).tolist(),
+                      dMIX=(np.interp(tb, ta, a["metrics/MIX"][:]) - b["metrics/MIX"][:])[sel].tolist(),
+                      backflow_ref=backflow_share(b)[sel].tolist(), backflow_test=np.interp(tb, ta, backflow_share(a))[sel].tolist())
+        # thermocline thickness, MIX, stratification number (where defined in both), outlet backflow
+        extra = {}
+        for key in ("thick_m", "MIX", "Str"):
+            xa, xb = np.interp(tb, ta, a[f"metrics/{key}"][:]), b[f"metrics/{key}"][:]
+            m_, mx_, mis = pair_stats(xa[sel], xb[sel])
+            extra[key] = dict(mean_abs_diff=m_, max_abs_diff=mx_, undefined_mismatch=mis,
+                              ref_range=float(np.nanmax(xb) - np.nanmin(xb)) if np.isfinite(xb).any() else None)
+        bfa, bfb = backflow_share(a), backflow_share(b)
+        bfa_t = np.interp(tb, ta, bfa)
+        extra["backflow"] = dict(ref_share_mean=float(bfb[sel].mean()), test_share_mean=float(bfa_t[sel].mean()),
+                                 ref_snapshots_with_backflow=float((bfb[sel] > 0).mean()), test_snapshots_with_backflow=float((bfa_t[sel] > 0).mean()),
+                                 mean_abs_diff=float(np.mean(np.abs(bfa_t[sel] - bfb[sel]))))
+        row = dict(pair=lab, t_event_s=t_ev, extra=extra, windows={k: wstat(m) for k, m in wins.items()}, series=series, snapshots=len(sel), time_offset_s=float(np.max(np.abs(np.interp(tb[sel], ta, ta) - tb[sel]))) if len(ta) else 0,
                    grid=f"{a['fields/T'].shape[1:]} vs {b['fields/T'].shape[1:]}",
                    field_rms_pct=float(100 * np.sqrt(np.mean(d ** 2)) / dT),
                    mean_field_pct=float(100 * np.sqrt(np.mean(d.mean(0) ** 2)) / dT),
@@ -67,6 +101,10 @@ for spec in sys.argv[3:]:
                    ymid_undef_mismatch=float(np.mean(np.isfinite(ya) != np.isfinite(yb))),
                    t_end_s=float(tb[sel][-1]) if sel else 0)
     out.append(row)
+    e = row["extra"]; fmt = lambda v, k=1: "n/a" if v is None else round(v, k)
+    print(f"   thickness mean |d| {fmt(None if e['thick_m']['mean_abs_diff'] is None else 1000 * e['thick_m']['mean_abs_diff'])} mm (undefined mismatch {e['thick_m']['undefined_mismatch']:.2f})"
+          f"  MIX mean |d| {fmt(e['MIX']['mean_abs_diff'], 4)} (ref range {fmt(e['MIX']['ref_range'], 3)})  Str mean |d| {fmt(e['Str']['mean_abs_diff'], 4)}"
+          f"  outlet backflow share ref {e['backflow']['ref_share_mean']:.3f} test {e['backflow']['test_share_mean']:.3f} (snapshots with any: {e['backflow']['ref_snapshots_with_backflow']:.2f} / {e['backflow']['test_snapshots_with_backflow']:.2f})")
     w = row["windows"]; print("   windows (field / profile / outlet, % dT): " + "  ".join(
         f"{k} {v['t_from']:.0f}-{v['t_to']:.0f} s: {v['field_pct']:.2f} / {v['profile_pct']:.2f} / {v['Tout_pct'] if v['Tout_pct'] is None else round(v['Tout_pct'], 2)}"
         for k, v in w.items() if v) + f"   (outlet event {row['t_event_s']:.0f} s)")

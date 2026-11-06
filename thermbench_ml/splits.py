@@ -3,8 +3,10 @@ twins of one design point never sit on both sides of a split, and it does not de
 which runs have finished: a case's side is decided by its parameters or a hash of its id.
 
   random    80 / 10 / 10 by hash of case_id                      (interpolation)
-  ood_flow  test: Re_in above the design 90th percentile (9007)  (unseen faster inflow)
-  ood_geom  test: W outside the design 10-90 % band [0.33, 0.93] (unseen tank shapes)
+  ood_flow  test: Re_in above the design 90th percentile (9007)  (unseen faster inflow; all test
+            runs are k-omega SST, so Re extrapolation and turbulence closure are tested together)
+  ood_geom  test: W outside the design 10-90 % band [0.33, 0.93] (unseen tank widths / aspect ratios
+            of the same rectangular 2D geometry, not new geometry families)
   ood_mode  test: all discharge cases, train on charging only    (unseen operation)
 For the ood splits, validation is 10 % of the remaining cases by hash.
 Thresholds are fixed from design_v2_full.csv (1024 cases), not recomputed.

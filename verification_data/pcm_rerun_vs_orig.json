@@ -13,7 +13,11 @@
   "melt_curve_maxdiff": 0.009667038917541504,
   "t99_rerun": 1308.0,
   "t99_orig": 1296.0,
-  "t99_diff_pct": 0.9259259259259259
+  "t99_diff_pct": 0.9259259259259259,
+  "front_mean_abs_mm": 0.5022232744539007,
+  "front_p95_abs_mm": 1.460977413544176,
+  "error_share_in_front_band": 0.549587607383728,
+  "front_band_area_share": 0.09332212923583481
  },
  {
   "case": "P0371",
@@ -29,7 +33,11 @@
   "melt_curve_maxdiff": 0.03177452087402344,
   "t99_rerun": 2226.0,
   "t99_orig": 2247.0,
-  "t99_diff_pct": -0.9345794392523364
+  "t99_diff_pct": -0.9345794392523364,
+  "front_mean_abs_mm": 1.4656492648019745,
+  "front_p95_abs_mm": 2.8515063116117325,
+  "error_share_in_front_band": 0.719691276550293,
+  "front_band_area_share": 0.15130871512503616
  },
  {
   "case": "P0228",
@@ -45,7 +53,11 @@
   "melt_curve_maxdiff": 0.005681037902832031,
   "t99_rerun": 12190.0,
   "t99_orig": 12305.0,
-  "t99_diff_pct": -0.9345794392523364
+  "t99_diff_pct": -0.9345794392523364,
+  "front_mean_abs_mm": 0.7453180322573086,
+  "front_p95_abs_mm": 2.6909793109672457,
+  "error_share_in_front_band": 0.6416441202163696,
+  "front_band_area_share": 0.07806492798531015
  },
  {
   "case": "P0273",
@@ -61,6 +73,10 @@
   "melt_curve_maxdiff": 0.027559518814086914,
   "t99_rerun": 2090.0,
   "t99_orig": 2134.0,
-  "t99_diff_pct": -2.0618556701030926
+  "t99_diff_pct": -2.0618556701030926,
+  "front_mean_abs_mm": 1.3198639937839303,
+  "front_p95_abs_mm": 2.4684080215620483,
+  "error_share_in_front_band": 0.5939932465553284,
+  "front_band_area_share": 0.07854038440773135
  }
 ]
