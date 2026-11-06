@@ -26,10 +26,22 @@ echo "$(date -u '+%F %H:%M') rerun $C on $(hostname), $NP cores, p_rgh PCG + DIC
 foamDictionary system/fvSolution -entry solvers/p_rgh/solver -set PCG > /dev/null
 foamDictionary system/fvSolution -entry solvers/p_rgh/preconditioner -set DIC > /dev/null
 foamDictionary system/fvSolution -entry solvers/p_rgh/smoother -remove > /dev/null
+# 2026-11-06 fix (found in the audit): p_rghFinal is its own entry once the file is written out, so setting only
+# p_rgh left every final pressure solve on GAMG + GaussSeidel. Set p_rghFinal explicitly and check both.
+foamDictionary system/fvSolution -entry solvers/p_rghFinal/solver -set PCG > /dev/null
+foamDictionary system/fvSolution -entry solvers/p_rghFinal/preconditioner -set DIC > /dev/null
+foamDictionary system/fvSolution -entry solvers/p_rghFinal/smoother -remove > /dev/null 2>&1
 foamDictionary system/fvSolution -entry solvers/p_rghFinal/maxIter -set 2000 > /dev/null
+# (foamDictionary -expand prints the whole file in v2606, so the two blocks are read out of it with awk)
+key() { foamDictionary -expand system/fvSolution 2>/dev/null | awk -v e="$1" -v k="$2" '$1==e{f=1;next} f&&$1=="}"{exit} f&&$1==k{sub(/;$/,"",$2); print $2; exit}'; }
+for e in p_rgh p_rghFinal; do
+  s=$(key $e solver); p=$(key $e preconditioner)
+  [ "$s" = PCG ] && [ "$p" = DIC ] || { echo "$e is '$s'/'$p', not PCG/DIC: stopped"; cd ..; echo "$C SOLVER_SETUP_FAIL (rerun)" >> $LOG; exit 1; }
+done
+echo "pressure solvers: p_rgh and p_rghFinal both PCG + DIC (checked)"
 cat > SOLVER_NOTE.txt <<N
-$C was rerun from t = 0 with the pressure solver p_rgh PCG + DIC (p_rghFinal maxIter 2000) instead of GAMG +
-GaussSeidel (maxIter 200), on $NP cores, $(date -u '+%F'). Reason: with GAMG the pressure did not converge
+$C was rerun from t = 0 with the pressure solver PCG + DIC for p_rgh and p_rghFinal (p_rghFinal maxIter 2000)
+instead of GAMG + GaussSeidel (maxIter 200), on $NP cores, $(date -u '+%F'). Reason: with GAMG the pressure did not converge
 (residual ~0.85 every step), the time step collapsed and the run stalled at t ~ 1450 s. Everything else as
 in the other cases. See scripts/pcm_rerun.sh.
 N
@@ -54,4 +66,4 @@ find $C -mindepth 1 -maxdepth 1 -type d -regex '.*/[0-9][0-9.e+-]*' ! -name 0 -e
 gzip -f $C/log.solver
 rm -rf $C/dynamicCode
 touch $C/DONE
-echo "$C ok (rerun with p_rgh PCG + DIC on $NP cores, SOLVER_NOTE.txt) wall ${wall} s, liquid fraction $lf | $(tail -1 $C/export.log)" >> $LOG
+echo "$C ok (rerun with p_rgh + p_rghFinal PCG + DIC on $NP cores, SOLVER_NOTE.txt) wall ${wall} s, liquid fraction $lf | $(tail -1 $C/export.log)" >> $LOG
