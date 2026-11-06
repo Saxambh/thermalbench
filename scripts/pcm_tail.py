@@ -20,11 +20,18 @@ than physical cores), not by the total work. Runs on each PCM machine, every 10 
    One switch at a time per machine. A reboot is safe: tb_resume restarts the batch, which resumes
    the case on one core.
 
+3. Disk guard (2026-11-06, after pc3's C: drive filled up and its Ubuntu disk failed with I/O
+   errors). Checked on every pass: free space where the cases are written and, under WSL, on the
+   Windows drive that holds Ubuntu's ext4.vhdx (the line in ~/thermbench/host_drive, e.g. /mnt/c).
+   Below 10 GB every PCM solver here is paused (SIGSTOP: nothing lost, it continues where it was);
+   once 20 GB are free again they are resumed (SIGCONT). Cases started while paused are paused on
+   the next pass. Marker ~/of_runs/pcm_full/DISK_PAUSED while paused.
+
   setsid nohup python3 pcm_tail.py loop > /dev/null 2>&1 < /dev/null &
   python3 pcm_tail.py status            print the table, change nothing
 Log: ~/of_runs/pcm_full/tail.log
 """
-import os, re, signal, subprocess, sys, time
+import os, re, shutil, signal, subprocess, sys, time
 
 RUNS = os.path.expanduser("~/of_runs/pcm_full/runs")
 LOG = os.path.expanduser("~/of_runs/pcm_full/tail.log")
@@ -111,7 +118,64 @@ def cases():
     return run, other
 
 
+LOW_GB, OK_GB = 10.0, 20.0
+PAUSED = os.path.expanduser("~/of_runs/pcm_full/DISK_PAUSED")
+
+
+def disk_free():
+    """Smallest free space (GB, path) over the runs folder and the Windows drive holding Ubuntu's disk."""
+    paths = [RUNS]
+    try:
+        h = open(os.path.expanduser("~/thermbench/host_drive")).read().strip()
+        if h:
+            paths.append(h)
+    except OSError:
+        pass
+    out = []
+    for p in paths:
+        try:
+            out.append((shutil.disk_usage(p).free / 1e9, p))
+        except OSError:
+            pass
+    return min(out) if out else (1e9, "")
+
+
+def guard():
+    """Pause every PCM solver here when a disk runs low, resume when there is room again."""
+    free, where = disk_free()
+    pids = [pid for pid, comm, state, nice, cwd, cmd in procs()
+            if comm.startswith("buoyantPimple") and cwd.startswith(RUNS + "/")]
+    if free < LOW_GB or (os.path.exists(PAUSED) and free < OK_GB):
+        n = 0
+        for pid in pids:
+            try:
+                if open(f"/proc/{pid}/stat").read().rsplit(")", 1)[1].split()[0] != "T":
+                    os.kill(pid, signal.SIGSTOP); n += 1
+            except (OSError, IndexError):
+                pass
+        if not os.path.exists(PAUSED):
+            open(PAUSED, "w").write(f"{free:.1f} GB free on {where}\n")
+            log(f"DISK LOW: {free:.1f} GB free on {where}, {len(pids)} PCM solvers paused")
+        elif n:
+            log(f"disk still low ({free:.1f} GB on {where}), {n} newly started solvers paused")
+        return True
+    if os.path.exists(PAUSED):
+        for pid in pids:
+            try:
+                os.kill(pid, signal.SIGCONT)
+            except OSError:
+                pass
+        os.remove(PAUSED)
+        log(f"disk ok again ({free:.1f} GB free on {where}), {len(pids)} PCM solvers resumed")
+    return False
+
+
 def status(act=False):
+    if act and guard():
+        return                                     # paused for disk space: no priority or switch changes
+    if not act:
+        free, where = disk_free()
+        print(f"disk: {free:.1f} GB free on {where}" + ("  PAUSED (DISK_PAUSED)" if os.path.exists(PAUSED) else ""))
     run, other = cases()
     cores = phys_cores()
     rows = []
