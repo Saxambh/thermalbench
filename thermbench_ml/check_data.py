@@ -9,6 +9,8 @@ PCM_ROOTS = ["~/of_runs/pcm_full/runs", "~/tb_data/laptop/pcm_full", "~/tb_data/
 m = json.load(open(sys.argv[1]))
 if m.get("family") == "pcm":   # PCM manifest (pcm_freeze_manifest.py)
     ROOTS = PCM_ROOTS
+if os.environ.get("TB_ROOTS"):   # explicit data folders (run_jobs_win.py on the Lund workstation, 2026-11-06)
+    ROOTS = os.environ["TB_ROOTS"].split(os.pathsep)
 where = {}
 for root in ROOTS:   # first root wins, as data.index
     for done in glob.glob(os.path.join(os.path.expanduser(root), "*", "DONE")):

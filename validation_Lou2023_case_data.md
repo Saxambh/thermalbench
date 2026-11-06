@@ -96,7 +96,24 @@ h_j from `scripts/lou3d_hj.py`: centreline v_y averaged over ±6.25 s, as in Lou
 
 **What it shows.** The same solver and turbulence choices as the tank dataset (buoyantPimpleFoam, kOmegaSST with the corrected buoyancy source, real water properties) reproduce a measured buoyant jet in a real tank in 3D. They do so better than the original authors' CFD.
 
-**Still to do.** The finer-mesh run `sst_finelow` on the lab gives the mesh sensitivity of h_j. At 04:20 UTC on 2026-11-05 it was at 114 of 750 s, about 29 h left. Then the outlet-temperature comparison with Section 4.
+## Mesh sensitivity: run `sst_finelow` (lab, 2026-11-06)
+
+**Run.** `~/of_runs/lou3d/sst_finelow` on the lab: the same case with the lower baffle region refined like the upper one (`make_lou3d.py --fine-lower`), 326,932 cells instead of 230,156, 8 cores. It ran to the shortened end of 300 s (finished 2026-11-06 00:48 UTC, exit 0; fields to t = 296.65 s, not yet reconstructed). Running on to 750 s would take about 37 h more at ~12 s simulated per hour.
+
+**h_j, 50 to 300 s** (`scripts/lou3d_hj.py ~/of_runs/lou3d/sst ~/lou3d_fine`):
+
+| t (s) | 50 | 100 | 150 | 200 | 250 | 300 |
+|---|---|---|---|---|---|---|
+| PIV mean (mm) | 108 | 114.5 | 129 | 133.5 | 138 | 147.5 |
+| coarse `sst` | 105.8 | 113.7 | 120.5 | 128.5 | 138.1 | 146.3 |
+| fine `sst_finelow` | 105.8 | 113.7 | 120.4 | 128.4 | 138.0 | 146.2 |
+
+- Fine vs PIV mean over these 6 times: bias −3.0 mm, RMS 4.2 mm; coarse vs fine: at most 0.1 mm apart.
+- Tank mean temperature: identical to 0.001 K up to 300 s. Outlet temperature: 20.000 °C in both (the hot front has not reached the lower baffle yet; in the coarse run the outlet starts to rise only after ~550 s: 20.3 °C at 600 s, 26.2 at 700 s, 34.2 at 750 s).
+
+**What it shows, and what it does not.** Refining the lower baffle changes nothing in the first 300 s, so the jet result (h_j) does not depend on the lower-region mesh. It is not a refinement of the jet region itself (the upper manifold and baffle are refined ×2 in both runs), and the lower refinement can only matter once the front reaches the lower baffle (after ~550 s), which this run did not reach. For the paper: report h_j vs PIV from the coarse run over 14 times, and this run as a check that the lower-region mesh does not affect it up to 300 s; state the limits.
+
+**Still to do.** Outlet-temperature / charging comparison with Lou Section 4 (data not yet extracted from the paper), using the coarse run to 750 s.
 
 ## Plan
 - 3D OpenFOAM case, quarter or eighth symmetry: buoyantPimpleFoam, real properties, kOmegaSST + buoyancyTurbSource (compressible path, correct sign), and laminar for comparison. Baffles as solid zones (chtMultiRegionFoam) or as thin adiabatic walls first.
