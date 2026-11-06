@@ -91,3 +91,33 @@ No open, validated, multi-case simulation dataset with ML benchmark tasks exists
 - PDEBench: [arXiv 2210.07182](https://arxiv.org/pdf/2210.07182)
 - UFRGS: [dissertation event page](https://www.inf.ufrgs.br/ppgc/eventos/evento/dissertacao-de-mestrado-de-alexandre-de-quadro-tacques-filho)
 - Mendeley Data: [mushy-constant dataset](https://data.mendeley.com/datasets/5kvbfptt39/2)
+
+## Addendum 2026-11-06: Ma et al. 2026 (missing from this file; found by the audit)
+
+**Paper.** Ma, Liu, Zhang, ..., Zhao, Tian (2026), *Journal of Energy Storage* 180:124366, "Multi-objective
+optimization of fin-embedded concrete thermal energy storage systems using CFD and machine learning".
+Found in the Scopus check of 2026-10-30 (sand-battery screening), solid-media + embedded pipes + ML,
+13 hits.
+
+**What it does.** 3D CFD of a concrete store with finned embedded pipes, a hybrid deep-learning
+surrogate trained on those runs, then a multi-objective genetic algorithm over fin number, height and
+thickness.
+
+**Overlap with ThermalStorageBench.** CFD plus ML surrogate for thermal storage, including a finned
+geometry parameterisation (as in our PCM family).
+
+**Difference.**
+- It is a single-study surrogate for one optimisation, with its own data and no released dataset or
+  benchmark.
+- It covers sensible solid storage, not stratified water tanks or PCM melting.
+- There are no out-of-distribution splits, no comparison of operator architectures and no
+  verification protocol.
+
+**Consequence.** The paper must cite it in the related work, alongside the S1 papers that "each train a
+model on its own small set of simulations". It does not change the novelty claim (an open, verified
+CFD dataset with fixed splits for ML on thermal storage).
+
+**Wording to revise.** "At the CFD noise level" in the safe wording above should be replaced. The
+collaborator note of 2026-11-06 asks not to call the perturbation sensitivity a noise floor. Use "within
+the measured sensitivity of the CFD solution to small perturbations" once stage 1A gives that number for
+the discharge cases.
