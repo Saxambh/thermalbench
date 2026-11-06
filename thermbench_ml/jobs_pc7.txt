@@ -8,4 +8,3 @@ fno random 0 60 --hybrid
 fno ood_geom 2 60
 fno ood_geom 1 60
 fno ood_mode 2 60
-fno ood_mode 1 60 --hybrid --canon
