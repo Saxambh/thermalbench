@@ -10,7 +10,7 @@
 F=${1:?tank or pcm}
 ML="$(dirname "$(readlink -f "$0")")"
 LOG=~/train_supervisor_$F.log
-if [ $F = tank ]; then S=run_final.sh; P=results; WORKERS=${WORKERS:-"lab pc3 pc4 pc5b pc6"}   # 2026-11-05: pc5 GPU 0 failed, laptop out (rebalance_final.py)
+if [ $F = tank ]; then S=run_final.sh; P=results; WORKERS=${WORKERS:-"lab pc3 pc4 pc6"}   # 2026-11-05: pc5 GPU 0 failed, laptop out (rebalance_final.py); 2026-11-06: pc5 CUDA gone on GPU 1 too, its jobs moved to lab, pc4, pc6
 else S=run_final_pcm.sh; P=results_pcm; WORKERS="laptop lab pc3 pc4 pc5a pc5b pc6"; fi
 host() { case $1 in laptop) echo "";; lab) echo labpc;; pc3|pc4|pc6) echo saxam@$1;; pc5a|pc5b) echo pc5;; esac; }
 dir()  { case $1 in pc5a|pc5b) echo thermalbench/thermbench_ml;; *) echo thermbench_ml;; esac; }
