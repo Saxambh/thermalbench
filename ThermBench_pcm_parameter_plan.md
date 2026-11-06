@@ -202,3 +202,28 @@ Decision 3 (fin model) waits for the conducting-fin Kamkari runs (pc3, started 2
 - [ ] Auto-stop at full melt (runTimeControl) and the melting-time prediction used for the snapshot spacing.
 - [ ] 1 mm mesh test against 0.5 mm.
 - [ ] Pilot of about 24 cases covering the corners of the design (smallest and largest Ste, W, N, both materials). It must pass energy closure within 1%, with no failures.
+
+## DECISION (Saxam, 2026-11-07 about 01:45 Nepal, "A seems valid"): PCM mesh uncertainty
+
+**Evidence.**
+- **Three-level study, G131** (lauric, unfinned, 1.0 / 0.5 / 0.25 mm): t99 4,200 / 4,536 / 4,746 s.
+  - Monotonic, observed order 0.68.
+  - Extrapolated t99 about 5,096 s, so the 0.5 mm dataset melts about 11 % too fast.
+  - GCI 15.4 % at 0.5 mm and 9.2 % at 0.25 mm.
+- **P0021:** non-monotonic, no GCI.
+- **Spot check** (6 cases, 0.5 vs 0.25 mm): t99 +1 to +8.7 %, the same sign in all.
+- G301 (octadecane) is still to come.
+
+**Decided (option A).**
+1. **Keep the 500 cases at 0.5 mm.** The PCM labels are the 0.5 mm numerical reference, consistent across the
+   dataset, and the ML benchmark is unaffected.
+2. **Report the melt-time discretisation uncertainty** (Celik GCI where the three levels allow it; otherwise
+   the inter-grid differences) and the direction of the bias (0.5 mm melts early).
+3. **Release the fine-mesh runs as a subset:** the 6 spot-check cases at 0.25 mm and the three-level sets
+   G131, G301 and P0021.
+4. **State in the paper that the plain-wall validation agreement at 0.5 mm** (195 vs 195 min) may partly
+   reflect cancellation between mesh error and model error.
+
+**Not decided.** Option B, a 0.25 mm subset of 50 to 100 cases (about 3,000 to 6,000 core-h), is to be
+reconsidered after G301 and the Kamkari 3-fin case at 0.25 mm. Option C (all 500 at 0.25 mm, about
+24,000 core-h) is rejected.
