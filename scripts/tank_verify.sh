@@ -10,6 +10,9 @@
 #   h10   production settings on a 10 mm mesh (2 h; only designs whose geometry sits on a 10 mm grid)
 # Serial, as the dataset runs. Raw time directories are deleted after a verified export (as run_batch.py).
 #   tank_verify.sh <run_id> <variant> <design.csv> <out_dir>     log line: <out_dir>/batch.log
+# design.csv MUST be design_v2_full.csv, the list the dataset was built from (geometry on a 10 mm grid).
+# design_h5mm_full.csv differs in 613 port offsets and 184 widths (found 2026-11-06 on T0243).
+# TV_NP=<n> runs the solver in parallel on n cores.
 unset LD_LIBRARY_PATH
 RID=$1; V=$2; CSV=$(readlink -f "$3"); OUT=$(readlink -f "$4")
 SCR=$(dirname "$(readlink -f "$0")")
@@ -49,7 +52,16 @@ want_n=2; want_c=0.5; [ $V = n4 ] && want_n=4; [ $V = co25 ] && want_c=0.25
 [ "$nO" = $want_n ] && [ "$co" = $want_c ] || { cd ..; echo "$C SETUP_FAIL nOuter=$nO maxCo=$co" >> $LOG; exit 1; }
 echo "$(date -u '+%F %H:%M') $C on $(hostname): nOuterCorrectors $nO, maxCo $co; generator args: $ARGS" > VERIFY_NOTE.txt
 ok=1
-blockMesh > log.blockMesh 2>&1 && nice -n 5 buoyantPimpleFoam > log.solver 2>&1 || ok=0
+if [ "${TV_NP:-1}" -gt 1 ]; then   # optional parallel run (2026-11-06 speed-up; round-off only)
+  printf 'FoamFile { format ascii; class dictionary; object decomposeParDict; }
+numberOfSubdomains %s;
+method scotch;
+' $TV_NP > system/decomposeParDict
+  blockMesh > log.blockMesh 2>&1 && decomposePar > log.decomposePar 2>&1     && nice -n 5 mpirun -np $TV_NP buoyantPimpleFoam -parallel > log.solver 2>&1 && reconstructPar > log.reconstructPar 2>&1 || ok=0
+  rm -rf processor*
+else
+  blockMesh > log.blockMesh 2>&1 && nice -n 5 buoyantPimpleFoam > log.solver 2>&1 || ok=0
+fi
 [ $ok = 1 ] && python3 $SCR/export_case.py "$OUT/$C" > log.export 2>&1 || ok=0
 cd ..
 [ $ok = 0 ] && { echo "$C FAIL $(grep -m1 -A2 FATAL $C/log.solver | tr '\n' ' ' | cut -c1-150)" >> $LOG; exit 1; }

@@ -154,3 +154,21 @@ addition.**
 
 1. Finish both long laminar runs (recommended), or stop T0221 after its outlet event.
 2. Approve or decline the two optional high-Re SST mesh runs.
+
+## Correction (2026-11-07, about 00:05 Nepal)
+
+The verification runs took their inputs from `design_h5mm_full.csv`, but the dataset was built from
+`design_v2_full.csv` (geometry on a 10 mm grid). For T0221, T0551 and T0408 the two lists are
+identical, so their results stand, including the exact reproduction of T0408. Three pilot runs differ
+slightly:
+
+| Run | Field | Wrong list | Dataset |
+|---|---|---|---|
+| T0243_sst | port offset | 0.115 m | 0.12 m |
+| T0393_lam | port offset | 0.045 m | 0.04 m |
+| T0211_sst | width | 0.67 m | 0.68 m |
+
+Their first verification sets are self-consistent, but they verify a near neighbour of the dataset run.
+The 1.79 % "p2 vs dataset" difference for T0243 is this 5 mm port shift, not irreproducibility. All
+three are being rerun with `design_v2_full.csv`: on pc3 (T0243, including 2.5 mm) and on pc4 (T0211,
+T0393), in `~/of_runs/tank_verify_v2`.

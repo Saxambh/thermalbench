@@ -19,7 +19,10 @@ Draft for the release. Every number below was checked against the frozen manifes
   | **total 1,020** | **1,212** |
 
   So the dataset is not "606 designs run with both models"; only 192 design points have both.
-- **Design:** Sobol sample of 1,024 design points (`design_h5mm_full.csv`, 1,217 planned runs).
+- **Design:** Sobol sample of 1,024 design points, 1,217 planned runs. **The dataset was built from
+  `design_v2_full.csv`**, with geometry snapped to a 10 mm grid; all 1,212 runs match it exactly.
+  `design_h5mm_full.csv` is an unsnapped variant: it differs from the dataset in 613 port offsets and
+  184 widths and must not be used to regenerate runs (found 2026-11-06).
   - Inlet velocity 0.005 to 0.2 m/s (log), ΔT 5 to 50 K, slot height 20 to 80 mm, port offset 0 to 0.2 H,
     tank width 0.25 to 1.0 m (H = 1 m).
   - Inlet type: A, side-wall slots (844 runs) or B, lid and bottom slots (368).
