@@ -87,3 +87,15 @@ pre-registered quantities and carry no pass/fail limit, so they cannot be tuned 
   - if no case shows a material change, all WARN cases are kept;
   - if cases of one kind do, every WARN case of that kind is rerun;
   - if the changes are spread over the kinds, all 59 WARN cases are rerun.
+
+## Addendum 2026-11-07, about 10:30 Nepal: is the T0211 failure one case or a regime? (fixed before these runs)
+
+T0211_sst failed: n4 and co25 each differ from production by 7.4 % of ΔT field RMSE, agree with each other
+(2.5 %), and the inlet x 1.0001 run differs by 0.5 %. Test: the four dataset SST designs nearest T0211 in
+(log Re, log Ri) that cover both modes and both inlet types: T0156 (discharge B), T0256 (discharge B),
+T0052 (charge B, wide), T0252 (charge A). Each is run with n4 and with rep (inlet x 1.0001), compared with
+its dataset run (p2 reproduced the dataset exactly in all five pilot designs).
+- **Affected design:** n4 field RMSE > 3 % of ΔT **and** rep field RMSE < 1.5 % (a numerical error that
+  the solution's sensitivity cannot explain). If both are high, it is reported as sensitivity, not as affected.
+- **Outcome:** 0 of 4 affected: T0211 is reported as an isolated label error of known size. 1 or more:
+  the regime is affected; the extent and any SST reruns are decided with Saxam before anything is regenerated.
