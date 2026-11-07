@@ -40,11 +40,33 @@ Speed: 1.45 s median per run for 3 seeds on the laptop RTX 4060, against a 2.6 h
 0.6 to 8.4 h) on one CPU core, about 6,000 times faster. The hardware differs (one GPU against one CPU core),
 so this is stated as a wall-clock comparison, not as equal-hardware cost.
 
+## Spread calibration (fitted on validation runs only, checked on test runs)
+
+The bound is error ≤ k × spread, with k fitted on each split's validation runs (calib.py, calib_an.py,
+ml_calib_summary.json). The constant bound is the same quantile of the validation errors, applied to every
+case regardless of spread.
+
+| Split | k for 90 % (run) | Test coverage, 90 % / 95 % | Constant bound coverage, 90 % / 95 % | Median 90 % bound, spread vs constant |
+|---|---|---|---|---|
+| random | 4.0 | 91 % / 96 % | 87 % / 92 % | 5.2 vs 7.9 % ΔT |
+| ood_geom | 3.5 | 88 % / 93 % | 84 % / 89 % | 5.1 vs 7.5 |
+| ood_flow | 3.7 | 90 % / 94 % | 19 % / 37 % | 10.5 vs 6.9 |
+| ood_mode | 3.2 | **71 % / 84 %** | 83 % / 93 % | 4.5 vs 7.7 |
+
+Per-snapshot calibration gives the same picture: random 90 % / 95 %, ood_geom 88 / 94, ood_flow 84 / 93,
+ood_mode 77 / 86.
+
+- **In distribution and for unseen widths,** "error ≤ about 4 × spread" holds at the stated rate. It is about
+  a third tighter than a constant bound and adapts to the case: about 4.3 % ΔT for easy runs, 6.5 % for hard
+  ones.
+- **For faster inflow than in training,** the spread bound keeps its coverage (90 %) while a constant bound
+  collapses (19 %). The spread grows with the extrapolation.
+- **For an operating mode never trained (discharge),** the spread under-covers: 71 % against 90 %. The
+  spread does not grow enough for a change of operation, so for ood_mode the bound is not reliable.
+
 ## Limits, stated with the claim
 
-- **Spread is under-dispersed.** The spread is about 0.38 of the actual error, so it ranks errors well but
-  is not a calibrated error bar. A scale factor must be fitted on validation runs, not on test runs, before
-  it is used as one.
+- **Spread is under-dispersed (about 0.38 of the error)** and is used only through the calibrated factor above; it does not cover the change to an unseen operating mode (ood_mode 71 % at 90 %).
 - **Faster inflow than in training (ood_flow).** The median error rises to 8.7 %; the spread flags this but
   does not remove it.
 - **Label uncertainty in the hard regime.** In the fast-jet, low-Ri regime the CFD labels have their own
