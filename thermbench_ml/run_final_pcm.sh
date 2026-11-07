@@ -61,8 +61,14 @@ if [ "$W" = laptop ]; then
   for split in random ood_fins ood_drive ood_material ood_material_r ood_tilt; do $PY pcm_evaluate.py --split $split --manifest $M --outdir $OUT; done
 fi
 mapfile -t JOBS < <(plan $W)
-echo "${#JOBS[@]} jobs for $W"
-for j in "${JOBS[@]}"; do
+# SLOTS jobs at once on this GPU (2026-11-07, Saxam: use the full capacity). Training settings are
+# unchanged; job k goes to slot k mod SLOTS, each slot runs its share in order, results go to the
+# same $OUT/<split>.json under a lock (pcm_evaluate.save).
+SLOTS=${SLOTS:-1}
+echo "${#JOBS[@]} jobs for $W in $SLOTS parallel slot(s)"
+run_slot() {
+for ((i=$1; i<${#JOBS[@]}; i+=SLOTS)); do
+  j="${JOBS[$i]}"
   read -r model split seed ep flags <<< "$j"
   # || true: under set -e a seed-0 job made this assignment fail and ended the worker (2026-11-05)
   name=$model$( [[ $flags == *hybrid* ]] && echo _hybrid )$( [ $seed != 0 ] && echo _s$seed || true )
@@ -71,6 +77,9 @@ for j in "${JOBS[@]}"; do
   fi
   echo "--- $split: $model $flags seed $seed ($ep epochs) $(date -u '+%H:%M')"
   $PY pcm_train.py --model $model $flags --split $split --seed $seed --epochs $ep $COMMON --outdir $OUT \
-    | grep -vE "^epoch +[0-9]*[1-9] "
+    | grep -vE "^epoch +[0-9]*[1-9] " | sed "s/^/[slot $1] /"
 done
+}
+for ((k=0; k<SLOTS; k++)); do run_slot $k & sleep 60; done
+wait
 echo "=== worker $W done $(date -u '+%F %H:%M') UTC"

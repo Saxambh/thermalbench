@@ -62,11 +62,17 @@ def evaluate(model, test, stride):
 def save(split, sizes, n_runs, stride, name, res, per_run, extra=None, outdir="results_pcm"):
     os.makedirs(os.path.join(HERE, outdir), exist_ok=True)
     out = os.path.join(HERE, outdir, f"{split}.json")
-    allres = json.load(open(out)) if os.path.exists(out) else {"split": split, "results": {}}
-    allres.update({"stride": stride, "n_runs": n_runs, "sizes": sizes,
-                   "updated": time.strftime("%Y-%m-%d %H:%M")})
-    allres["results"][name] = res | (extra or {}) | {"per_run": per_run}
-    json.dump(allres, open(out, "w"), indent=1)
+    # 2026-11-07: several jobs share one GPU (run_final_pcm.sh SLOTS), so the read-modify-write of the
+    # split file is done under an exclusive lock, and written to a temp file then renamed
+    import fcntl
+    with open(out + ".lock", "w") as lk:
+        fcntl.flock(lk, fcntl.LOCK_EX)
+        allres = json.load(open(out)) if os.path.exists(out) else {"split": split, "results": {}}
+        allres.update({"stride": stride, "n_runs": n_runs, "sizes": sizes,
+                       "updated": time.strftime("%Y-%m-%d %H:%M")})
+        allres["results"][name] = res | (extra or {}) | {"per_run": per_run}
+        json.dump(allres, open(out + ".tmp", "w"), indent=1)
+        os.replace(out + ".tmp", out)
 
 
 def main():
