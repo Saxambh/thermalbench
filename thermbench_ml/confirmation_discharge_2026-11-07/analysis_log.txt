@@ -1,0 +1,26 @@
+
+primary
+  H1 fno  fno_hybrid minus fno_hybrid_canon        n 215  improvement +9.17 pp [+8.33, +10.02]  improved in 96 % of designs  p 0.0001  Holm 0.0004  SUPPORTED
+  H1 unet unet_hybrid minus unet_hybrid_canon      n 215  improvement +9.74 pp [+8.84, +10.64]  improved in 95 % of designs  p 0.0001  Holm 0.0004  SUPPORTED
+  H2 fno  ideal_stratified minus fno_hybrid_canon  n 215  improvement +12.53 pp [+11.59, +13.47]  improved in 98 % of designs  p 0.0001  Holm 0.0004  SUPPORTED
+  H2 unet ideal_stratified minus unet_hybrid_canon n 215  improvement +12.61 pp [+11.65, +13.55]  improved in 98 % of designs  p 0.0001  Holm 0.0004  SUPPORTED
+
+sensitivity_without_T0211_sst
+  H1 fno  fno_hybrid minus fno_hybrid_canon        n 214  improvement +9.16 pp [+8.30, +10.02]  improved in 96 % of designs  p 0.0001  Holm 0.0004  SUPPORTED
+  H1 unet unet_hybrid minus unet_hybrid_canon      n 214  improvement +9.74 pp [+8.82, +10.64]  improved in 95 % of designs  p 0.0001  Holm 0.0004  SUPPORTED
+  H2 fno  ideal_stratified minus fno_hybrid_canon  n 214  improvement +12.53 pp [+11.57, +13.48]  improved in 98 % of designs  p 0.0001  Holm 0.0004  SUPPORTED
+  H2 unet ideal_stratified minus unet_hybrid_canon n 214  improvement +12.60 pp [+11.63, +13.56]  improved in 98 % of designs  p 0.0001  Holm 0.0004  SUPPORTED
+
+descriptive (field error, % of dT: mean / median)
+  subset: 259 runs, 215 designs, SST 58 %, Ri<5 14 %
+     fno_hybrid            14.02 /  14.30
+     fno_hybrid_canon       5.03 /   4.16
+     unet_hybrid           14.47 /  14.72
+     unet_hybrid_canon      4.96 /   4.26
+     ideal_stratified      17.41 /  17.75
+  remaining_ood_mode_test: 104 runs, 88 designs, SST 27 %, Ri<5 5 %
+     fno_hybrid            10.39 /   9.86
+     fno_hybrid_canon       3.12 /   2.64
+     unet_hybrid           10.53 /  10.02
+     unet_hybrid_canon      2.90 /   2.45
+     ideal_stratified      14.30 /  14.48
