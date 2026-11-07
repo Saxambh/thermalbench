@@ -1,0 +1,26 @@
+{
+ "random": {
+  "best": "T0033_lam",
+  "median": "T0373_sst",
+  "p90": "T0200_lam",
+  "worst": "T0460_sst"
+ },
+ "ood_flow": {
+  "best": "T0171_sst",
+  "median": "T0116_sst",
+  "p90": "T0764_sst",
+  "worst": "T0364_sst"
+ },
+ "ood_geom": {
+  "best": "T0741_lam",
+  "median": "T0258_lam",
+  "p90": "T0056_lam",
+  "worst": "T0220_sst"
+ },
+ "ood_mode": {
+  "best": "T0033_lam",
+  "median": "T0810_lam",
+  "p90": "T0675_sst",
+  "worst": "T0748_sst"
+ }
+}
