@@ -71,17 +71,33 @@ Design points removed entirely: T0073 (its only run), T0191, T0765, T0882. That 
 
 ## Verification status (see `verification_criteria_2026-11-06.md`, `response_mesh_verification_2026-11-06.md`)
 
-- **Mesh, 2.5 vs 5 mm.** T0408 (both closures) is within all pre-registered limits: field 0.34 % of
-  ΔT, energy 0.17 %, outlet 1.43 % of ΔT, thermocline midpoint 0.5 mm. Around the outlet event the
-  outlet error is 2.03 % of ΔT. T0243_sst, T0221_lam and T0551_lam are running.
-- **Outer iterations (2 vs 4) and Courant limit (0.5 vs 0.25).** Negligible for T0408; 6 more designs
-  running.
+Completed 2026-11-07. Limits were committed before results; `reply_tank_mesh_2026-11-07.md` and
+`reply_tank_ml_verification_2026-11-07.md` give the full tables.
+
+- **Mesh, 2.5 vs 5 mm (T0408, T0221, T0551, T0243).** Integral quantities (stored energy, horizontal
+  profile, outlet temperature, thermocline height) agree on all four; stored energy borderline for T0243
+  (0.96 %). Full field differs by 0.34 to 2.76 % of ΔT (T0243 1.70 % and T0551 2.76 % borderline). The
+  three levels do not converge monotonically, so no GCI is given and the mesh is not called converged.
+- **Outer iterations (2 vs 4), Courant limit (0.5 vs 0.25) and inlet × 1.0001.** Agreement for T0408,
+  T0221 and T0243; T0393 outlet and T0551 field borderline, both at the size of the flow's own
+  sensitivity. T0211_sst differs by 7.4 % of ΔT (a numerical error of the production settings).
+- **Regime test.** Of 10 further wide, low-Ri SST designs, none shows the T0211 error (all ≤ 0.05 %;
+  0 of 10, 95 % interval 0 to 31 %). Including four earlier neighbours, 2 of 15 wide low-Ri SST designs
+  show it: T0211_sst and T0052_sst (the latter under a rule added after its result).
 - **Experiment (3D, Lou et al. 2023).** Bias +2.4 mm, RMS 7.2 mm.
+
+**Flagged labels.** T0211_sst and T0052_sst stay in the dataset and are listed in
+`thermbench_ml/label_flags_tank.json` (n4 vs production 7.4 and 6.8 % of ΔT) so users can exclude or
+down-weight them. The flag file is separate from the frozen manifest, whose md5 is unchanged. Production
+residuals do not single these runs out, so similar runs elsewhere cannot be identified from the logs; the
+regime test bounds how common they are.
 
 ## Known limitations (to state in the release)
 
 - One uniform mesh (5 mm) and one numerical setup. Inter-grid discrepancies are reported for the
   verification cases; dataset-wide mesh convergence is not claimed.
+- Label uncertainty in the fast-jet regime (SST, Ri below about 5): two known runs differ by about 7 % of
+  ΔT with tighter numerical settings (flagged above). The ML error on those runs is of the same size.
 - 2D: no 3D effects; experimental validation is indirect, through the 3D Lou et al. case.
 - The SST runs model turbulence with RANS. Across the 192 design points run with both models, the
   laminar and SST solutions differ by a median 3.9 % of ΔT in field RMSE (10th to 90th percentile

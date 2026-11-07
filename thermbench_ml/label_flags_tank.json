@@ -1,0 +1,39 @@
+{
+  "description": "Runs whose CFD labels carry a known numerical-setting uncertainty larger than the verification limits. Kept in the dataset (option A of the pre-registered regime test, verification_criteria_2026-11-06.md, result 2026-11-07); listed here so users can exclude or down-weight them. Kept separate from manifest_full_h5mm.json so the frozen manifest and its md5 do not change. Field differences are RMSE in % of the run's delta T against the dataset run.",
+  "created": "2026-11-07",
+  "regime_test": {
+    "sample": "10 wide SST designs (W >= 0.6 m, Ri < 10), 5 per mode, chosen by md5 of run_id within Ri bins",
+    "affected": 0,
+    "of": 10,
+    "binomial_95_interval": [0.0, 0.31],
+    "max_field_difference_pct": 0.05
+  },
+  "flags": [
+    {
+      "run_id": "T0211_sst",
+      "flag": "label_numerical_uncertainty",
+      "Re": 5396, "Ri": 3.87, "mode": "discharge",
+      "n4_field_pct": 7.38, "co25_field_pct": 7.32, "rep_field_pct": 0.47, "n4_vs_co25_field_pct": 2.49,
+      "cause": "phase error in the tilting and sloshing of the thermocline interface after the jet reaches it; nOuterCorrectors 4 and maxCo 0.25 agree with each other but not with production (2, 0.5)",
+      "test_split": "ood_mode",
+      "ml_field_error_pct": 7.94,
+      "note": "the main ML model's error on this run is of the same size as the label's own numerical uncertainty"
+    },
+    {
+      "run_id": "T0052_sst",
+      "flag": "label_numerical_uncertainty",
+      "Re": 4725, "Ri": 3.60, "mode": "charge",
+      "n4_field_pct": 6.77, "rep_field_pct": 1.68,
+      "outlet_n4_pct": 5.44, "energy_n4_pct": 1.08,
+      "classification_note": "not affected under the rule written before its test (rep >= 1.5 %); affected under the later ratio rule (n4 >= 2 x rep), which was added after this result (post hoc)",
+      "test_split": "ood_geom",
+      "ml_field_error_pct": 7.19,
+      "note": "the main ML model's error on this run is of the same size as the label's own numerical uncertainty"
+    }
+  ],
+  "sensitive_not_flagged": [
+    {"run_id": "T0156_sst", "n4_field_pct": 1.80, "rep_field_pct": 3.84, "note": "flow sensitivity: a 0.01 % inlet change moves the field more than the numerical settings"},
+    {"run_id": "T0551_lam", "n4_field_pct": 2.14, "co25_field_pct": 1.96, "rep_field_pct": 1.85, "note": "field borderline, same size as flow sensitivity"},
+    {"run_id": "T0393_lam", "rep_outlet_pct": 2.87, "note": "outlet borderline in every variant including rep (backflow events)"}
+  ]
+}

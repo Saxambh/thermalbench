@@ -132,3 +132,8 @@ bin the run with the smallest md5 hash of its run_id is taken:
   examples.
 - 1 or more: the affected share (with a binomial 95 % interval) is reported, and A against C (rerunning the
   regime) is decided with Saxam.
+
+**Result (2026-11-07, about 15:45 Nepal).** All 10 designs are unaffected. For every design, n4 and rep differ
+from the dataset run by at most 0.05 % of ΔT in the field, with energy, outlet and midpoint differences
+near zero (verification_data/regime2_*.json). 0 of 10 affected (binomial 95 % interval 0 to 31 %), so under
+the rule above the regime is reported as label uncertainty (option A), with T0211 and T0052 as examples.

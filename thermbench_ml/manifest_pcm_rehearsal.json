@@ -1,0 +1,525 @@
+{
+ "family": "pcm",
+ "created_utc": "2026-11-05 06:47",
+ "n_runs": 63,
+ "n_cases": 63,
+ "roots": [
+  "~/of_runs/pcm_full/runs",
+  "~/tb_data/laptop/pcm_full",
+  "~/tb_data/lab/pcm_full",
+  "~/tb_data/pc3/pcm_full",
+  "~/tb_data/pc4/pcm_full",
+  "~/tb_data/pc5/pcm_full"
+ ],
+ "solver": "make_pcm_case.py with p_rghFinal relTol 0, maxIter 200 (option A, 2026-11-04)",
+ "excluded": {
+  "qc_fail": [],
+  "old_solver": []
+ },
+ "runs": [
+  {
+   "run_id": "P0046",
+   "case_id": "P0046",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "OK",
+   "h5_MB": 25.36,
+   "h5_md5": "9748ef026f1b893f85fc39c8bf98729b"
+  },
+  {
+   "run_id": "P0076",
+   "case_id": "P0076",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "OK",
+   "h5_MB": 18.3,
+   "h5_md5": "d491d92605bdfe14ad163898fe052ba2"
+  },
+  {
+   "run_id": "P0130",
+   "case_id": "P0130",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "WARN",
+   "h5_MB": 22.2,
+   "h5_md5": "dd66b265e4025b0f5f7a9c2a104fdb8e"
+  },
+  {
+   "run_id": "P0184",
+   "case_id": "P0184",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "OK",
+   "h5_MB": 37.53,
+   "h5_md5": "ae35780c03186eaac57daf49daac5cf3"
+  },
+  {
+   "run_id": "P0237",
+   "case_id": "P0237",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "OK",
+   "h5_MB": 35.25,
+   "h5_md5": "ffd9a475bdb05f2309875d9f5f3adc7f"
+  },
+  {
+   "run_id": "P0278",
+   "case_id": "P0278",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "OK",
+   "h5_MB": 19.74,
+   "h5_md5": "0cf9aa094280b8042dbf32c31cabe36b"
+  },
+  {
+   "run_id": "P0294",
+   "case_id": "P0294",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "WARN",
+   "h5_MB": 18.91,
+   "h5_md5": "dce34ab8c2b6534e644e118cff415e11"
+  },
+  {
+   "run_id": "P0334",
+   "case_id": "P0334",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "OK",
+   "h5_MB": 28.85,
+   "h5_md5": "6047527ecf6221ed888528cb4933953a"
+  },
+  {
+   "run_id": "P0384",
+   "case_id": "P0384",
+   "root": "/home/saxam/of_runs/pcm_full/runs",
+   "qc": "OK",
+   "h5_MB": 31.96,
+   "h5_md5": "9118ba9fb18c9d4bee4ea839077ce96f"
+  },
+  {
+   "run_id": "P0036",
+   "case_id": "P0036",
+   "root": "/home/saxam/tb_data/pc3/pcm_full",
+   "qc": "OK",
+   "h5_MB": 38.4,
+   "h5_md5": "4e5586665dfffc122694885922562247"
+  },
+  {
+   "run_id": "P0118",
+   "case_id": "P0118",
+   "root": "/home/saxam/tb_data/pc3/pcm_full",
+   "qc": "OK",
+   "h5_MB": 21.19,
+   "h5_md5": "f2f450ad6a847f89230c4873a84b69b8"
+  },
+  {
+   "run_id": "P0391",
+   "case_id": "P0391",
+   "root": "/home/saxam/tb_data/pc3/pcm_full",
+   "qc": "OK",
+   "h5_MB": 36.89,
+   "h5_md5": "62629e9d2e8aa38f10474d37ae1d080e"
+  },
+  {
+   "run_id": "P0406",
+   "case_id": "P0406",
+   "root": "/home/saxam/tb_data/pc3/pcm_full",
+   "qc": "OK",
+   "h5_MB": 20.89,
+   "h5_md5": "15c85ddc85b199111da6132de7ee4b4a"
+  },
+  {
+   "run_id": "P0002",
+   "case_id": "P0002",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 23.0,
+   "h5_md5": "79d642cf0c7476d436defba8fada8468"
+  },
+  {
+   "run_id": "P0022",
+   "case_id": "P0022",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 14.26,
+   "h5_md5": "8e257281f3cbb7238988d0803d88e7cb"
+  },
+  {
+   "run_id": "P0024",
+   "case_id": "P0024",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 16.15,
+   "h5_md5": "5a2871ef300d8a7b71b62ddf62d0548e"
+  },
+  {
+   "run_id": "P0035",
+   "case_id": "P0035",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 24.26,
+   "h5_md5": "21286be76aabf868c7853b5f91721506"
+  },
+  {
+   "run_id": "P0056",
+   "case_id": "P0056",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 21.28,
+   "h5_md5": "b2b385242b4abbb581bdae2d9c9e55f3"
+  },
+  {
+   "run_id": "P0057",
+   "case_id": "P0057",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 17.11,
+   "h5_md5": "d9ec80b94b5b9598347f7d77da375c1f"
+  },
+  {
+   "run_id": "P0063",
+   "case_id": "P0063",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 16.63,
+   "h5_md5": "e73c2d2c61041b9231d4962d86b1ef10"
+  },
+  {
+   "run_id": "P0087",
+   "case_id": "P0087",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 24.93,
+   "h5_md5": "c64c8b3ec801e49fe286e90afab5b3a4"
+  },
+  {
+   "run_id": "P0088",
+   "case_id": "P0088",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 28.65,
+   "h5_md5": "222c464d926cd8517bd39519a2bca3b2"
+  },
+  {
+   "run_id": "P0107",
+   "case_id": "P0107",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 19.64,
+   "h5_md5": "e3285cc009c65d1e527b271185443d43"
+  },
+  {
+   "run_id": "P0123",
+   "case_id": "P0123",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 23.24,
+   "h5_md5": "291ae09672861e47d96b0dcf80cf7043"
+  },
+  {
+   "run_id": "P0128",
+   "case_id": "P0128",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 20.8,
+   "h5_md5": "08e17494de501f0f844257ea442d3b9e"
+  },
+  {
+   "run_id": "P0145",
+   "case_id": "P0145",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 26.6,
+   "h5_md5": "81ba9f0a1fcf01597502268e8640d87c"
+  },
+  {
+   "run_id": "P0156",
+   "case_id": "P0156",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 22.25,
+   "h5_md5": "a2aa2278bef53f269c3b524a4a3fc6f2"
+  },
+  {
+   "run_id": "P0158",
+   "case_id": "P0158",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 18.4,
+   "h5_md5": "725607d9e100b68f564e0725805db434"
+  },
+  {
+   "run_id": "P0169",
+   "case_id": "P0169",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 19.05,
+   "h5_md5": "4289285fecc34cda90be36c786e88d54"
+  },
+  {
+   "run_id": "P0174",
+   "case_id": "P0174",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 18.11,
+   "h5_md5": "0dcdd744e17a2b75883fcbc49dbcdde3"
+  },
+  {
+   "run_id": "P0193",
+   "case_id": "P0193",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 19.51,
+   "h5_md5": "a3747f22db119b0acc24042dca229384"
+  },
+  {
+   "run_id": "P0201",
+   "case_id": "P0201",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 20.13,
+   "h5_md5": "0e89591b9b1871c7bca551c1d5a88514"
+  },
+  {
+   "run_id": "P0205",
+   "case_id": "P0205",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 20.18,
+   "h5_md5": "aadf030f6c4132101fbf0079021265eb"
+  },
+  {
+   "run_id": "P0212",
+   "case_id": "P0212",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 18.75,
+   "h5_md5": "b6626fdb2b2893159fc41e740a6d6917"
+  },
+  {
+   "run_id": "P0217",
+   "case_id": "P0217",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 25.53,
+   "h5_md5": "9d7406834059cce08658eabedd1ccbb4"
+  },
+  {
+   "run_id": "P0238",
+   "case_id": "P0238",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 21.36,
+   "h5_md5": "20227ed0473b3b0e7f9b8215a6561c98"
+  },
+  {
+   "run_id": "P0243",
+   "case_id": "P0243",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 21.71,
+   "h5_md5": "be907801202ebab97ff189466968ae4f"
+  },
+  {
+   "run_id": "P0246",
+   "case_id": "P0246",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 12.85,
+   "h5_md5": "9dacfcbf1ff9ffa98b4f9aab22598368"
+  },
+  {
+   "run_id": "P0251",
+   "case_id": "P0251",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 25.96,
+   "h5_md5": "f60859a3df7e3bfd9b667f748bcccd83"
+  },
+  {
+   "run_id": "P0252",
+   "case_id": "P0252",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 24.09,
+   "h5_md5": "4eec90a8bba0612f386f2d9452c9f9af"
+  },
+  {
+   "run_id": "P0263",
+   "case_id": "P0263",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 15.42,
+   "h5_md5": "959e634b72fc2131b8ef7a7c31725b7c"
+  },
+  {
+   "run_id": "P0276",
+   "case_id": "P0276",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 24.19,
+   "h5_md5": "206d4b4af96aa8229f9ec0c8136b4bff"
+  },
+  {
+   "run_id": "P0289",
+   "case_id": "P0289",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 19.73,
+   "h5_md5": "334312f81e96ef3f6b3ff465326b9644"
+  },
+  {
+   "run_id": "P0292",
+   "case_id": "P0292",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 21.55,
+   "h5_md5": "cc771f28a8cbe7eff5497deb0a43b268"
+  },
+  {
+   "run_id": "P0309",
+   "case_id": "P0309",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 25.03,
+   "h5_md5": "3b7a0545972b2e76c2f83ebb101694c1"
+  },
+  {
+   "run_id": "P0315",
+   "case_id": "P0315",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 18.85,
+   "h5_md5": "7df16bfab274cddee92ecdd4df4c87ea"
+  },
+  {
+   "run_id": "P0317",
+   "case_id": "P0317",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 21.89,
+   "h5_md5": "60d5d78d64d572d5a972bff7b98f8230"
+  },
+  {
+   "run_id": "P0320",
+   "case_id": "P0320",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 22.27,
+   "h5_md5": "7c7bf7643214d02756abf7dd4ae8bf53"
+  },
+  {
+   "run_id": "P0328",
+   "case_id": "P0328",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 15.72,
+   "h5_md5": "3a15bb0748ecd7212f64e5b1bdbd7d31"
+  },
+  {
+   "run_id": "P0360",
+   "case_id": "P0360",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 25.06,
+   "h5_md5": "2347028c8d225cd25c4a093501faf5c7"
+  },
+  {
+   "run_id": "P0371",
+   "case_id": "P0371",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 23.45,
+   "h5_md5": "5bc38d90f9096e7bc7fd9fca1d6c6596"
+  },
+  {
+   "run_id": "P0375",
+   "case_id": "P0375",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 23.83,
+   "h5_md5": "7c043062ec6a7b00279306fec3964668"
+  },
+  {
+   "run_id": "P0380",
+   "case_id": "P0380",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 16.9,
+   "h5_md5": "5c4017eb7b432450a336848fc76ed740"
+  },
+  {
+   "run_id": "P0396",
+   "case_id": "P0396",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 16.8,
+   "h5_md5": "e289e2da063f8586899c215d778c30b5"
+  },
+  {
+   "run_id": "P0404",
+   "case_id": "P0404",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 26.66,
+   "h5_md5": "5fdff01e6d720373b89d0ea3cea1ec1c"
+  },
+  {
+   "run_id": "P0427",
+   "case_id": "P0427",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 19.79,
+   "h5_md5": "20e015e7cd17e544bb859d10adc94ecd"
+  },
+  {
+   "run_id": "P0429",
+   "case_id": "P0429",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 17.25,
+   "h5_md5": "3850a3e2fdaba63263ac5957ce6e1c11"
+  },
+  {
+   "run_id": "P0445",
+   "case_id": "P0445",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 21.98,
+   "h5_md5": "0d2914ceb8b36dc9b1ad5619d451e291"
+  },
+  {
+   "run_id": "P0458",
+   "case_id": "P0458",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 17.76,
+   "h5_md5": "6b22c13284b921872e865b4bf17d9b6e"
+  },
+  {
+   "run_id": "P0459",
+   "case_id": "P0459",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 26.98,
+   "h5_md5": "0a1a717d4e7d6fdc154c1714ab5920ff"
+  },
+  {
+   "run_id": "P0475",
+   "case_id": "P0475",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 26.15,
+   "h5_md5": "84e3e85359d5f4c0ed578527c5453150"
+  },
+  {
+   "run_id": "P0478",
+   "case_id": "P0478",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 14.17,
+   "h5_md5": "1a62c63ee0327f405e092a54ad9446dd"
+  },
+  {
+   "run_id": "P0497",
+   "case_id": "P0497",
+   "root": "/home/saxam/tb_data/pc4/pcm_full",
+   "qc": "OK",
+   "h5_MB": 19.85,
+   "h5_md5": "70708485575955d43f0e2f8cf1363036"
+  }
+ ]
+}

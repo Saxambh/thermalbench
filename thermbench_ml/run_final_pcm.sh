@@ -6,7 +6,7 @@
 # writes its own results_pcm*/, merge_results.py combines them. The laptop also runs the
 # non-neural PCM baselines (pcm_evaluate.py).
 #   bash run_final_pcm.sh plan               # assignment and expected hours per worker
-#   bash run_final_pcm.sh <laptop|pc3|lab|pc4|pc5a|pc5b|pc6>
+#   bash run_final_pcm.sh <laptop|pc3|lab|pc4|pc6|pc7>
 set -e
 cd "$(dirname "$0")"
 M=manifest_pcm.json
@@ -17,7 +17,9 @@ plan() {
 python3 - "$1" <<'EOF'
 import sys
 # GPU speed vs the laptop and memory (GB), as run_final.sh (tank measurements, 2026-11-04)
-GPUS = {"laptop": 1.0, "pc3": 1.0, "lab": 1.25, "pc4": 0.8, "pc5a": 1.8, "pc5b": 1.8, "pc6": 1.0}   # pc6 (RTX 4060 as pc3) added 2026-11-05
+# 2026-11-07: pc5 omitted, pc7 added; speeds measured on the tank final jobs (rebalance_final.py, 2026-11-05);
+# pc7 not yet measured, taken as the laptop
+GPUS = {"laptop": 1.0, "pc3": 1.07, "lab": 2.2, "pc4": 0.75, "pc6": 1.0, "pc7": 1.0}
 # share of the runs in train per split (pcm_splits.py; dev set 2026-11-02: fins 0.66, drive 0.81,
 # material 0.47, material_r 0.44, tilt 0.66)
 FRAC = {"random": 0.80, "ood_fins": 0.66, "ood_drive": 0.81, "ood_material": 0.47, "ood_material_r": 0.44, "ood_tilt": 0.66}
@@ -50,7 +52,9 @@ OUT=results_pcm
 case "$1" in pc5a) export CUDA_VISIBLE_DEVICES=0; OUT=results_pcm_pc5a ;; pc5b) export CUDA_VISIBLE_DEVICES=1; OUT=results_pcm_pc5b ;; esac
 mkdir -p $OUT
 exec > >(tee -a $OUT/run_final_pcm.log) 2>&1
-W=${1:?worker: laptop, pc3, lab, pc4, pc5a, pc5b or pc6}
+W=${1:?worker: laptop, pc3, lab, pc4, pc6 or pc7}
+# wait for a tank training job still on this GPU (2026-11-07); the pattern is not in this script's own command line
+while pgrep -f "[ /]train.py --model" > /dev/null; do echo "waiting for a running tank train.py $(date -u +%H:%M)"; sleep 300; done
 echo "=== run_final_pcm worker $W $(date -u '+%F %H:%M') UTC on $(hostname), manifest md5 $(md5sum $M | cut -c1-12)"
 python3 check_data.py $M || { echo "data check failed: not all frozen PCM runs are here and intact"; exit 1; }
 if [ "$W" = laptop ]; then

@@ -144,7 +144,7 @@ def index(roots, manifest=None):
     return runs
 
 
-DEFAULT_ROOTS = ["~/of_runs/pcm_full/runs", "~/tb_data/laptop/pcm_full", "~/tb_data/lab/pcm_full",
+DEFAULT_ROOTS = ["~/tb_data/pcm_frozen", "~/of_runs/pcm_full/runs", "~/tb_data/laptop/pcm_full", "~/tb_data/lab/pcm_full",
                  "~/tb_data/pc3/pcm_full", "~/tb_data/pc4/pcm_full", "~/tb_data/pc5/pcm_full",
                  "~/tb_data/pc6/pcm_full"]   # pc6 added 2026-11-05
 

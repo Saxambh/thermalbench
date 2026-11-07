@@ -224,6 +224,9 @@ Decision 3 (fin model) waits for the conducting-fin Kamkari runs (pc3, started 2
 4. **State in the paper that the plain-wall validation agreement at 0.5 mm** (195 vs 195 min) may partly
    reflect cancellation between mesh error and model error.
 
-**Not decided.** Option B, a 0.25 mm subset of 50 to 100 cases (about 3,000 to 6,000 core-h), is to be
-reconsidered after G301 and the Kamkari 3-fin case at 0.25 mm. Option C (all 500 at 0.25 mm, about
-24,000 core-h) is rejected.
+**Option B not taken (decided 2026-11-07, Saxam).** Option B, a 0.25 mm subset of 50 to 100 cases (about
+3,000 to 6,000 core-h), was reconsidered after G301 and the Kamkari 3-fin case at 0.25 mm. At 0.25 mm the 3-fin
+case melts fully at 121.3 min against 115.5 min at 0.5 mm (+5 %, inside the spot-check range of +1 to +8.7 %)
+and about 125 min in the experiment; mean deviation from the experiment drops from +0.059 to +0.045. The mesh
+effect is already quantified, so option A stands and the 3-fin 0.25 mm run joins the fine-mesh subset.
+Option C (all 500 at 0.25 mm, about 24,000 core-h) is rejected.
