@@ -32,42 +32,56 @@ simulation? The earlier physics baseline, "ideal stratification", is an idealise
 
 - **Field, profile and thermocline midpoint:** both surrogates are better than the multi-node model on
   **every split**, with every interval excluding zero.
-  - Field: 3.1 to 4.4 pp of ΔT better.
-  - Profile: 3.6 to 4.1 pp better.
-  - Midpoint: 6.6 to 19 mm better.
+  - Field: 1.46 to 4.40 pp of ΔT better. The smallest is U-Net on unseen widths, 1.46 pp [0.88, 2.04];
+    corrected after review from "3.1 to 4.4".
+  - Profile: 3.61 to 4.14 pp better. This is the most informative comparison, because the profile is the
+    observable both model types are designed to predict.
+  - Midpoint: 6.61 to 19.14 mm better. This is conditional on both fields having a defined crossing.
 - **Outlet temperature** (area-averaged, the benchmark's outlet metric):
 
 | Split | FNO minus MN | U-Net minus MN |
 |---|---|---|
-| random | +0.01 K [−0.09, +0.10], no difference | −0.16 K [−0.24, −0.07], U-Net better |
-| ood_geom | +0.03 K [−0.06, +0.14], no difference | **+1.13 K [+0.75, +1.54], MN better** |
+| random | +0.01 K [−0.09, +0.10], no clear difference | −0.16 K [−0.24, −0.07], U-Net better |
+| ood_geom | +0.03 K [−0.06, +0.14], no clear difference | **+1.13 K [+0.75, +1.54], MN better** |
 | ood_mode | **+0.17 K [+0.02, +0.34], MN better** | **+0.31 K [+0.12, +0.52], MN better** |
 | ood_flow | **+0.33 K [+0.22, +0.44], MN better** | **+0.15 K [+0.04, +0.27], MN better** |
 
-- **Stored energy:** the surrogates are better or equal. Multi-node is worse by 0.04 to 0.76 pp, and
-  significantly so except against FNO on random and U-Net on ood_geom.
+- **Stored-energy proxy:** small differences, generally favouring the surrogates. Seven of eight point
+  estimates favour a surrogate; the largest is 0.76 pp (FNO, ood_flow). On unseen widths the 1D model leads
+  U-Net by 0.12 pp [−0.06, +0.27], an interval spanning zero.
+- **Intervals spanning zero** (FNO outlet on random and ood_geom) establish neither equivalence nor a
+  negligible difference: "no clear difference".
 - **Against the other baselines:** multi-node beats ideal stratification on every metric and split, and
   beats RBF interpolation on most metrics. On discharge it transfers without any special treatment (7.6 %
   field error), where RBF and the plain networks fail (64 to 67 %).
 
-## What it shows
+## What it shows (wording agreed after review, 8 November)
 
-1. **The surrogates' advantage is the internal state of the tank:** the field, the stratification profile
-   and the thermocline position, about 2× better than a calibrated 1D model, on every split.
-2. **For the outlet temperature,** the quantity a system simulation takes from the tank, a calibrated 1D
-   model is as good as or better than the field surrogates outside the training distribution. It is
-   significantly better on discharge and faster inflow (both surrogates) and on unseen widths (U-Net). It
-   is equal to FNO in distribution, and only U-Net beats it there.
-3. **For an energy-storage reader,** the honest claim is not "surrogates beat physics models". It is
-   "surrogates are needed to predict stratification and thermocline position; for outlet temperature a
-   calibrated 1D model is already competitive and transfers more robustly."
+1. **Internal stratification:** both hybrid-canonical surrogates predict it more accurately than the
+   calibrated 1D model on all four splits.
+2. **Near-outlet temperature:** the 1D model is competitive. It has lower error than both surrogates on the
+   held-out discharge (ood_mode) and high-flow (ood_flow) cases. This is the area-averaged port-adjacent
+   cell temperature; usefulness for the delivered (flow-weighted) fluid temperature would need a
+   flux-weighted comparison.
+3. **Discharge is the clearest engineering example.** Calibrated on charging cases only, the 1D model has
+   7.58 % field error on discharge against 4.48 % (FNO) and 4.37 % (U-Net). On the same designs it has lower
+   near-outlet temperature error, by 0.17 K [0.02, 0.34] and 0.31 K [0.12, 0.52]. The preferred model
+   changes with the quantity of interest.
+
+**Manuscript wording:**
+"Across four tank splits, both hybrid-canonical surrogates reduced vertical-profile error by 3.6–4.1
+percentage points of ΔT and thermocline-midpoint error by 6.6–19.1 mm relative to the calibrated multi-node
+model. The multi-node model achieved lower near-outlet temperature error than both surrogates on held-out
+discharge and high-flow cases. For these benchmark conditions, the benefit of full-field prediction depended
+on which thermal quantity was required."
 
 ## Limits
 
 - **Simple fit:** Nelder-Mead from one start, 150 evaluations, on a 60-run subsample per closure. The
   laminar fits moved the mixing depth to the whole tank, which acts as Ri-dependent extra diffusion. The
-  fit improved the training loss only modestly (0.059 to 0.054 laminar, 0.079 to 0.071 SST). A stronger
-  calibration could improve the 1D model further, which would strengthen point 2.
+  fit improved the training loss only modestly (0.059 to 0.054 laminar, 0.079 to 0.071 SST). This limits
+  conclusions about the best attainable 1D performance. Better optimisation of the training-profile
+  objective could improve or worsen held-out outlet error. No refit is needed for the stated comparison.
 - **Outlet metric:** the 1D model's outlet value is the layer temperature at the outlet height, compared
   with the same area-averaged outlet metric as every model. It is not the flow-weighted temperature.
 - **Statistics:** descriptive marginal intervals, no multiplicity correction. The tank surrogate results are
