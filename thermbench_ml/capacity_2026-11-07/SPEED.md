@@ -25,7 +25,8 @@ not an equal-cost or energy comparison. Training cost is not amortised into it.
   - loading the three checkpoints and building the input scaling, done once per split;
   - reading the CFD labels (used only for scoring);
   - scoring.
-- **Result over 821 test runs** (all four splits): median **1.45 s** per run (10th to 90th percentile 1.41 to
+- **Result over 821 run-split timings** (654 distinct runs, each timed once per split it is a test run in;
+  all with 121 snapshots): median **1.45 s** per run (10th to 90th percentile 1.41 to
   1.51 s, max 2.75 s).
 
 ## CFD timing (`cfdt_all.txt`)

@@ -75,11 +75,12 @@ Simulated time is 0.33 to 11 h (median 1.75 h).
 
 - **Mesh, three levels, G131** (lauric acid, unfinned; a width-rounded variant of P0131):
   - t99 from the dense series is 4198.6 / 4515.0 / 4704.3 s at 1.0 / 0.5 / 0.25 mm;
-  - observed order 0.74; GCI 13.1 % on the 0.5 mm production mesh and 7.5 % at 0.25 mm;
+  - observed order 0.74; GCI 13.06 % on the 0.5 mm production mesh and 7.5 % at 0.25 mm; the 0.5 mm run is
+    9.5 % early against the extrapolation and 4.0 % early against the 0.25 mm run;
   - this is one scalar in one configuration, from a combined space-and-time refinement (the time step
     halves with the mesh).
-- **Mesh, G301** (octadecane): order about 0.15, so not in the asymptotic range; no GCI. Two-grid difference
-  7.25 %.
+- **Mesh, G301** (octadecane): order about 0.15, not shown to be in the asymptotic range; no GCI. The 0.5 mm
+  run melts 6.76 % earlier than the 0.25 mm run.
 - **Spot check, 6 dataset designs, 0.5 vs 0.25 mm:**
   - the finer mesh melts later in all 6, by 1.0 to 8.7 % (median 4.9 %);
   - field differences 4.2 to 7.6 % of ΔT, concentrated at the melt front, with front shifts of 0.3 to

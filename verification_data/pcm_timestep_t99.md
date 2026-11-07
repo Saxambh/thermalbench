@@ -41,10 +41,16 @@ from its interpolated crossing is:
 
 **Reading**
 - **G131:** sampling at the write interval inflated the reported uncertainty. The corrected value for t99
-  on the production mesh is 13.1 %, for one scalar in one configuration, from a combined space-time
-  refinement.
-- **G301:** its observed order of about 0.15 shows the three levels are not in the asymptotic range, so no
-  GCI is quoted for it. Its two-grid difference (0.25 vs 0.5 mm) is **7.25 %** (dense), not 6.67 %.
+  on the production mesh is 13.06 %, for one scalar in the width-adjusted G131 case, from a combined
+  space-time refinement. The 0.5 mm result is 9.5 % early relative to the extrapolation, and 4.0 % early
+  relative to the observed 0.25 mm result. 13.06 % replaces 15.43 % wherever the current estimate is cited.
+- **G301:** its observed order of about 0.15 means the three levels are not shown to be in the asymptotic
+  range, so no GCI is quoted (pre-registered order criterion). The low order makes the extrapolation
+  unreliable; it does not by itself explain why the order is low.
+  - Two-grid difference on the same basis as the old 6.67 % (divided by the fine result): the 0.5 mm run
+    melts **6.76 %** earlier than the 0.25 mm run (dense).
+  - Equivalently, the fine run is 7.25 % later, divided by the medium result.
+  - The old 6.67 % used snapshot t99.
 - **P0021:** the fine mesh melts 0.70 % later (dense), not 0.98 %.
 - **Three different "melt" times** must be kept apart in the paper:
   - **t99:** liquid fraction 0.99, used in the mesh study;

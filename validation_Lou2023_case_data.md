@@ -136,8 +136,17 @@ a trend:
 **Outlet temperature (started 8 November, `verification_data/lou_outlet_2026-11-07/`).**
 - **Data:** Lou's outlet curve for this case (uniform baffle, 1 L/min, 333.15 K into 293.15 K) was
   digitised from Fig. 15a via T*_out = 1 − Ri_bulk/Ri0.
-- **Comparison up to 750 s:** within 0.024 in T*_out. Breakthrough (T* = 0.1) at t* 0.796 (Lou) vs 0.806
-  (ours).
+- **Provenance:** experimental (checked 8 November in the full text).
+  - Fig. 15 sits in Section 4, titled "...: experimental results".
+  - Section 4.2 introduces it with "Additional charging experiments were performed under different working
+    temperature differences" (uniform and optimised baffle).
+  - §2.6 gives a measurement uncertainty for Ri_bulk from the PT100 inlet and outlet sensors.
+  - Their CFD (18 days per full charge) was used only for the baffle optimisation.
+  - So the curve is the PT100-measured outlet temperature, transformed to Ri_bulk by the authors.
+- **Comparison up to 750 s** (8 times, through t* 0.887): within 0.024 in T*_out. Breakthrough (T* = 0.1)
+  at t* 0.796 (Lou) vs 0.806 (ours), 8.6 s later in our run. The 50 % crossing is not reached yet.
+- **Wording:** the late h_j deviation is described as persistent late over-penetration. Two PIV tests give
+  repeatability information but cannot rule out shared measurement or extraction error.
 - **Still running:** the run is being extended on the lab to t* = 1.5 (1,275 s) for the full curve.
 
 ## Plan
