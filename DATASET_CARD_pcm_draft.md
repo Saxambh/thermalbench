@@ -123,8 +123,12 @@ validation dossier, §11.
   than this sensitivity should be read with care.
 - **Fin surfaces:** fins are resolved on the cell grid, so 1 mm fins span two cells and the no-slip
   surface sits at cell centres.
+- **Energy metric:** the ML `energy_err` covers sensible and latent energy in the PCM cells, normalised by
+  their full-charge capacity. It excludes energy stored in the metal fins.
 - **Melt-time metrics:** t99 (liquid fraction 0.99), the run end (0.995) and experimental "full melt" are
-  different quantities. ML melt-time scores use an input-only time horizon of 3 t_ref and report the share
+  different quantities. The ML reference t90 is interpolated between field snapshots; on all six test sets it
+  matches the dense liquid-fraction series to within 0.10 % (median 0.001 to 0.003 %,
+  `thermbench_ml/pcm_t90_ref_check.json`). ML melt-time scores use an input-only time horizon of 3 t_ref and report the share
   of runs that reach 90 %.
 
 ## Still missing for the release
