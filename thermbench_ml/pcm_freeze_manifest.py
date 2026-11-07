@@ -9,6 +9,7 @@ check_data.py which roots to search. Every PCM split then draws from this list o
 (pcm_data.index(..., manifest=path)), so all models see exactly the same runs.
 """
 import argparse
+import csv
 import glob
 import hashlib
 import json
@@ -30,13 +31,13 @@ def md5(path, block=1 << 22):
 
 
 def fixed(path):
-    """True if the case was solved with p_rghFinal relTol 0. The synced copies on the laptop hold
+    """(True/False, evidence) for p_rghFinal relTol 0. The synced copies on the laptop hold
     only light files (no system/), so their origin batch (runs, not runs_v1_*) is the evidence there."""
     f = os.path.join(path, "system", "fvSolution")
     if os.path.exists(f):
         m = re.search(r"p_rghFinal\s*\{[^}]*?relTol\s+([0-9.eE+-]+)\s*;", open(f).read(), re.S)
-        return bool(m) and float(m.group(1)) == 0.0
-    return "v1_relTol" not in path
+        return bool(m) and float(m.group(1)) == 0.0, "system/fvSolution"
+    return "v1_relTol" not in path, "no system/fvSolution in this copy: origin batch (not runs_v1_*) and case.json made after the fix"
 
 
 def main():
@@ -44,13 +45,16 @@ def main():
     ap.add_argument("--roots", nargs="+", default=DEFAULT_ROOTS)
     ap.add_argument("--out", default=os.path.join(HERE, "manifest_pcm.json"))
     ap.add_argument("--expect", type=int, default=500, help="design size, for the summary only")
+    ap.add_argument("--inventory", default=None, help="accepted-output inventory csv: adds source machine and path per run")
     a = ap.parse_args()
     runs = index(a.roots)
+    inv = {r["case_id"]: r for r in csv.DictReader(open(a.inventory))} if a.inventory else {}
     entries, skipped = [], {"no_qc": [], "fail": [], "old_solver": []}
     for r in runs:
         q = os.path.join(r.path, "qc.json")
         st = json.load(open(q)).get("status", "none") if os.path.exists(q) else "none"
-        if not fixed(r.path):
+        ok, evidence = fixed(r.path)
+        if not ok:
             skipped["old_solver"].append(r.run_id); continue
         if st == "none":
             skipped["no_qc"].append(r.run_id)
@@ -58,9 +62,12 @@ def main():
             skipped["fail"].append(r.run_id); continue
         h5 = os.path.join(r.path, "thermbench.h5")
         entries.append({"run_id": r.run_id, "case_id": r.case_id, "root": os.path.dirname(r.path), "qc": st,
-                        "h5_MB": round(os.path.getsize(h5) / 1e6, 2), "h5_md5": md5(h5)})
+                        "h5_MB": round(os.path.getsize(h5) / 1e6, 2), "h5_md5": md5(h5), "solver_evidence": evidence}
+                       | ({"source_machine": inv[r.case_id]["accepted_machine"], "source_path": inv[r.case_id]["accepted_path"]}
+                          if r.case_id in inv else {}))
     body = {"family": "pcm", "created_utc": time.strftime("%Y-%m-%d %H:%M", time.gmtime()),
             "n_runs": len(entries), "n_cases": len({e["case_id"] for e in entries}), "roots": a.roots,
+            "inventory": os.path.basename(a.inventory) if a.inventory else None,
             "solver": "make_pcm_case.py with p_rghFinal relTol 0, maxIter 200 (option A, 2026-11-04)",
             "excluded": {"qc_fail": sorted(skipped["fail"]), "old_solver": sorted(skipped["old_solver"])},
             "runs": entries}
