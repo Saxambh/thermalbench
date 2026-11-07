@@ -1,12 +1,12 @@
 case_id,status,accepted_machine,accepted_path,source,pcm_qc,solver_qc,series_repaired,energy_err_pct,t_melt_s,h5_bytes,identical_copies_elsewhere,differing_copies,n_attempt_folders,superseded
-P0000,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0000,dataset run,OK,WARN,no,0.153,9633.4824,25404037,0,0,1,
+P0000,ACCEPTED,pc6,/home/saxam/of_runs/pcm_warnfix/P0000,corrected rerun (replaces the dataset run),OK,fixed,no,0.156,9555.3412,25188776,0,0,2,"laptop:runs[dataset,OK]"
 P0001,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0001,dataset run,OK,ok,no,0.317,3189.308,15159322,0,0,2,"pc4:runs[dataset,-]"
 P0002,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0002,dataset run,OK,ok,no,0.152,5558.0711,23001526,0,0,1,
 P0003,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0003,dataset run,OK,ok,no,0.036,10555.029,20663744,0,0,1,
 P0004,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0004,dataset run,OK,ok,no,0.081,16961.718,27080011,0,0,1,
 P0005,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0005,dataset run,OK,ok,no,0.274,3407.3474,17795066,0,0,1,
 P0006,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0006,dataset run,OK,ok,no,0.087,5847.8492,9399667,0,0,2,"pc4:runs[dataset,-]"
-P0007,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0007,dataset run,OK,WARN,no,0.087,4529.7464,25383516,0,0,1,
+P0007,ACCEPTED,pc3,/home/saxam/of_runs/pcm_warn/P0007,corrected rerun (replaces the dataset run),OK,fixed,no,0.091,4529.8247,25373051,0,0,2,"laptop:runs[dataset,OK]"
 P0008,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0008,dataset run,OK,ok,no,0.894,3433.3935,16788852,0,0,1,
 P0009,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0009,dataset run,OK,ok,no,0.068,8954.0083,21500332,0,0,1,
 P0010,ACCEPTED,lab,/home/saxam/of_runs/pcm_full/runs/P0010,dataset run,OK,ok,no,0.341,8112.6898,22976909,0,0,1,
@@ -31,7 +31,7 @@ P0028,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0028,dataset run,OK,ok,no,
 P0029,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0029,dataset run,OK,ok,no,0.064,8006.4629,23310071,0,0,2,"pc3:runs[dataset,-]"
 P0030,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0030,dataset run,OK,WARN,no,0.292,6562.3062,20706661,0,0,1,
 P0031,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0031,dataset run,OK,ok,no,0.085,3158.2323,17107183,0,0,2,"pc4:runs[dataset,-]"
-P0032,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0032,dataset run,WARN,WARN,yes,0.204,19392.379,32252246,0,0,1,
+P0032,ACCEPTED,pc6,/home/saxam/of_runs/pcm_warnfix/P0032,corrected rerun (replaces the dataset run),OK,fixed,no,0.118,19322.758,32059898,0,0,2,"pc3:runs[dataset,WARN]"
 P0033,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0033,dataset run,OK,ok,no,0.399,1535.1394,12351650,0,0,3,"pc4:runs[dataset,-];pc6:runs[dataset,-]"
 P0034,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0034,dataset run,OK,ok,no,0.105,9754.0973,12674201,0,0,1,
 P0035,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0035,dataset run,OK,ok,no,0.47,4320.707,24258692,0,0,1,
@@ -40,14 +40,14 @@ P0037,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0037,dataset run,OK,ok,no,
 P0038,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0038,dataset run,OK,ok,no,0.156,7648.4508,12990863,0,0,1,
 P0039,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0039,dataset run,OK,ok,no,0.023,9155.5059,34407808,0,0,1,
 P0040,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0040,dataset run,OK,ok,no,0.091,7988.5155,11532204,0,0,2,"pc4:runs[dataset,-]"
-P0041,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0041,dataset run,WARN,WARN,no,0.211,1986.6987,21203931,0,0,2,"pc3:runs[dataset,-]"
+P0041,ACCEPTED,pc6,/home/saxam/of_runs/pcm_warnfix/P0041,corrected rerun (replaces the dataset run),OK,fixed,no,0.212,1981.7397,21188958,0,0,3,"pc3:runs[dataset,-];pc6:runs[dataset,WARN]"
 P0042,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0042,dataset run,OK,ok,yes,0.052,14795.451,19976157,0,0,1,
 P0043,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0043,dataset run,OK,ok,no,0.643,2279.5982,23892372,1,0,2,"pc6:runs[dataset,OK]"
 P0044,ACCEPTED,laptop,/mnt/d/ThermBench_data/pcm_rerunB/P0044,corrected rerun (replaces the dataset run),OK,fixed,no,0.117,22659.212,24754912,0,0,3,"laptop:pcm_rerunB_halffix[halffix,-];lab:runs[dataset,WARN]"
 P0045,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0045,dataset run,OK,ok,no,0.101,4371.61,21437500,0,0,1,
 P0046,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0046,dataset run,OK,ok,no,0.341,6696.7582,25361178,0,0,1,
 P0047,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0047,dataset run,OK,ok,no,0.033,4089.661,11576589,0,0,2,"pc4:runs[dataset,-]"
-P0048,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0048,dataset run,OK,WARN,no,0.193,3784.973,19445294,0,0,1,
+P0048,ACCEPTED,pc3,/home/saxam/of_runs/pcm_warn/P0048,corrected rerun (replaces the dataset run),OK,fixed,no,0.194,3785.8577,19441245,0,0,2,"pc4:runs[dataset,OK]"
 P0049,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0049,dataset run,OK,ok,no,0.021,4228.9492,12830165,0,0,2,"pc4:runs[dataset,-]"
 P0050,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0050,dataset run,OK,ok,no,0.576,8437.0,15101165,0,0,1,
 P0051,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0051,dataset run,OK,ok,no,0.043,11702.131,22368186,0,0,2,"pc3:runs[dataset,-]"
@@ -74,8 +74,8 @@ P0071,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0071,dataset run,OK,ok,no,
 P0072,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0072,dataset run,OK,ok,yes,0.017,13841.149,23251249,0,0,1,
 P0073,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0073,dataset run,OK,ok,no,0.477,1190.8611,14155643,0,0,2,"pc6:runs[dataset,-]"
 P0074,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0074,dataset run,OK,ok,yes,0.066,20804.5,13859519,0,0,1,
-P0075,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0075,dataset run,WARN,WARN,no,0.237,4538.7799,22696114,0,0,1,
-P0076,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0076,dataset run,OK,WARN,no,0.439,9470.8519,18295284,0,0,1,
+P0075,ACCEPTED,pc6,/home/saxam/of_runs/pcm_warn/P0075,corrected rerun (replaces the dataset run),OK,fixed,no,0.247,4498.5116,22344205,0,0,2,"pc4:runs[dataset,WARN]"
+P0076,ACCEPTED,pc6,/home/saxam/of_runs/pcm_warnfix/P0076,corrected rerun (replaces the dataset run),OK,fixed,no,0.429,9463.587,18273263,0,0,2,"laptop:runs[dataset,OK]"
 P0077,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0077,dataset run,OK,ok,no,0.138,4345.0677,18445572,0,0,2,"pc4:runs[dataset,-]"
 P0078,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0078,dataset run,OK,ok,no,0.176,6481.8577,15667339,0,0,1,
 P0079,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0079,dataset run,OK,WARN,no,0.129,3084.9486,27915047,0,0,1,
@@ -88,7 +88,7 @@ P0085,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0085,dataset run,OK,ok,no,
 P0086,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0086,dataset run,OK,ok,no,0.021,10993.904,19307895,0,0,1,
 P0087,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0087,dataset run,OK,ok,no,0.743,4394.6422,24925019,0,0,1,
 P0088,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0088,dataset run,OK,ok,no,0.254,7587.0715,28648819,0,0,1,
-P0089,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0089,dataset run,WARN,WARN,no,0.171,4572.3671,17814642,0,0,1,
+P0089,ACCEPTED,pc6,/home/saxam/of_runs/pcm_warnfix/P0089,corrected rerun (replaces the dataset run),OK,fixed,no,0.088,4559.1734,17801772,0,0,2,"pc4:runs[dataset,WARN]"
 P0090,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0090,dataset run,OK,ok,no,0.623,3442.5464,10020671,0,0,1,
 P0091,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0091,dataset run,OK,ok,no,0.089,9742.3645,22625561,0,0,2,"pc3:runs[dataset,-]"
 P0092,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0092,dataset run,OK,ok,no,0.023,14324.498,31459615,0,0,2,"pc3:runs[dataset,-]"
@@ -129,7 +129,7 @@ P0126,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0126,dataset run,OK,ok,no,
 P0127,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0127,dataset run,OK,ok,no,0.161,4093.8903,24509065,0,0,1,
 P0128,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0128,dataset run,OK,ok,no,0.324,11122.821,20797137,0,0,1,
 P0129,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0129,dataset run,OK,ok,no,0.126,3803.1647,21212033,0,0,1,
-P0130,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0130,dataset run,WARN,WARN,no,0.155,5800.8675,22197441,0,0,1,
+P0130,ACCEPTED,pc6,/home/saxam/of_runs/pcm_warnfix/P0130,corrected rerun (replaces the dataset run),OK,fixed,no,0.162,5813.0806,22356182,0,0,2,"laptop:runs[dataset,WARN]"
 P0131,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0131,dataset run,OK,ok,no,0.128,4413.7531,9786080,0,0,2,"pc4:runs[dataset,-]"
 P0132,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0132,dataset run,OK,ok,no,0.083,7874.3371,12816769,0,0,1,
 P0133,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0133,dataset run,OK,WARN,yes,0.211,1997.1221,22029935,0,0,1,
@@ -163,7 +163,7 @@ P0160,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0160,dataset run,OK,ok,no,
 P0161,ACCEPTED,lab,/home/saxam/of_runs/pcm_full/runs/P0161,dataset run,OK,ok,no,0.252,5145.1989,29981729,0,0,1,
 P0162,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0162,dataset run,OK,ok,yes,0.072,20064.053,29270640,0,0,1,
 P0163,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0163,dataset run,OK,WARN,no,0.656,2060.2904,12725461,0,0,1,
-P0164,ACCEPTED,pc7,/home/saxam/of_runs/pcm_full/runs/P0164,dataset run,OK,WARN,no,0.219,4856.7489,16482765,0,0,3,"pc4:runs[dataset,-];pc6:runs[dataset,-]"
+P0164,ACCEPTED,lab,/home/saxam/of_runs/pcm_warn/P0164,corrected rerun (replaces the dataset run),OK,fixed,no,0.219,4872.2636,16517989,0,0,4,"pc4:runs[dataset,-];pc6:runs[dataset,-];pc7:runs[dataset,OK]"
 P0165,ACCEPTED,lab,/home/saxam/of_runs/pcm_full/runs/P0165,dataset run,OK,ok,no,0.011,9767.1441,19470246,0,0,2,"pc3:runs[dataset,-]"
 P0166,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0166,dataset run,OK,ok,no,0.08,6759.3804,22060911,0,0,1,
 P0167,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0167,dataset run,OK,ok,no,0.303,4394.8167,15580530,0,0,2,"pc4:runs[dataset,-]"
@@ -171,7 +171,7 @@ P0168,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0168,dataset run,OK,ok,no,
 P0169,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0169,dataset run,OK,ok,no,0.64,3740.8491,19045851,0,0,1,
 P0170,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0170,dataset run,OK,ok,no,0.08,7361.0816,14047677,0,0,2,"pc4:runs[dataset,-]"
 P0171,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0171,dataset run,OK,ok,no,0.331,5806.507,27490598,0,0,2,"pc3:runs[dataset,-]"
-P0172,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0172,dataset run,OK,WARN,yes,0.181,8542.3723,24059329,0,0,1,
+P0172,ACCEPTED,pc3,/home/saxam/of_runs/pcm_warnfix/P0172,corrected rerun (replaces the dataset run),OK,fixed,no,0.183,8538.5925,24046245,0,0,2,"pc3:runs[dataset,OK]"
 P0173,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0173,dataset run,OK,ok,no,0.021,3100.7799,10237352,1,0,2,"pc6:runs[dataset,OK]"
 P0174,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0174,dataset run,OK,ok,no,0.403,5544.8381,18106706,0,0,1,
 P0175,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0175,dataset run,OK,ok,no,0.029,10945.197,19528114,0,0,2,"pc5-archive(laptop D:):pcm_full[dataset,-]"
@@ -214,7 +214,7 @@ P0211,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0211,dataset run,OK,WARN,n
 P0212,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0212,dataset run,OK,ok,no,0.078,12703.594,18746353,0,0,1,
 P0213,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0213,dataset run,OK,ok,no,0.338,2639.1481,16496090,0,0,1,
 P0214,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0214,dataset run,OK,ok,no,0.03,9191.4274,8751273,0,0,2,"pc4:runs[dataset,-]"
-P0215,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0215,dataset run,OK,WARN,no,0.244,3095.9089,27229216,0,0,3,"pc3:runs[dataset,-];pc6:runs[dataset,-]"
+P0215,ACCEPTED,pc3,/home/saxam/of_runs/pcm_warnfix/P0215,corrected rerun (replaces the dataset run),OK,fixed,no,0.246,3134.0492,27395414,0,0,4,"pc3:runs[dataset,-];pc4:runs[dataset,OK];pc6:runs[dataset,-]"
 P0216,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0216,dataset run,OK,ok,no,0.509,4670.7572,15177562,0,0,1,
 P0217,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0217,dataset run,OK,ok,no,0.13,7147.1588,25525074,0,0,1,
 P0218,ACCEPTED,pc5-archive(laptop D:),/mnt/d/ThermBench_data/tb_data/pc5/pcm_full/P0218,dataset run,OK,ok,no,0.339,11022.107,26859191,0,0,1,
@@ -255,10 +255,10 @@ P0252,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0252,dataset run,OK,ok,no,
 P0253,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0253,dataset run,OK,ok,no,0.126,6425.0869,17959684,0,0,1,
 P0254,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0254,dataset run,OK,ok,no,0.089,8519.4864,24826458,0,0,2,"pc3:runs[dataset,-]"
 P0255,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0255,dataset run,OK,ok,no,0.162,6062.8376,15337305,0,0,2,"pc4:runs[dataset,-]"
-P0256,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0256,dataset run,OK,WARN,no,0.7,5780.9704,16011815,0,0,2,"pc3:runs[dataset,-]"
+P0256,ACCEPTED,pc3,/home/saxam/of_runs/pcm_warnfix/P0256,corrected rerun (replaces the dataset run),OK,fixed,no,0.699,5788.7631,15998720,0,0,3,"pc3:runs[dataset,-];pc6:runs[dataset,OK]"
 P0257,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0257,dataset run,OK,ok,no,0.023,8952.6602,18414878,0,0,2,"pc3:runs[dataset,-]"
 P0258,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0258,dataset run,OK,ok,yes,0.186,9749.66,33316406,0,0,1,
-P0259,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0259,dataset run,WARN,WARN,no,0.179,3353.1644,15786201,1,0,2,"pc6:runs[dataset,WARN]"
+P0259,ACCEPTED,pc3,/home/saxam/of_runs/pcm_warnfix/P0259,corrected rerun (replaces the dataset run),OK,fixed,no,0.159,3334.2328,15675196,0,0,3,"pc4:runs[dataset,WARN];pc6:runs[dataset,WARN]"
 P0260,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0260,dataset run,OK,ok,no,0.1,6454.0676,15138708,1,0,2,"pc6:runs[dataset,OK]"
 P0261,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0261,dataset run,OK,ok,yes,0.128,5375.1623,27164110,0,0,1,
 P0262,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0262,dataset run,OK,ok,no,0.013,9335.015,22021719,0,0,1,
@@ -318,12 +318,12 @@ P0315,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0315,dataset run,OK,ok,no,
 P0316,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0316,dataset run,OK,WARN,no,0.027,34231.835,24979624,0,0,1,
 P0317,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0317,dataset run,OK,ok,no,0.504,4430.6041,21889569,0,0,1,
 P0318,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0318,dataset run,OK,ok,no,0.095,4020.3929,16902754,1,0,3,"pc4:runs[dataset,-];lab:runs[dataset,OK]"
-P0319,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0319,dataset run,OK,WARN,no,0.141,4540.9753,26282510,0,0,1,
+P0319,ACCEPTED,pc3,/home/saxam/of_runs/pcm_warn/P0319,corrected rerun (replaces the dataset run),OK,fixed,no,0.141,4540.5982,26273201,0,0,2,"pc3:runs[dataset,OK]"
 P0320,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0320,dataset run,OK,ok,no,0.068,12135.334,22265136,0,0,1,
 P0321,ACCEPTED,lab,/home/saxam/of_runs/pcm_full/runs/P0321,dataset run,OK,ok,no,0.382,1865.5553,18588094,0,0,3,"pc4:runs[dataset,-];pc6:runs[dataset,-]"
 P0322,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0322,dataset run,OK,ok,no,0.061,8554.3395,9127854,0,0,2,"pc4:runs[dataset,-]"
 P0323,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0323,dataset run,OK,ok,no,0.329,2936.9983,21801832,0,0,1,
-P0324,ACCEPTED,pc7,/home/saxam/of_runs/pcm_full/runs/P0324,dataset run,WARN,WARN,no,0.241,18534.028,30837132,0,0,2,"pc5-archive(laptop D:):pcm_full[dataset,-]"
+P0324,ACCEPTED,pc3,/home/saxam/of_runs/pcm_warnfix/P0324,corrected rerun (replaces the dataset run),OK,fixed,no,0.245,18592.548,30973901,0,0,3,"pc5-archive(laptop D:):pcm_full[dataset,-];pc7:runs[dataset,WARN]"
 P0325,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0325,dataset run,OK,ok,no,0.033,5420.8413,11429621,0,0,2,"pc4:runs[dataset,-]"
 P0326,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0326,dataset run,OK,ok,no,0.383,5305.062,19766306,0,0,2,"pc3:runs[dataset,-]"
 P0327,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0327,dataset run,OK,ok,no,0.072,3968.644,25535405,0,0,1,
@@ -375,7 +375,7 @@ P0372,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0372,dataset run,OK,ok,no,
 P0373,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0373,dataset run,OK,ok,no,0.015,4770.9017,16826828,0,0,2,"pc4:runs[dataset,-]"
 P0374,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0374,dataset run,OK,ok,no,0.099,4589.3987,11190113,0,0,2,"pc6:runs[dataset,-]"
 P0375,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0375,dataset run,OK,ok,no,0.19,7136.2064,23826727,0,0,1,
-P0376,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0376,dataset run,OK,WARN,no,0.065,21908.781,14758692,0,0,1,
+P0376,ACCEPTED,lab,/home/saxam/of_runs/pcm_warn/P0376,corrected rerun (replaces the dataset run),OK,fixed,no,0.1,21912.324,14738165,0,0,2,"pc4:runs[dataset,OK]"
 P0377,ACCEPTED,lab,/home/saxam/of_runs/pcm_full/runs/P0377,dataset run,OK,ok,no,0.307,2963.1866,25016706,0,0,1,
 P0378,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0378,dataset run,WARN,ok,no,0.024,7777.2784,25024484,0,0,1,
 P0379,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0379,dataset run,OK,WARN,no,0.38,3531.3373,17946748,0,0,1,
@@ -403,7 +403,7 @@ P0400,ACCEPTED,pc7,/home/saxam/of_runs/pcm_full/runs/P0400,dataset run,OK,ok,no,
 P0401,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0401,dataset run,OK,ok,no,0.231,3696.1821,21589614,0,0,1,
 P0402,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0402,dataset run,OK,ok,no,0.131,3940.1576,13436057,1,0,3,"pc4:runs[dataset,-];lab:runs[dataset,OK]"
 P0403,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0403,dataset run,OK,WARN,no,0.195,5851.6356,24030787,0,0,2,"pc3:runs[dataset,-]"
-P0404,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0404,dataset run,OK,WARN,no,0.121,3241.9605,26657908,0,0,1,
+P0404,ACCEPTED,lab,/home/saxam/of_runs/pcm_warnfix/P0404,corrected rerun (replaces the dataset run),OK,fixed,no,0.122,3252.3584,26757138,0,0,2,"pc4:runs[dataset,OK]"
 P0405,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0405,dataset run,OK,ok,no,0.185,3940.3071,15078709,0,0,2,"pc4:runs[dataset,-]"
 P0406,ACCEPTED,pc3,/home/saxam/of_runs/pcm_full/runs/P0406,dataset run,OK,ok,no,0.292,12380.862,20886510,0,0,1,
 P0407,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0407,dataset run,OK,ok,no,0.027,11539.075,21258650,0,0,2,"pc3:runs[dataset,-]"
@@ -418,7 +418,7 @@ P0415,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0415,dataset run,OK,ok,no,
 P0416,ACCEPTED,lab,/home/saxam/of_runs/pcm_full/runs/P0416,dataset run,OK,ok,no,0.017,27689.598,37899506,0,0,2,"pc3:runs[dataset,-]"
 P0417,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0417,dataset run,OK,ok,no,0.489,4078.2482,19365927,0,0,1,
 P0418,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0418,dataset run,OK,ok,no,0.093,8763.678,19549146,0,0,1,
-P0419,NEEDS CORRECTED RERUN (solver QC FAIL),,,,,FAIL,no,,,,0,0,2,"pc5-archive(laptop D:):pcm_full[dataset,-];pc6:runs[dataset,WARN]"
+P0419,ACCEPTED,pc6,/home/saxam/of_runs/pcm_rerunE/P0419,corrected rerun (replaces the dataset run),OK,fixed,no,0.126,3972.1105,21939112,0,0,3,"pc5-archive(laptop D:):pcm_full[dataset,-];pc6:runs[dataset,WARN]"
 P0420,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0420,dataset run,OK,ok,no,0.225,11032.149,21636576,0,0,1,
 P0421,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0421,dataset run,OK,ok,no,0.145,3829.6857,15708264,0,0,2,"pc4:runs[dataset,-]"
 P0422,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0422,dataset run,OK,ok,no,0.421,2777.9781,15680245,0,0,2,"pc6:runs[dataset,-]"
@@ -427,7 +427,7 @@ P0424,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0424,dataset run,OK,ok,no,
 P0425,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0425,dataset run,OK,ok,no,0.086,4909.1856,26878882,0,0,2,"pc5-archive(laptop D:):pcm_full[dataset,-]"
 P0426,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0426,dataset run,OK,ok,no,0.022,15051.638,24596583,0,0,1,
 P0427,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0427,dataset run,OK,ok,no,0.368,4619.3396,19790424,0,0,1,
-P0428,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0428,dataset run,OK,WARN,no,0.32,3075.863,18015475,0,0,1,
+P0428,ACCEPTED,lab,/home/saxam/of_runs/pcm_warnfix/P0428,corrected rerun (replaces the dataset run),OK,fixed,no,0.319,3093.7575,18141294,0,0,2,"pc4:runs[dataset,OK]"
 P0429,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0429,dataset run,OK,ok,no,0.016,7814.4815,17253349,0,0,1,
 P0430,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0430,dataset run,OK,ok,yes,0.208,10124.303,29433124,0,0,1,
 P0431,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0431,dataset run,OK,ok,no,0.148,4761.745,10842766,0,0,2,"pc4:runs[dataset,-]"
@@ -441,7 +441,7 @@ P0438,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0438,dataset run,OK,ok,no,
 P0439,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0439,dataset run,OK,ok,no,0.388,2127.3407,30702069,0,0,1,
 P0440,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0440,dataset run,OK,ok,yes,0.361,12061.692,24310089,0,0,1,
 P0441,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0441,dataset run,OK,ok,no,0.057,5888.5341,21977446,0,0,1,
-P0442,NEEDS CORRECTED RERUN (solver QC FAIL),,,,,FAIL,no,,,,0,0,1,"pc4:runs[dataset,WARN]"
+P0442,ACCEPTED,pc6,/home/saxam/of_runs/pcm_rerunE/P0442,corrected rerun (replaces the dataset run),OK,fixed,no,0.178,7054.1391,22649189,0,0,2,"pc4:runs[dataset,WARN]"
 P0443,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0443,dataset run,OK,ok,no,0.061,2292.5928,12982659,1,0,3,"pc4:runs[dataset,-];lab:runs[dataset,OK]"
 P0444,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0444,dataset run,OK,ok,no,0.16,6838.5951,10760493,0,0,2,"pc4:runs[dataset,-]"
 P0445,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0445,dataset run,OK,ok,no,0.328,1911.7086,21984468,0,0,1,
@@ -468,10 +468,10 @@ P0465,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0465,dataset run,OK,ok,no,
 P0466,ACCEPTED,pc7,/home/saxam/of_runs/pcm_full/runs/P0466,dataset run,OK,ok,no,0.085,22232.822,32830749,0,0,2,"pc5-archive(laptop D:):pcm_full[dataset,-]"
 P0467,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0467,dataset run,OK,ok,no,0.036,3667.9958,14919425,0,0,2,"pc4:runs[dataset,-]"
 P0468,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0468,dataset run,OK,ok,no,0.074,11238.5,10375725,0,0,1,
-P0469,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0469,dataset run,WARN,WARN,no,0.204,2434.3015,24366911,0,0,3,"pc3:runs[dataset,-];pc6:runs[dataset,-]"
+P0469,ACCEPTED,lab,/home/saxam/of_runs/pcm_warnfix/P0469,corrected rerun (replaces the dataset run),OK,fixed,no,0.158,2437.9356,24527196,0,0,4,"pc3:runs[dataset,-];pc4:runs[dataset,WARN];pc6:runs[dataset,-]"
 P0470,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0470,dataset run,OK,ok,no,0.115,11769.173,16123848,0,0,1,
 P0471,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0471,dataset run,OK,ok,no,0.514,3354.5228,17400749,0,0,1,
-P0472,ACCEPTED,pc5-archive(laptop D:),/mnt/d/ThermBench_data/tb_data/pc5/pcm_full/P0472,dataset run,OK,WARN,no,0.324,12001.411,21943767,0,0,1,
+P0472,ACCEPTED,lab,/home/saxam/of_runs/pcm_warnfix/P0472,corrected rerun (replaces the dataset run),OK,fixed,no,0.325,12009.528,21941448,0,0,2,"pc5-archive(laptop D:):pcm_full[dataset,OK]"
 P0473,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0473,dataset run,OK,ok,no,0.028,5448.6543,18046718,0,0,1,
 P0474,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0474,dataset run,OK,ok,no,0.411,4381.9779,14846598,0,0,1,
 P0475,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0475,dataset run,OK,ok,no,0.085,6816.9905,26150719,0,0,1,
@@ -494,7 +494,7 @@ P0491,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0491,dataset run,OK,ok,no,
 P0492,ACCEPTED,laptop,/home/saxam/of_runs/pcm_full/runs/P0492,dataset run,OK,ok,no,0.074,11499.031,24265496,0,0,1,
 P0493,ACCEPTED,pc6,/home/saxam/of_runs/pcm_full/runs/P0493,dataset run,OK,ok,no,0.257,1744.0621,23157548,1,0,3,"pc4:runs[dataset,-];lab:runs[dataset,OK]"
 P0494,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0494,dataset run,OK,ok,no,0.097,15317.5,10673080,0,0,1,
-P0495,NO USABLE OUTPUT,,,,,FAIL,no,,,,0,0,2,"pc3:runs[dataset,FAIL];pc3:pcm_rerunD[rerun,FAIL]"
+P0495,ACCEPTED,pc6,/home/saxam/of_runs/pcm_rerunE/P0495,corrected rerun (replaces the dataset run),OK,fixed,no,0.123,2825.0091,24020079,0,0,3,"pc3:runs[dataset,FAIL];pc3:pcm_rerunD[rerun,FAIL]"
 P0496,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0496,dataset run,OK,ok,no,0.245,11188.752,28200572,0,0,1,
 P0497,ACCEPTED,pc4,/home/saxam/of_runs/pcm_full/runs/P0497,dataset run,OK,ok,no,0.281,4608.724,19848222,0,0,1,
 P0498,ACCEPTED,lab,/home/saxam/of_runs/pcm_full/runs/P0498,dataset run,OK,ok,no,0.048,11992.941,20160391,0,0,1,
