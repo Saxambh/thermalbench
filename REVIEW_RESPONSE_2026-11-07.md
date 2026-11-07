@@ -229,10 +229,20 @@ membership, checked against the stored test-run scores:
 
 ## 6. Novelty
 
-**6.1 Prior art.** **Partly verified** (pages fetched 7 November):
-- **Energies 18(3):511 (2025),** a neural network predicting 2D tank behaviour from CFD images: the page
-  refused automated access, so it is **not verified**. Saxam should open it. If it is as described, we
-  cannot claim novelty for neural prediction of tank fields, and we agree.
+**6.1 Prior art.** **Verified** (pages fetched 7 November; Energies 18(3):511 read 8 November):
+- **Energies 18(3):511 (2025),** "Modeling of TES Tanks by Means of CFD Simulation Using Neural Networks"
+  (University of Lleida group). **Verified 8 November** from the open-access full text in Saxam's browser.
+  - **Data and model:** a GAN-trained convolutional autoencoder predicts the temperature image of one small
+    2D COMSOL tank 3 s ahead.
+    - The tank is a sensible-heat tank in discharge, with a solid cylinder in a laminar fluid.
+    - Three inputs are varied at 5 levels each (125 runs, 320 s); fixed geometry.
+  - **Scoring:** image SSIM and PSNR. There are no physical error metrics, no train/test splits by design,
+    no out-of-distribution test and no baselines, and the data are available on request only.
+  - **What it means for us:** it is prior work on neural prediction of tank temperature fields from CFD,
+    so we cannot claim that idea as new, and we agree. It is not a benchmark: one geometry, image metrics,
+    one-step prediction and no released data. Our contribution remains the combination: an open
+    1,212 + 500-run dataset of two storage families, verified and validated, with fixed design-level OOD
+    splits, physical metrics, baselines and label-uncertainty analysis.
 - **Hydrate dataset (Li, Sun, Li, Dec 2025):** 320 COMSOL cases varying branched-fin geometry, scalar
   outputs, CC BY; no test split or benchmark.
 - **Finned shell-tube PCM dataset (Alimi et al., Sep 2025):** 7 melting scenarios, 173,077 samples (rows,

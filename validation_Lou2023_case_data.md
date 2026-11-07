@@ -92,7 +92,27 @@ h_j from `scripts/lou3d_hj.py`: centreline v_y averaged over ±6.25 s, as in Lou
 **Agreement with the PIV mean over 14 times**
 - **Ours:** bias +2.4 mm, RMS 7.2 mm. Up to 450 s it is within ±9 mm (mostly within ±4); after that it runs 7 to 12 mm deeper.
 - **Lou's own Fluent CFD:** bias −29.7 mm.
-- The two PIV tests differ by up to 18 mm, so our deviation is within the measurement spread.
+- The two PIV tests differ by up to 18 mm (early times). This is not an uncertainty band, and the late
+  deviation exceeds it (see below).
+
+**Temporal structure of the deviation** (added 8 November, review item 3.7). The +2.4 mm mean bias hides
+a trend:
+
+| Window | Ours minus PIV mean: mean (range) | Spread between the two PIV tests (median) |
+|---|---|---|
+| 50 to 300 s | −2.9 mm (−8.5 to +0.1) | 9 mm |
+| 350 to 450 s | −0.9 mm (−3.9 to +1.8) | 2 mm |
+| **500 to 700 s** | **+10.8 mm (+6.7 to +13.0)** | 5 mm |
+
+- **Late deviation:** after 500 s our jet penetrates 7 to 13 mm (about 5 %) deeper than both PIV tests
+  separately (4.7 to 16 mm vs test 1, 7.5 to 12 mm vs test 2).
+- **Rate:** the penetration grows at 0.180 mm/s in our run against 0.151 mm/s in the PIV (linear fits,
+  50 to 700 s), about 19 % faster.
+- **Interpretation:** the late deviation is larger than the difference between the two tests, so it is a
+  real model-experiment difference, not measurement scatter. The early agreement is within that scatter.
+- **Correction:** the spread between the two PIV tests is a test-to-test repeatability indication, not an
+  uncertainty band, and earlier text calling our deviation "within the measurement spread" is withdrawn
+  for t ≥ 500 s.
 
 **What it shows.** The same solver and turbulence choices as the tank dataset (buoyantPimpleFoam, kOmegaSST with the corrected buoyancy source, real water properties) reproduce a measured buoyant jet in a real tank in 3D. They do so better than the original authors' CFD.
 
@@ -113,7 +133,12 @@ h_j from `scripts/lou3d_hj.py`: centreline v_y averaged over ±6.25 s, as in Lou
 
 **What it shows, and what it does not.** Refining the lower baffle changes nothing in the first 300 s, so the jet result (h_j) does not depend on the lower-region mesh. It is not a refinement of the jet region itself (the upper manifold and baffle are refined ×2 in both runs), and the lower refinement can only matter once the front reaches the lower baffle (after ~550 s), which this run did not reach. For the paper: report h_j vs PIV from the coarse run over 14 times, and this run as a check that the lower-region mesh does not affect it up to 300 s; state the limits.
 
-**Still to do.** Outlet-temperature / charging comparison with Lou Section 4 (data not yet extracted from the paper), using the coarse run to 750 s.
+**Outlet temperature (started 8 November, `verification_data/lou_outlet_2026-11-07/`).**
+- **Data:** Lou's outlet curve for this case (uniform baffle, 1 L/min, 333.15 K into 293.15 K) was
+  digitised from Fig. 15a via T*_out = 1 − Ri_bulk/Ri0.
+- **Comparison up to 750 s:** within 0.024 in T*_out. Breakthrough (T* = 0.1) at t* 0.796 (Lou) vs 0.806
+  (ours).
+- **Still running:** the run is being extended on the lab to t* = 1.5 (1,275 s) for the full curve.
 
 ## Plan
 - 3D OpenFOAM case, quarter or eighth symmetry: buoyantPimpleFoam, real properties, kOmegaSST + buoyancyTurbSource (compressible path, correct sign), and laminar for comparison. Baffles as solid zones (chtMultiRegionFoam) or as thin adiabatic walls first.

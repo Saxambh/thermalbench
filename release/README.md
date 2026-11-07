@@ -39,6 +39,7 @@ metrics, baselines, training and evaluation; see `thermbench_ml/README.md`.
 
 - **Tank:** dataset card `DATASET_CARD_tank_draft.md` and boundary conditions
   `verification_data/tank_boundary_conditions.md`.
+- **PCM:** dataset card `DATASET_CARD_pcm_draft.md` (drafted 8 November).
 - **Verification and validation:** `verification_criteria_2026-11-06.md`, `verification_data/`,
   `validation_Lou2023_case_data.md`.
 - **Label flags:** `thermbench_ml/label_flags_tank.json`.
@@ -47,6 +48,5 @@ metrics, baselines, training and evaluation; see `thermbench_ml/README.md`.
 
 - License.
 - Version tag and DOI.
-- The PCM dataset card.
 - The final project name.
 - The data archive itself (h5 files, about 61 GB for the tank and 9.7 GB for PCM) with its hosting.
