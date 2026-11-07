@@ -99,3 +99,36 @@ its dataset run (p2 reproduced the dataset exactly in all five pilot designs).
   the solution's sensitivity cannot explain). If both are high, it is reported as sensitivity, not as affected.
 - **Outcome:** 0 of 4 affected: T0211 is reported as an isolated label error of known size. 1 or more:
   the regime is affected; the extent and any SST reruns are decided with Saxam before anything is regenerated.
+
+## Addendum 2026-11-07, about 13:45 Nepal: extent of the wide, low-Ri SST regime (fixed before these runs)
+
+**Outcome of the first regime test.**
+- Under the rule above, 0 of 4 designs were affected: T0252, T0256 and T0156 were not; T0052 had n4 6.77 %
+  and rep 1.68 %, so it missed the rep < 1.5 % condition by 0.18.
+- That outcome is kept on record as it stands.
+- T0052 nevertheless resembles T0211 (n4 four times rep; outlet 5.44 %). Both affected-looking designs are
+  wide (0.68 and 0.96 m), while the narrow ones (0.36, 0.42 m) were unaffected. Saxam chose to measure the
+  regime (option B).
+
+**Sample.** Wide SST dataset runs (W ≥ 0.6 m) with Ri < 10, excluding the six designs already tested
+(119 runs: 85 charge, 34 discharge). For each mode, the runs are split into 5 equal bins by Ri, and from each
+bin the run with the smallest md5 hash of its run_id is taken:
+- charge: T0988, T0492, T0828, T0851, T0036;
+- discharge: T0108, T0004, T0636, T0227, T0696.
+
+(A first draw without mode balancing gave only charge runs and was replaced before anything ran.)
+
+**Runs.** Each design gets n4 and rep, compared with its dataset run.
+
+**Rule for these runs.**
+- A design is **affected** if n4 field RMSE > 3 % of ΔT **and** either rep < 1.5 % **or** n4 ≥ 2 × rep.
+  The ratio condition is added because T0052 showed that a fixed rep limit can miss a numerical error four
+  times larger than the sensitivity.
+- Under this rule T0052 would be affected; that reclassification is post hoc and is labelled as such.
+- A design with n4 > 3 % but n4 < 2 × rep is reported as sensitive.
+
+**Outcome.**
+- 0 of 10 affected: the regime is reported as label uncertainty (option A), with T0211 and T0052 as
+  examples.
+- 1 or more: the affected share (with a binomial 95 % interval) is reported, and A against C (rerunning the
+  regime) is decided with Saxam.
