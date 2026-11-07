@@ -23,10 +23,14 @@ aggregate was seen. It is not a prospective confirmation on new designs.
   resample reached the observed mean.
 - **Inference:** the intervals and p-values treat designs as replicates of a broader population of
   comparable cases. The mean improvements describe these 215 designs exactly.
-- **Sensitivity:** without the flagged run T0211_sst (214 designs), every estimate changes by at most
-  0.03 pp and all four hypotheses remain supported.
+- **Sensitivity:** without the flagged run T0211_sst (214 designs), every mean estimate changes by less
+  than 0.01 pp (largest 0.0077 pp) and all four hypotheses remain supported. (Corrected after review:
+  an earlier version gave the looser bound "at most 0.03 pp".)
 
-## Descriptive (field error, % of ΔT, seed means: mean / median)
+## Descriptive (field error, % of ΔT, seed means: mean / median, run-weighted)
+
+These means give each run equal weight. The primary tests give each design equal weight, so differences of
+the means below do not reproduce the primary effects. Both are correct for their purpose.
 
 | Model | Subset (259 runs, 215 designs) | Remaining ood_mode test runs (104 runs, 88 designs) |
 |---|---|---|
