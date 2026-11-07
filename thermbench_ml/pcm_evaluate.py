@@ -19,7 +19,22 @@ from pcm_data import DEFAULT_ROOTS, index
 from pcm_splits import SPLITS, split_runs
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-COLS = ["rmse_K", "alpha_rmse", "liquid_iou", "melt_frac_err", "energy_err", "t90_err"]
+COLS = ["rmse_K", "alpha_rmse", "liquid_iou", "melt_frac_err", "energy_err", "t90_reached", "t90_err"]
+
+
+class QueryRun:
+    """A test run seen through a fixed time grid: times() returns the query times (from the inputs
+    only) instead of the CFD file's, everything else is the run itself. Every predictor reads time
+    only through run.times(), so this works for all of them (pcm_metrics.melt_time)."""
+
+    def __init__(self, run, t):
+        self._run, self._t = run, np.asarray(t, float)
+
+    def times(self):
+        return self._t, self._t / self._run.t_ref
+
+    def __getattr__(self, k):
+        return getattr(self._run, k)
 
 
 def evaluate(model, test, stride):
@@ -31,8 +46,16 @@ def evaluate(model, test, stride):
         p_th, p_a = model.predict(r, idx)
         m = r.meta
         S = m["props"]["cp"] * (m["T_wall_K"] - m["T_init_K"]) / m["props"]["L"]
-        per_run.append(pcm_metrics.score(p_th, p_a, r.field("T", idx=idx, theta=True), r.field("alpha", idx=idx),
-                                         r.mask(), r.Tw - r.T0, S, t[idx]) | {"run_id": r.run_id})
+        sc = pcm_metrics.score(p_th, p_a, r.field("T", idx=idx, theta=True), r.field("alpha", idx=idx),
+                               r.mask(), r.Tw - r.T0, S, t[idx])
+        # melt time on the fixed input-only grid (never the CFD file's times, which end at true melt)
+        t_q = np.linspace(0, pcm_metrics.TAU_H, pcm_metrics.N_Q) * r.t_ref
+        w = r.mask() > 0
+        f_q = np.concatenate([model.predict(QueryRun(r, t_q[i:i + 50]), np.arange(len(t_q[i:i + 50])))[1][:, w].mean(1)
+                              for i in range(0, len(t_q), 50)])
+        f_t = r.field("alpha")[:, w].mean(1)
+        sc |= pcm_metrics.melt_time(t_q, f_q, t, f_t)
+        per_run.append(sc | {"run_id": r.run_id})
     return pcm_metrics.aggregate(per_run), per_run
 
 

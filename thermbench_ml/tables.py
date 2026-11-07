@@ -29,7 +29,7 @@ FAMILY = {
     "pcm": {
         "order": ["initial", "stefan", "front", "knn", "nn", "idw", "rbf", "fno", "fno_hybrid", "unet", "unet_hybrid"],
         "units": {"rmse_K": "K", "alpha_rmse": "-", "liquid_iou": "- (higher is better)", "melt_frac_err": "-",
-                  "energy_err": "fraction of full charge", "t90_err": "fraction of t90"},
+                  "energy_err": "fraction of full charge", "t90_err": "fraction of t90, runs that reach 90 % only", "t90_reached": "share of runs reaching 90 % melted"},
         "note": "",
     },
 }
