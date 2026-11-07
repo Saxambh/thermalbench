@@ -8,12 +8,16 @@
 # Healthy cases (10 checked on pc4): cap 0-0.2 %, res 0.003-0.025. Flags: FAIL cap > 20 % or res > 0.2;
 # WARN cap > 2 % or res > 0.05. One line per case to stdout: case cap% res dt flag
 #   pcm_solver_qc.sh <runs_dir> [jobs]      (runs at nice 15)
+# 2026-11-07: the cap is read from the case's own p_rghFinal maxIter (200 in the dataset GAMG set-up; 2000 in
+# the PCG + DIC corrected reruns, which need more iterations per solve by design). Before this, PCG reruns
+# were counted as capped at >= 200 iterations and falsely flagged FAIL; their largest count was 586.
 R=${1:?runs dir}; J=${2:-4}
 cd "$R" || exit 1
 one() {
   c=$1; f=$c/log.solver.gz; [ -f $f ] || f=$c/log.solver; [ -f $f ] || { echo "$c nolog"; return; }
-  zcat -f $f | awk -v c=$c '
-    /Solving for p_rgh/ { r=$0; sub(/.*Initial residual = /,"",r); sub(/,.*/,"",r); n++; s+=r; if ($NF+0 >= 200) m++ }
+  mx=$(awk '/p_rghFinal/{b=1} b&&/maxIter/{gsub(/;/,"",$2); print $2; exit} b&&/}/{exit}' $c/system/fvSolution 2>/dev/null)
+  zcat -f $f | awk -v c=$c -v mx=${mx:-200} '
+    /Solving for p_rgh/ { r=$0; sub(/.*Initial residual = /,"",r); sub(/,.*/,"",r); n++; s+=r; if ($NF+0 >= mx) m++ }
     /^deltaT = / { sd+=$3; k++ }
     END { if (!n) { print c, "nopressure"; exit }
           dt = k ? sd/k : 0
