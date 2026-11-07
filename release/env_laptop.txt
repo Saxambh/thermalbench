@@ -1,0 +1,8 @@
+os: Ubuntu 24.04.1 LTS (WSL2 on Windows 11), kernel 6.18.54.1-microsoft-standard-WSL2
+python (gpu venv): Python 3.12.3
+torch: 2.14.1+cu126 cuda 12.6
+python (cpu venv): Python 3.12.3
+h5py: 3.10.0 hdf5 1.10.10
+numpy: 1.26.4
+openfoam: v2606 (/usr/lib/openfoam/openfoam2606) build 
+/usr/lib/openfoam/openfoam2606/platforms/linux64GccDPInt32Opt/bin/buoyantPimpleFoam

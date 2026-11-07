@@ -16,18 +16,18 @@ Assignment is by design point, so laminar/SST twins stay together, and it is fix
 | split | test set | tests |
 |---|---|---|
 | random | 10 % of design points by hash | interpolation |
-| ood_flow | Re_in > 9007 (design 90th percentile) | faster inflow than seen |
-| ood_geom | W < 0.33 m or W > 0.93 m | unseen tank shapes |
-| ood_mode | all discharge cases (train on charging) | unseen operation |
+| ood_flow | Re_in > 9007 (design 90th percentile) | faster inflow than seen; all its test runs are SST, so Re extrapolation and the turbulence closure are tested together |
+| ood_geom | W < 0.33 m or W > 0.93 m | unseen widths / aspect ratios of the same rectangular 2D geometry (not new geometry families) |
+| ood_mode | all discharge cases (train on charging) | unseen operation mode (transfer under an approximate charge/discharge symmetry) |
 
 ## Metrics (`metrics.py`)
 - `rmse_K`, `rmse_theta`: the full field.
 - `profile_rmse`: the row-averaged profile, which is what a 1D tank model is judged on.
 - `y_mid_err_m`: thermocline height.
-- `energy_err`: stored energy error as a fraction of the tank's full capacity. It is not divided by the energy currently stored, which goes to about zero at the end of a discharge.
-- `T_out_err_K`: outlet temperature error in K, what a system simulation takes from the tank.
+- `energy_err`: stored energy error as a fraction of the tank's full capacity, from mean theta (constant rho cp). It matches the real-property energy error within +-1 % (`proxy_check_2026-11-07/RESULT.md`). It is not divided by the energy currently stored, which goes to about zero at the end of a discharge.
+- `T_out_err_K`: error of the **area-averaged** outlet temperature in K (mean of the cells next to the outlet, identical to the outlet-face average). It is not the flow-weighted (mixing-cup) temperature a system model receives: the two differ by a median 0.6 % of dT, 2.3 % around breakthrough and up to about 30 % in very-high-Ri laminar runs (`proxy_check_2026-11-07/RESULT.md`).
 
-Noise floor: two CFD solutions that differ only in solver settings drift apart by about 0.65 K RMS in 60 s and 1 to 2 K over minutes, because the buoyant jet is chaotic. Field errors below this are not meaningful.
+Label sensitivity: the verification of 6 November (`../verification_criteria_2026-11-06.md`) measured how much the labels move under tighter solver settings, a finer mesh and a 0.01 % inlet change; it is small in most cases tested and about 6 to 7 % of dT in two flagged fast-jet SST runs (`label_flags_tank.json`). Scoring the same predictions against those alternative solutions changed no FNO/U-Net ranking except one 0.11-point case under the 2.5 mm mesh (`altref_2026-11-07/RESULT.md`). (An earlier version of this README described a 'noise floor' from early tests; it is superseded.)
 
 ## Baselines
 | model | file | idea |
