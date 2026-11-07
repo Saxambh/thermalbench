@@ -1,0 +1,20 @@
+0 T0014_lam
+100 T0677_lam
+200 T0896_lam
+300 T0439_lam
+400 T0957_lam
+500 T0624_sst
+600 T0066_lam
+700 T0219_sst
+800 T0373_lam
+900 T0548_sst
+1000 T0704_sst
+1100 T0847_sst
+1200 T1010_lam
+1212 runs
+energy |proxy - real| (fraction of full charge), run means: median 0.00023, 90 % 0.000885, max 0.00207
+rho*cp weight min / max over [Tc, Th], relative to mean: 0.9900 / 1.0092
+outlet |proxy - real| % of dT, run means: median 1.08e-05, 90 % 3.13e-05, max 0.000101
+outlet in breakthrough window, % of dT: median 9.29e-06, 90 % 2.71e-05, max 7.09e-05
+y_mid max |proxy - h5| (m): median 2.22e-16, 90 % 1.75e-15, max 4.34e-14
+y_mid label missing (share of snapshots): median 0.025, 90 % 0.15, max 0.508 ; runs with any missing 924

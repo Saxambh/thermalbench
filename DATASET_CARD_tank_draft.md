@@ -33,9 +33,10 @@ Draft for the release. Every number below was checked against the frozen manifes
   OpenFOAM's buoyancyTurbSource.
 - **Per run:** one `thermbench.h5` (about 18 to 40 MB) with:
   - 121 snapshots of T, p_rgh, ux and uy (plus k, omega, nut for SST) on the native grid;
-  - stored energy, exergy, MIX number, stratification number, thermocline midpoint and thickness,
-    mean T and outlet T per snapshot;
-  - dense outlet and mean-T time series;
+  - stored energy (real properties), exergy, MIX number, stratification number, thermocline midpoint
+    and thickness, mean T and area-averaged outlet T per snapshot;
+  - dense time series of the area-averaged outlet T, mean T, and outlet mass and enthalpy flow (from
+    which the flow-weighted outlet temperature follows);
   - `case.json` with all inputs.
 
 ## Runs excluded from the planned 1,217
@@ -80,7 +81,8 @@ Completed 2026-11-07. Limits were committed before results; `reply_tank_mesh_202
   three levels do not converge monotonically, so no GCI is given and the mesh is not called converged.
 - **Outer iterations (2 vs 4), Courant limit (0.5 vs 0.25) and inlet × 1.0001.** Agreement for T0408,
   T0221 and T0243; T0393 outlet and T0551 field borderline, both at the size of the flow's own
-  sensitivity. T0211_sst differs by 7.4 % of ΔT (a numerical error of the production settings).
+  sensitivity. T0211_sst differs by 7.4 % of ΔT: numerical-setting dependence of the production
+  solution. n4 and co25 still differ from each other by 2.49 %, so neither setting is shown to be converged.
 - **Regime test.** Of 10 further wide, low-Ri SST designs, none shows the T0211 error (all ≤ 0.05 %;
   0 of 10, 95 % interval 0 to 31 %). Including four earlier neighbours, 2 of 15 wide low-Ri SST designs
   show it: T0211_sst and T0052_sst (the latter under a rule added after its result).
@@ -97,7 +99,19 @@ regime test bounds how common they are.
 - One uniform mesh (5 mm) and one numerical setup. Inter-grid discrepancies are reported for the
   verification cases; dataset-wide mesh convergence is not claimed.
 - Label uncertainty in the fast-jet regime (SST, Ri below about 5): two known runs differ by about 7 % of
-  ΔT with tighter numerical settings (flagged above). The ML error on those runs is of the same size.
+  ΔT with tighter numerical settings (flagged above). Scoring the same frozen predictions against the
+  alternative solutions moved the ML field error on these runs by at most 0.43 pp of ΔT and kept the model
+  ordering (`thermbench_ml/altref_2026-11-07/RESULT.md`).
+- **Metric definitions.**
+  - The benchmark's energy metric is mean θ (constant ρcp); it matches the real-property energy error
+    within ±1 %.
+  - The outlet metric is the **area-averaged** outlet temperature, not the flow-weighted (mixing-cup)
+    temperature a system model receives. The two differ by a median 0.6 % of ΔT, 2.3 % around breakthrough,
+    and up to about 30 % in very-high-Ri laminar runs, where the thermocline crosses the outlet slot. The h5
+    files keep the outlet mass and enthalpy flow series for computing the mixing-cup temperature
+    (`thermbench_ml/proxy_check_2026-11-07/RESULT.md`).
+  - The thermocline midpoint is undefined (no θ = 0.5 crossing) in a median 2.5 % of snapshots; these are
+    excluded from the midpoint error and reported as `y_mid_missing`.
 - 2D: no 3D effects; experimental validation is indirect, through the 3D Lou et al. case.
 - The SST runs model turbulence with RANS. Across the 192 design points run with both models, the
   laminar and SST solutions differ by a median 3.9 % of ΔT in field RMSE (10th to 90th percentile

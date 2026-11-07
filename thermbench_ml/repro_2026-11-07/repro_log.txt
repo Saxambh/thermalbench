@@ -1,0 +1,28 @@
+manifest md5 0e8b6d8ddfc9be4b882e25762c26b3ec device cuda
+random   fno_hybrid_canon       repro 4.017  stored 4.017  runs 131/131  max run diff 0.0  16s
+random   fno_hybrid_canon_s1    repro 4.116  stored 4.116  runs 131/131  max run diff 0.0  12s
+random   fno_hybrid_canon_s2    repro 3.935  stored 3.935  runs 131/131  max run diff 0.0  13s
+random   unet_hybrid_canon      repro 3.631  stored 3.631  runs 131/131  max run diff 0.0  13s
+random   unet_hybrid_canon_s1   repro 3.517  stored 3.517  runs 131/131  max run diff 0.0  13s
+random   unet_hybrid_canon_s2   repro 3.724  stored 3.724  runs 131/131  max run diff 0.0  14s
+ood_flow fno_hybrid_canon       repro 9.707  stored 9.707  runs 103/103  max run diff 0.0  12s
+ood_flow fno_hybrid_canon_s1    repro 9.928  stored 9.928  runs 103/103  max run diff 0.0  10s
+ood_flow fno_hybrid_canon_s2    repro 9.840  stored 9.840  runs 103/103  max run diff 0.0  11s
+ood_flow unet_hybrid_canon      repro 9.313  stored 9.313  runs 103/103  max run diff 0.0  10s
+ood_flow unet_hybrid_canon_s1   repro 9.061  stored 9.061  runs 103/103  max run diff 0.0  10s
+ood_flow unet_hybrid_canon_s2   repro 9.259  stored   runs None/103  max run diff None  11s
+ood_geom fno_hybrid_canon       repro 4.468  stored 4.468  runs 224/224  max run diff 0.0  23s
+ood_geom fno_hybrid_canon_s1    repro 4.454  stored 4.454  runs 224/224  max run diff 0.0  22s
+ood_geom fno_hybrid_canon_s2    repro 4.414  stored 4.414  runs 224/224  max run diff 0.0  21s
+ood_geom unet_hybrid_canon      repro 6.149  stored 6.149  runs 224/224  max run diff 0.0  22s
+ood_geom unet_hybrid_canon_s1   repro 6.024  stored 6.024  runs 224/224  max run diff 0.0  21s
+ood_geom unet_hybrid_canon_s2   repro 6.513  stored 6.513  runs 224/224  max run diff 0.0  21s
+ood_mode fno_hybrid_canon       repro 4.416  stored 4.416  runs 363/363  max run diff 0.0  40s
+ood_mode fno_hybrid_canon_s1    repro 4.473  stored 4.473  runs 363/363  max run diff 0.0  36s
+ood_mode fno_hybrid_canon_s2    repro 4.556  stored 4.556  runs 363/363  max run diff 0.0  36s
+ood_mode unet_hybrid_canon      repro 4.685  stored 4.685  runs 363/363  max run diff 0.0  36s
+ood_mode unet_hybrid_canon_s1   repro 4.170  stored 4.170  runs 363/363  max run diff 0.0  37s
+ood_mode unet_hybrid_canon_s2   repro 4.259  stored 4.259  runs 363/363  max run diff 0.0  35s
+done
+
+[exited with code 0]

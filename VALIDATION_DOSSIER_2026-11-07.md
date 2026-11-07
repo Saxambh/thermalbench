@@ -17,6 +17,33 @@ verification and validation done, and its ML training not yet started.
 
 ---
 
+## Corrections after review (added 7 November, late)
+
+This dossier is kept as the version the independent reviewer assessed. The statements below are **superseded**,
+and the corrected wording applies wherever the old one appears in the body. Details are in
+`REVIEW_RESPONSE_2026-11-07.md` (item numbers in brackets).
+
+| § | Superseded statement | Corrected statement |
+|---|---|---|
+| 5.2, 14 | "a mesh uncertainty of up to about 2.8 %" | 0.34 to 2.76 % of ΔT field difference in the four designs tested (three laminar, none flagged); not a dataset-wide bound [2.1] |
+| 5.2 | "most of the 2.76 % (T0551) is the flow's own sensitivity" | The mesh difference (2.76 %) is of the same order as the response to a 0.01 % inlet change (1.85 %); the two cannot be separated in this design [2.3] |
+| 5.2 | "every integral quantity passed" (T0243) | T0243's energy difference (0.96 %) is borderline [2.2] |
+| 5.3, 5.4 | "numerical error of the production settings" (T0211) | Numerical-setting dependence of the production solution; n4 and co25 still differ by 2.49 %, so neither is shown converged [2.4] |
+| 8.2 | "part of the measured ML error in this regime may be label error" | Across T0211 and T0052, the tested alternative references moved ensemble field error by at most 0.43 pp of ΔT and preserved the model ordering (`thermbench_ml/altref_2026-11-07/RESULT.md`). Similar scalar errors cannot show how much error the two CFD fields share with the true solution |
+| 7.4, 8.1 | "energy error" and "outlet temperature error" as real quantities | Energy is a constant-ρcp proxy and matches the real-property energy error within ±1 %. The outlet metric is exactly the area-averaged outlet temperature; it differs from the flow-weighted outlet temperature by a median 0.6 % of ΔT, 2.3 % around breakthrough, and up to about 30 % in very-high-Ri laminar runs (`thermbench_ml/proxy_check_2026-11-07/RESULT.md`) [4.2] |
+| 7.4 | y_mid missing rate not reported | The label has no θ = 0.5 crossing in a median 2.5 % of snapshots (up to 51 %); these are excluded from the midpoint error and counted in `y_mid_missing` [4.2] |
+| 7.3 | generalisation wording | ood_geom covers the tails of one geometry family; ood_flow is SST-only extrapolation; ood_mode is transfer under an approximate symmetry [4.3] |
+| 8.4, 13 | "transfers to discharge only through the symmetry" | On ood_mode (FNO / U-Net), the models without the canonical frame stay at 13 % or worse (plain 64.8 / 67.0 %, hybrid only 13.0 / 13.3 %); canonical only reaches 12.4 / 9.85 %, and hybrid + canonical about 4.4 %. The canonical-frame benefit was then confirmed on 215 designs with no identified pre-freeze exposure: +9.2 pp (FNO) and +9.7 pp (U-Net), Holm p 0.0004 each, as a pre-registered subset analysis (`thermbench_ml/confirmation_discharge_2026-11-07/RESULT.md`) [4.4] |
+| 7.2, 8.4 | "main model: FNO hybrid in the canonical frame"; resolution-independence argument | FNO and U-Net are co-equal baselines, with no "main model"; the resolution argument is dropped [4.5] |
+| 8.4 (new) | the hybrid + canonical combination is implicitly the best variant | Design-level intervals show it is clearly best only on ood_mode. The canonical-only model is slightly better on random and ood_flow (both architectures), and U-Net hybrid + canonical is worse than U-Net hybrid or U-Net canonical on ood_geom (`thermbench_ml/stats_2026-11-07/design_ci.md`) |
+| 8.1 | speed "about 6,000 times faster" | A latency ratio of median wall times (about 6,455 to 1), with hardware and timing boundaries named and no equal-cost claim [4.10] |
+| 5.1 | "a label difference smaller than half the best ML error cannot change a benchmark ranking" | Withdrawn. A reference change of size d can move a two-model gap by up to 2d; the limits are engineering tolerances [5.1] |
+| 11.1 | "systematic in sign (all PCM cases melt early)", "all 9 cases" | 6 unique designs: in the 0.5 vs 0.25 mm comparison the finer mesh melts later in all 6 (1.0 to 8.7 %). G131 and G301 are width-adjusted variants [3.4] |
+| 10 | "the remaining +0.08 in the first hour is model error" (3 fins) | The remaining difference combines residual discretisation, properties, boundary conditions, experimental uncertainty and model form; these runs do not separate them [3.10] |
+| 8.4 | U-Net ood_flow 9.19 (2 seeds) | 9.21 with all 3 seeds (`thermbench_ml/repro_2026-11-07/RESULT.md`) |
+
+---
+
 ## Contents
 
 1. What the benchmark is and why it exists
