@@ -50,6 +50,22 @@ input-only horizon (tau ≤ 3 t_ref). Crossing counts are in `RESULT_tables.md`.
 4. **No single architecture wins everywhere.** U-Net leads on random, fins, drive and material, FNO on tilt.
    The hybrid prior helps most where the plain models are unstable (FNO on both material splits).
 
+## Paired intervals (`paired.py`, `PAIRED.md`, added 8 November)
+
+- **Method:** baseline minus neural per test run (neural: seed-mean per run); 95 % bootstrap over runs
+  (each PCM run is its own case). Compared against IDW as a fixed reference, and against the split's best
+  baseline (chosen on the test set).
+- **Random, fins, drive, tilt:** every neural model is better than IDW and than the best baseline on field
+  RMSE, every interval excluding zero. The smallest margin is U-Net hybrid on tilt, 0.55 K [0.45, 0.66].
+- **Both material splits:** IDW is better than every neural model on field RMSE and energy error, every
+  interval excluding zero. The smallest margin is U-Net hybrid on ood_material, 0.26 K [0.10, 0.43].
+- **t90 on ood_material_r:** this is read on the runs where both models crossed in every seed (84 for U-Net,
+  100 for FNO hybrid). The FNO hybrid "advantage" there (+5.5 pp) is on that easier subset, so it is not
+  evidence of better transfer.
+- **Caveat:** the intervals resample runs with the seed-mean fixed. On the material splits the seed spread
+  (FNO ± 8.7 and ± 9.6 K) is larger than many of these intervals, so they do not express uncertainty about
+  what a retrained model would score.
+
 ## WARN sensitivity (review item 3.6)
 
 - **Setup:** the 39 retained solver-WARN cases fall into the test sets as follows: random 3, fins 15,
@@ -65,8 +81,9 @@ input-only horizon (tau ≤ 3 t_ref). Crossing counts are in `RESULT_tables.md`.
 
 ## Limits
 
-- **Statistics:** descriptive means; seed SD over 3 seeds; no design-level intervals yet. The material-split
-  seed spread is large enough that single-seed rankings there would not be reliable.
+- **Statistics:** descriptive means; seed SD over 3 seeds; paired run-level intervals for neural vs baselines
+  (above), descriptive and not pre-registered. The material-split seed spread is large enough that
+  single-seed rankings there would not be reliable.
 - **Crossing:** "crossed" counts the prediction's crossing within the horizon. The t90 error is conditional
   on that, so a model that crosses less often is scored on an easier subset. Read the two columns together.
 - **Scope:** two materials only. "Unseen material" is transfer between them in either direction, not to a
