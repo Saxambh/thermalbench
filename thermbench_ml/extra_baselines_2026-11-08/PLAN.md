@@ -43,7 +43,8 @@ near zero.
 - `train.py` / `pcm_train.py` are unchanged apart from registering the model:
   - AdamW (weight decay 1e-4), OneCycle schedule;
   - best-validation checkpoint, test scored once with it;
-  - batch 8, 60 epochs (as FNO);
+  - batch 8, 60 epochs (as FNO); see the batch-size record at the end: batch 8 is the tank pipeline's
+    batch, the PCM pipeline (and these PCM jobs) use 16;
   - same stride and test snapshots.
 - **One allowed tuning step, on validation data only:**
   - peak learning rate in {1e-3, 3e-4};
@@ -150,3 +151,16 @@ fixed in amendment 1: masked RMSE ≤ 0.01.
 - **Best validation RMSE:** lr 1e-3: 0.04731 (pc4); lr 3e-4: 0.04559 (lab).
 - **Chosen:** 3e-4, frozen for all 36 jobs. The pilots' test scores were not read; the pilot folders are not
   used in any result.
+
+## Batch-size record (8 November, from review; no change to any job)
+
+- **Training batch:** the PCM Transolver jobs train at batch 16 (`run_transolver_pcm.sh`, `--batch 16`), the
+  same as every PCM FNO and U-Net job (`run_final_pcm.sh`, `--batch 16`; also the `pcm_train.py` default).
+  The "batch 8 (as FNO)" in the Training section is the tank pipeline's batch (`train.py` default) and was
+  written for the tank jobs, which were not run.
+- **Timing batch:** the timings in amendment 1 and the tank check were measured at batch 16. The overfit
+  checks used a separate fixed batch of 8 training samples.
+- **Naming:** the model is reported as the 4×4-patch Transolver variant.
+- **Scope of the tank gate:** it was an implementation and resource decision. An 8-sample overfit result
+  says nothing about how Transolver would generalise on tank data, so the tank question (e.g. unseen widths)
+  stays open.

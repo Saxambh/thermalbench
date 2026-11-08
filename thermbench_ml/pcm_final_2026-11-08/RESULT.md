@@ -33,10 +33,11 @@ input-only horizon (tau ≤ 3 t_ref). Crossing counts are in `RESULT_tables.md`.
 
 ## What it shows
 
-1. **Interpolation within the design space** (random, unseen fin counts, unseen drive): the neural models
-   are clearly best.
+1. **Interpolation (random) and held-out conditions within the same material** (unseen fin counts,
+   stronger heating): the neural models are clearly best.
    - Field error is 2 to 4 times lower than the best baseline.
-   - Melt-time error is 1.1 to 1.2 % on random and drive, against 8 to 9 % for the best baseline.
+   - Melt-time error is 1.1 to 1.2 % on random and stronger heating, against 8 to 9 % for the best
+     baseline. On held-out fins the best neural t90 error is 7.9 % (against 26.2 %).
    - U-Net leads FNO on these three splits.
 2. **Unseen tilt:** the neural models are only modestly better (6.2 to 7.1 K against 7.7 K for IDW), and
    all models are much worse than in distribution.
@@ -50,6 +51,35 @@ input-only horizon (tau ≤ 3 t_ref). Crossing counts are in `RESULT_tables.md`.
 4. **No single architecture wins everywhere.** U-Net leads on random, fins, drive and material, FNO on tilt.
    The hybrid prior helps most where the plain models are unstable (FNO on both material splits).
 
+## Material transfer by direction (added 8 November, from review)
+
+The two directions are reported separately: they involve the same two materials but differ sharply.
+
+| Training → held-out material | IDW | U-Net hybrid, seeds 0 / 1 / 2 | IDW advantage over the U-Net hybrid seed mean, 95 % interval |
+|---|---|---|---|
+| n-octadecane → lauric acid (ood_material) | 5.35 K | 7.20 / 4.68 / 4.96 K | 0.26 K [0.10, 0.43] |
+| lauric acid → n-octadecane (ood_material_r) | 3.55 K | 7.07 / 9.07 / 6.32 K | 3.94 K [3.67, 4.21] |
+
+- **Held-out lauric acid:** IDW beats the three-seed mean, but two of the three U-Net hybrid seeds beat
+  IDW. Every other variant loses to IDW in every seed (plain U-Net 5.51 to 6.62 K, FNO hybrid 6.53 to
+  12.25 K, FNO 7.27 to 22.95 K).
+- **Held-out n-octadecane:** IDW beats every seed of every variant by a wide margin (closest: U-Net hybrid
+  seed 2, 6.32 K).
+- **Claim used:** "IDW had lower field RMSE than the three-seed mean of every tested neural variant in both
+  directions." Seed-consistent superiority is claimed only for held-out n-octadecane.
+- The paired interval and the seed results answer different questions (variation over cases for fixed
+  fitted models, and variation over training seeds) and are consistent.
+
+**Suggested manuscript wording (review):** Across the random, fin-count, heating and orientation splits, all
+four neural variants had lower mean temperature-field RMSE than IDW. The ordering reversed for transfer
+between n-octadecane and lauric acid in either direction. Against hybrid U-Net, IDW's mean advantage was
+0.26 K on held-out lauric acid and 3.94 K on held-out n-octadecane. Individual training seeds reversed the
+first comparison. These results identify material transfer, particularly prediction of n-octadecane after
+training on lauric acid, as a limitation of the evaluated surrogates.
+
+**Placement:** the PCM section leads with the change in ranking across generalisation tasks, with material
+transfer next to the within-material results, not as a count of four wins and two losses.
+
 ## Paired intervals (`paired.py`, `PAIRED.md`, added 8 November)
 
 - **Method:** baseline minus neural per test run (neural: seed-mean per run); 95 % bootstrap over runs
@@ -62,6 +92,14 @@ input-only horizon (tau ≤ 3 t_ref). Crossing counts are in `RESULT_tables.md`.
 - **t90 on ood_material_r:** this is read on the runs where both models crossed in every seed (84 for U-Net,
   100 for FNO hybrid). The FNO hybrid "advantage" there (+5.5 pp) is on that easier subset, so it is not
   evidence of better transfer.
+- **Best baseline is selected on the test split** (by field RMSE), and the interval does not include the
+  uncertainty from that selection. Headline comparisons therefore use the named IDW comparison.
+- **t90 denominators:** the main table averages conditional t90 errors per seed; the paired t90 table needs
+  both methods to cross in every seed. The FNO hybrid t90 "advantage" over IDW on ood_material_r uses 100 of
+  250 cases; the denominator is always stated next to the estimate, and it cannot establish better melt-time
+  performance over the whole split.
+- **Review verdict (8 November):** the run-level paired interval is kept as the primary interval; no second
+  bootstrap layer over the three seeds. For material transfer the three seed results are reported directly.
 - **Caveat:** the intervals resample runs with the seed-mean fixed. On the material splits the seed spread
   (FNO ± 8.7 and ± 9.6 K) is larger than many of these intervals, so they do not express uncertainty about
   what a retrained model would score.
@@ -78,6 +116,7 @@ input-only horizon (tau ≤ 3 t_ref). Crossing counts are in `RESULT_tables.md`.
   - every neural-versus-best-baseline conclusion above is unchanged;
   - the only order changes are swaps between near-tied baselines, e.g. kNN/IDW on random, IDW/front on tilt.
 - **Conclusion:** the retained WARN cases do not influence the PCM conclusions.
+- **Scope:** this tests excluding WARN cases from scoring. It does not test retraining without them.
 
 ## Limits
 

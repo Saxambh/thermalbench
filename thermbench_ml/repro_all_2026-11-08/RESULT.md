@@ -12,7 +12,10 @@ tank table: 2 architectures × 4 variants (plain, canonical, hybrid, hybrid + ca
 
 ## Result
 
-- **96 of 96 checkpoints reproduce their stored scores exactly:** 19,704 run scores, maximum difference 0.0.
+- **96 of 96 checkpoints reproduce their stored scores exactly:** 19,704 per-run field-RMSE scores
+  (`rmse_theta`, the metric compared run by run), maximum difference 0.0.
+- **Review (8 November):** milestone closed. The checkpoint correction below counts as a finding of the
+  audit: it caught a release file that would have prevented reproduction.
 - One checkpoint needed correcting first (below).
 
 ## The one correction: U-Net, ood_flow, seed 2
