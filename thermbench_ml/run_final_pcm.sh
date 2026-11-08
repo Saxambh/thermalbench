@@ -80,6 +80,9 @@ for ((i=$1; i<${#JOBS[@]}; i+=SLOTS)); do
     | grep -vE "^epoch +[0-9]*[1-9] " | sed "s/^/[slot $1] /"
 done
 }
-for ((k=0; k<SLOTS; k++)); do run_slot $k & sleep 60; done
-wait
+# wait for the slot PIDs only: a bare 'wait' also waits for the tee process substitution above, which never
+# exits, so the worker hung after its last job and never logged 'done' (found 2026-11-08)
+pids=()
+for ((k=0; k<SLOTS; k++)); do run_slot $k & pids+=($!); sleep 60; done
+wait "${pids[@]}"
 echo "=== worker $W done $(date -u '+%F %H:%M') UTC"
