@@ -15,7 +15,7 @@ from models import MODELS
 
 fam = sys.argv[1]
 ARCH = sys.argv[2] if len(sys.argv) > 2 else "transolver"
-KW = {"fno": {"width": 32}, "unet": {"base": 32}}.get(ARCH, {"base": 32, "patch": int(ARCH[-1]) if ARCH[-1].isdigit() else 1})
+KW = {"fno": {"width": 32}, "unet": {"base": 32}}.get(ARCH, {"base": 32, "patch": int(ARCH.rstrip("c")[-1]), "conv": ARCH.endswith("c")})
 ARCH = "transolver" if ARCH.startswith("transolver") else ARCH
 dev = "cuda"
 torch.manual_seed(0)

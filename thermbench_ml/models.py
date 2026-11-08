@@ -93,21 +93,23 @@ class UNet(nn.Module):
 class PhysicsAttention(nn.Module):
     """Transolver physics attention for a point set [B, N, C] (the reference irregular-mesh form)."""
 
-    def __init__(self, dim, heads=8, slices=32):
+    def __init__(self, dim, heads=8, slices=32, conv=False):
         super().__init__()
-        self.h, self.d = heads, dim // heads
+        self.h, self.d, self.conv = heads, dim // heads, conv
         self.temperature = nn.Parameter(torch.full((1, heads, 1, 1), 0.5))
-        self.in_x = nn.Linear(dim, dim)
-        self.in_fx = nn.Linear(dim, dim)
+        # conv=True: 3 x 3 convolutions on the token grid, as the reference structured-mesh variant
+        self.in_x = nn.Conv2d(dim, dim, 3, padding=1) if conv else nn.Linear(dim, dim)
+        self.in_fx = nn.Conv2d(dim, dim, 3, padding=1) if conv else nn.Linear(dim, dim)
         self.slice = nn.Linear(self.d, slices)
         nn.init.orthogonal_(self.slice.weight)
         self.q, self.k, self.v = (nn.Linear(self.d, self.d, bias=False) for _ in range(3))
         self.out = nn.Linear(dim, dim)
 
-    def forward(self, x):
-        B, N, _ = x.shape
-        fx = self.in_fx(x).view(B, N, self.h, self.d).transpose(1, 2)          # [B, H, N, d]
-        xm = self.in_x(x).view(B, N, self.h, self.d).transpose(1, 2)
+    def forward(self, x, hw=None):
+        B, N, C = x.shape
+        proj = (lambda f: f(x.transpose(1, 2).reshape(B, C, *hw)).flatten(2).transpose(1, 2)) if self.conv else (lambda f: f(x))
+        fx = proj(self.in_fx).reshape(B, N, self.h, self.d).transpose(1, 2)    # [B, H, N, d]
+        xm = proj(self.in_x).reshape(B, N, self.h, self.d).transpose(1, 2)
         w = torch.softmax(self.slice(xm) / self.temperature, dim=-1)          # [B, H, N, M]
         norm = w.sum(2)                                                        # [B, H, M]
         tok = torch.einsum("bhnm,bhnd->bhmd", w, fx) / (norm[..., None] + 1e-5)
@@ -118,14 +120,14 @@ class PhysicsAttention(nn.Module):
 
 
 class TransolverBlock(nn.Module):
-    def __init__(self, dim, heads, slices, mlp_ratio=4):
+    def __init__(self, dim, heads, slices, mlp_ratio=4, conv=False):
         super().__init__()
         self.n1, self.n2 = nn.LayerNorm(dim), nn.LayerNorm(dim)
-        self.attn = PhysicsAttention(dim, heads, slices)
+        self.attn = PhysicsAttention(dim, heads, slices, conv)
         self.mlp = nn.Sequential(nn.Linear(dim, dim * mlp_ratio), nn.GELU(), nn.Linear(dim * mlp_ratio, dim))
 
-    def forward(self, x):
-        x = x + self.attn(self.n1(x))
+    def forward(self, x, hw=None):
+        x = x + self.attn(self.n1(x), hw)
         return x + self.mlp(self.n2(x))
 
 
@@ -135,12 +137,12 @@ class Transolver(nn.Module):
     per token to its patch x patch cells, as in vision transformers. Gradient checkpointing per block
     while training saves memory only; the computation is identical."""
 
-    def __init__(self, cin, base=32, layers=6, heads=8, slices=32, patch=4, cout=1):
+    def __init__(self, cin, base=32, layers=6, heads=8, slices=32, patch=4, conv=False, cout=1):
         super().__init__()
         dim, self.p, self.cout = 4 * base, patch, cout
         self.embed = nn.Conv2d(cin + 2, dim, patch, stride=patch)
         self.pre = nn.Sequential(nn.GELU(), nn.Linear(dim, dim))
-        self.blocks = nn.ModuleList(TransolverBlock(dim, heads, slices) for _ in range(layers))
+        self.blocks = nn.ModuleList(TransolverBlock(dim, heads, slices, conv=conv) for _ in range(layers))
         self.head = nn.Sequential(nn.LayerNorm(dim), nn.Linear(dim, cout * patch * patch))
 
     def forward(self, x):
@@ -153,7 +155,7 @@ class Transolver(nn.Module):
         h, w = x.shape[-2] // p, x.shape[-1] // p
         z = self.pre(self.embed(x).flatten(2).transpose(1, 2))                 # [B, h*w, dim]
         for b in self.blocks:
-            z = checkpoint(b, z, use_reentrant=False) if self.training and torch.is_grad_enabled() else b(z)
+            z = checkpoint(b, z, (h, w), use_reentrant=False) if self.training and torch.is_grad_enabled() else b(z, (h, w))
         y = self.head(z).transpose(1, 2).reshape(B, self.cout * p * p, h, w)
         return F.pixel_shuffle(y, p)[..., :H, :W]
 

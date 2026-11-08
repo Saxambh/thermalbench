@@ -124,3 +124,22 @@ on the largest grid; pc4 and lab, RTX 4070 Ti):
 - The learning-rate rule: {1e-3, 3e-4}, chosen by best validation loss on the PCM random split, plain
   variant, seed 0. The test score that pcm_train.py also writes is not used for the choice.
 - Everything else in this plan.
+
+## Tank overfit check (8 November, training data only): failed, so Transolver is not run on the tank
+
+Same 8 tank training samples, 1600 steps, OneCycle, bf16 (`overfit_timing.py`; pc7 and pc6). Criterion
+fixed in amendment 1: masked RMSE ≤ 0.01.
+
+| Variant | Parameters | s per step (FNO 0.067) | RMSE, lr 1e-3 | RMSE, lr 3e-4 |
+|---|---|---|---|---|
+| patch 4 (the PCM design) | 1.16 M | 0.055 | 0.093 | 0.053 |
+| patch 4 + 3 x 3 convolutional slice projections (reference structured-mesh form) | 2.73 M | 0.128 | **0.012** | 0.047 |
+| patch 2 + convolutional projections | 2.70 M | 0.519 | 0.032 | 0.093 |
+
+**Outcome:**
+- The best variant misses the criterion narrowly (0.012).
+- **Decision, applying the rule as written:** Transolver is reported for the PCM family only.
+  - The tank omission is stated with this table.
+  - The near miss of the convolutional variant is recorded, so a reader can see it was not a large failure.
+- The convolutional option stays in `models.py` (`conv=False` by default) but is not used. The PCM design is
+  unchanged: patch 4, no convolutions.
