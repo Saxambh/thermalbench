@@ -143,3 +143,10 @@ fixed in amendment 1: masked RMSE ≤ 0.01.
   - The near miss of the convolutional variant is recorded, so a reader can see it was not a large failure.
 - The convolutional option stays in `models.py` (`conv=False` by default) but is not used. The PCM design is
   unchanged: patch 4, no convolutions.
+
+## Learning-rate choice (8 November, validation only)
+
+- **Setup:** PCM random split, plain Transolver, seed 0, 60 epochs (`run_transolver_pcm.sh pilot`).
+- **Best validation RMSE:** lr 1e-3: 0.04731 (pc4); lr 3e-4: 0.04559 (lab).
+- **Chosen:** 3e-4, frozen for all 36 jobs. The pilots' test scores were not read; the pilot folders are not
+  used in any result.
