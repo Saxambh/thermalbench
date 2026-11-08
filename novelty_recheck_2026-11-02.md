@@ -121,3 +121,66 @@ CFD dataset with fixed splits for ML on thermal storage).
 collaborator note of 2026-11-06 asks not to call the perturbation sensitivity a noise floor. Use "within
 the measured sensitivity of the CFD solution to small perturbations" once stage 1A gives that number for
 the discharge cases.
+
+## Addendum 2026-11-08: arXiv check and web recheck (before the outline)
+
+**Why.** This was listed as "before submission: check arXiv directly", because Scopus does not index arXiv. It
+was run once the PCM and Transolver results were in, so that the paper's positioning is checked before writing.
+
+**arXiv API queries** (abstract field, newest first, read back to 2024):
+
+| # | Query (abstract) | Hits | Relevant |
+|---|---|---|---|
+| A | "thermal energy storage" AND (benchmark OR dataset) AND (neural OR "machine learning") | 1 | 2512.01011 (below) |
+| B | "phase change" AND melting AND (neural operator / Transolver / Fourier / DeepONet / surrogate) | 8 | none for storage (laser melt pools, plasma reactor) |
+| C | (thermocline / "stratified tank" / "storage tank") AND (neural / surrogate / ML) | 7 | none (cryogenic tank data assimilation, climate) |
+| D | Transolver AND (heat / thermal / melting) | 4 | none for storage; 2610.40731 uses a canonical coordinate frame (below) |
+| E | ("latent heat" / PCM) AND (dataset / benchmark) AND (neural / learning) | 42 | none ("PCM" mostly phase-change memory) |
+| F | (natural convection / Rayleigh-Benard / buoyancy) AND (neural operator / Transolver) AND (dataset / benchmark) | 1 | 2510.21804 (below) |
+| G | (solid-liquid / enthalpy-porosity / melting front) AND (neural / learning) | 60 | none (atomistic ML potentials) |
+| H | (heat transfer / thermal) AND "neural operator" AND (out-of-distribution / generalization) AND material | 6 | 2607.25668 (below) |
+| I | (stratification / stratified) AND (neural operator / FNO) AND (tank / storage / thermal) | 0 | |
+| J | "thermal storage" AND (CFD / OpenFOAM / simulation) AND (neural / surrogate / learning) | 1 | none since 2024 |
+
+**Web search** (three searches) for journal papers and datasets since 2 November: nothing new for stratified
+tanks; for PCM only the single-study Mendeley datasets already listed (plus a March 2026 hexagonal Y-fin set,
+DOI 10.17632/dk9tktnk78.1, DNN training data for one paper).
+
+**New works to cite (none changes the novelty claim):**
+- **IC-ThermBench** (arXiv 2608.23977, August 2026): open benchmark for chip (2.5D/3D-IC) thermal learning,
+  50,000 samples, eight baselines, generalisation scopes including material variation and cross-package
+  out-of-distribution transfer, where error rises sharply (best RMSE 1.2 to 16.0 K). The closest benchmark
+  *design* to ours, in a different application. Its sharp out-of-distribution degradation parallels our
+  material-transfer result; cite as supporting context, not as precedent for storage.
+  **Name clash:** "ThermBench" is used by this benchmark. Our release name is still open; avoid "ThermBench"
+  alone (the working name ThermalStorageBench is distinct but close).
+- **REALM** (arXiv 2512.18595): benchmark of neural surrogates on 11 realistic reactive-flow datasets,
+  including spectral operators and Transformers; argues simplified proxies hide fragility. Cite with PDEBench
+  and The Well as benchmark precedent.
+- **Two-phase heat transfer open-data review** (arXiv 2605.23037, NED3): boiling, condensation, immersion
+  cooling; calls for benchmark splits and baselines. Not storage.
+- **2512.01011** (November 2025): physics-driven deep learning for a 2D finned PCM store (Stefan problem,
+  forced air cooling), one system, three networks. Add to the PCM single-study group (Shen et al. 2025).
+- **2601.22086** (January 2026): geometry-aware generative world model for 2D transient buoyant convection
+  coupled to a solid, tested on unseen geometries. Related method, no storage, no open benchmark.
+- **2510.21804 XRePIT** (October 2025): OpenFOAM plus neural-surrogate hybrid for 3D buoyancy-driven flow.
+  Related tooling, not a dataset.
+- **2610.40731** (October 2026): DeepONet with a Transolver trunk in a canonical (body-fitted) coordinate
+  frame for hypersonic shapes. A further example of canonicalisation as a method; does not touch the
+  charge/discharge symmetry claim.
+- **2607.25668** (July 2026): PINO (FNO backbone) on 1,500 1D wall-conduction solutions for ranking wall
+  materials. Conduction only; no material-transfer test in our sense.
+- **Building TES ML review** (Energy Reports 2026, PII S2352484726007006; seen in a search snippet only,
+  the page refused automated access): reportedly identifies the lack of shared benchmark problems and open
+  datasets as a gap. **Verify authors, DOI and wording in a browser before citing**; if confirmed, it is the
+  strongest motivation citation.
+
+**UFRGS dissertation:** retried; the repository page timed out (HTTP 504). A search snippet now describes
+it as aiming to demonstrate the data's suitability for training ML models, with public code. **Check in a
+browser** whether any model was trained; it remains 12 single-fin lauric-acid cases without benchmark splits
+or baselines.
+
+**Conclusion (unchanged):** no open, verified, multi-case CFD dataset with fixed out-of-distribution splits
+and ML baselines for thermal energy storage (stratified tanks or PCM melting) was found on arXiv or the web
+as of 8 November 2026. Safe wording stays "to our knowledge, the first open benchmark for ML in thermal
+energy storage". Rerun Scopus S1 to S8 just before submission.
