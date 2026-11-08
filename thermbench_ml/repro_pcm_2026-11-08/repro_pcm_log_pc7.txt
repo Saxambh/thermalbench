@@ -1,0 +1,18 @@
+worker pc7 manifest md5 19397b78801e26909fe8d0e369cd9bca device cuda
+random          fno_hybrid_s2          repro 0.8568  stored 0.8567545039981923  runs 52/52  max run diff rmse_K 0.00e+00  77s
+random          transolver_hybrid_s1   repro 0.7209  stored 0.7208963369093573  runs 52/52  max run diff rmse_K 0.00e+00  73s
+ood_fins        fno_hybrid             repro 3.1017  stored 3.101682527430039  runs 139/139  max run diff rmse_K 0.00e+00  206s
+ood_fins        unet                   repro 1.7183  stored 1.7182740061791315  runs 139/139  max run diff rmse_K 0.00e+00  196s
+ood_fins        transolver_hybrid_s1   repro 2.8154  stored 2.815410956336763  runs 139/139  max run diff rmse_K 0.00e+00  196s
+ood_drive       unet                   repro 0.9993  stored 0.9992695025976335  runs 51/51  max run diff rmse_K 0.00e+00  72s
+ood_drive       transolver_hybrid_s1   repro 1.1839  stored 1.1838759429991095  runs 51/51  max run diff rmse_K 0.00e+00  71s
+ood_material    unet_s2                repro 6.6159  stored 6.615868384114561  runs 250/250  max run diff rmse_K 0.00e+00  355s
+ood_material    transolver_hybrid_s1   repro 7.5381  stored 7.538068531302235  runs 250/250  max run diff rmse_K 0.00e+00  353s
+ood_material_r  fno_hybrid_s2          repro 15.3103  stored 15.310332918914861  runs 250/250  max run diff rmse_K 0.00e+00  365s
+ood_material_r  unet_hybrid            repro 7.0695  stored 7.069543974762599  runs 250/250  max run diff rmse_K 0.00e+00  378s
+ood_material_r  transolver_hybrid_s1   repro 15.6081  stored 15.608087077726156  runs 250/250  max run diff rmse_K 0.00e+00  351s
+ood_tilt        fno_hybrid_s1          repro 6.9668  stored 6.96675083236169  runs 150/150  max run diff rmse_K 0.00e+00  224s
+ood_tilt        unet                   repro 6.5520  stored 6.551997934413214  runs 150/150  max run diff rmse_K 0.00e+00  213s
+ood_tilt        unet_hybrid_s2         repro 7.0357  stored 7.035722750661816  runs 150/150  max run diff rmse_K 0.00e+00  230s
+ood_tilt        transolver_hybrid_s1   repro 6.8255  stored 6.825464158859009  runs 150/150  max run diff rmse_K 0.00e+00  212s
+done

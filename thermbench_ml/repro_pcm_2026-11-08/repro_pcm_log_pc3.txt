@@ -1,0 +1,19 @@
+worker pc3 manifest md5 19397b78801e26909fe8d0e369cd9bca device cuda
+random          unet_s1                repro 0.6005  stored 0.6005060093829202  runs 52/52  max run diff rmse_K 0.00e+00  73s
+random          transolver_s2          repro 0.6629  stored 0.6628801341371331  runs 52/52  max run diff rmse_K 0.00e+00  67s
+ood_fins        fno_s2                 repro 3.6578  stored 3.6578188063623425  runs 139/139  max run diff rmse_K 0.00e+00  191s
+ood_fins        unet_hybrid            repro 1.8140  stored 1.8140327308422273  runs 139/139  max run diff rmse_K 0.00e+00  213s
+ood_fins        transolver_s2          repro 2.3176  stored 2.317610896165167  runs 139/139  max run diff rmse_K 0.00e+00  180s
+ood_drive       fno                    repro 1.3925  stored 1.392549539193043  runs 51/51  max run diff rmse_K 0.00e+00  70s
+ood_drive       unet_hybrid_s1         repro 1.0994  stored 1.099446278699777  runs 51/51  max run diff rmse_K 0.00e+00  78s
+ood_drive       transolver_s2          repro 1.1073  stored 1.1073416613424798  runs 51/51  max run diff rmse_K 0.00e+00  66s
+ood_material    fno_s1                 repro 22.9482  stored 22.948209177109323  runs 250/250  max run diff rmse_K 0.00e+00  344s
+ood_material    unet_hybrid_s2         repro 4.9623  stored 4.962317375007908  runs 250/250  max run diff rmse_K 0.00e+00  384s
+ood_material    transolver_s2          repro 6.0506  stored 6.050590432658285  runs 250/250  max run diff rmse_K 0.00e+00  325s
+ood_material_r  fno_hybrid             repro 10.7808  stored 10.780755349525663  runs 250/250  max run diff rmse_K 0.00e+00  370s
+ood_material_r  unet_hybrid_s1         repro 9.0660  stored 9.065994526232863  runs 250/250  max run diff rmse_K 0.00e+00  380s
+ood_material_r  transolver_s2          repro 13.7785  stored 13.778495360588197  runs 250/250  max run diff rmse_K 0.00e+00  321s
+ood_tilt        fno_s2                 repro 6.5476  stored 6.547576936073676  runs 150/150  max run diff rmse_K 0.00e+00  206s
+ood_tilt        unet_hybrid            repro 7.2427  stored 7.242713847042875  runs 150/150  max run diff rmse_K 0.00e+00  230s
+ood_tilt        transolver_s2          repro 6.1809  stored 6.180875075091632  runs 150/150  max run diff rmse_K 0.00e+00  195s
+done

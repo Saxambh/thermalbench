@@ -1,0 +1,31 @@
+worker lab manifest md5 19397b78801e26909fe8d0e369cd9bca device cuda
+random          fno                    repro 0.8209  stored 0.8209304616106217  runs 52/52  max run diff rmse_K 0.00e+00  89s
+random          fno_s1                 repro 0.8187  stored 0.8187168189010372  runs 52/52  max run diff rmse_K 0.00e+00  90s
+random          unet_s2                repro 0.5977  stored 0.5977422883125676  runs 52/52  max run diff rmse_K 0.00e+00  95s
+random          unet_hybrid_s1         repro 0.6573  stored 0.6573289099528364  runs 52/52  max run diff rmse_K 0.00e+00  118s
+random          transolver             repro 0.6444  stored 0.6443853390547769  runs 52/52  max run diff rmse_K 0.00e+00  113s
+ood_fins        fno_s1                 repro 3.9246  stored 3.9245893472517617  runs 139/139  max run diff rmse_K 0.00e+00  247s
+ood_fins        fno_hybrid_s2          repro 3.1966  stored 3.1966157303923657  runs 139/139  max run diff rmse_K 0.00e+00  317s
+ood_fins        unet_s1                repro 1.8400  stored 1.8399604140872214  runs 139/139  max run diff rmse_K 0.00e+00  253s
+ood_fins        unet_hybrid_s1         repro 1.8111  stored 1.8110550335318645  runs 139/139  max run diff rmse_K 0.00e+00  330s
+ood_fins        transolver             repro 2.3752  stored 2.375248911849845  runs 139/139  max run diff rmse_K 0.00e+00  320s
+ood_drive       fno_s1                 repro 1.4160  stored 1.4159715033914546  runs 51/51  max run diff rmse_K 0.00e+00  85s
+ood_drive       fno_hybrid             repro 1.4987  stored 1.4987154019279603  runs 51/51  max run diff rmse_K 0.00e+00  109s
+ood_drive       unet_s2                repro 1.1193  stored 1.1192717307515994  runs 51/51  max run diff rmse_K 0.00e+00  85s
+ood_drive       unet_hybrid_s2         repro 1.1344  stored 1.1344039773867922  runs 51/51  max run diff rmse_K 0.00e+00  112s
+ood_drive       transolver             repro 1.1059  stored 1.1059202592096882  runs 51/51  max run diff rmse_K 0.00e+00  105s
+ood_material    fno_hybrid             repro 7.6832  stored 7.683237222000675  runs 250/250  max run diff rmse_K 0.00e+00  537s
+ood_material    fno_hybrid_s1          repro 12.2472  stored 12.247231361752048  runs 250/250  max run diff rmse_K 0.00e+00  575s
+ood_material    unet_hybrid            repro 7.1957  stored 7.195695240591863  runs 250/250  max run diff rmse_K 0.00e+00  575s
+ood_material    transolver             repro 5.8583  stored 5.858327843345896  runs 250/250  max run diff rmse_K 0.00e+00  559s
+ood_material_r  fno                    repro 45.5286  stored 45.528636730426065  runs 250/250  max run diff rmse_K 0.00e+00  437s
+ood_material_r  fno_s1                 repro 28.9974  stored 28.997432724667334  runs 250/250  max run diff rmse_K 0.00e+00  445s
+ood_material_r  unet_s1                repro 10.4421  stored 10.442057757425394  runs 250/250  max run diff rmse_K 0.00e+00  451s
+ood_material_r  unet_s2                repro 8.5660  stored 8.565975202914803  runs 250/250  max run diff rmse_K 0.00e+00  469s
+ood_material_r  transolver             repro 20.5216  stored 20.52158822255292  runs 250/250  max run diff rmse_K 0.00e+00  556s
+ood_tilt        fno_s1                 repro 5.4964  stored 5.496394858647179  runs 150/150  max run diff rmse_K 0.00e+00  265s
+ood_tilt        fno_hybrid_s2          repro 6.2885  stored 6.2885348612647505  runs 150/150  max run diff rmse_K 0.00e+00  337s
+ood_tilt        unet_s1                repro 6.6510  stored 6.650955014946257  runs 150/150  max run diff rmse_K 0.00e+00  283s
+ood_tilt        unet_s2                repro 6.8038  stored 6.803811077083448  runs 150/150  max run diff rmse_K 0.00e+00  279s
+ood_tilt        transolver             repro 6.7917  stored 6.79165349750438  runs 150/150  max run diff rmse_K 0.00e+00  340s
+done

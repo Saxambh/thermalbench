@@ -1,0 +1,7 @@
+manifest md5 19397b78801e26909fe8d0e369cd9bca device cuda
+random          fno                    repro 0.8209  stored 0.8209304616106217  runs 52/52  max run diff rmse_K 1.56e-04  74s
+random          fno_s1                 repro 0.8187  stored 0.8187168189010372  runs 52/52  max run diff rmse_K 8.30e-05  73s
+random          fno_s2                 repro 0.8121  stored 0.8121486623529793  runs 52/52  max run diff rmse_K 0.00e+00  72s
+random          fno_hybrid             repro 0.8484  stored 0.8483661525176577  runs 52/52  max run diff rmse_K 2.18e-06  82s
+random          fno_hybrid_s1          repro 0.8734  stored 0.873440267107703  runs 52/52  max run diff rmse_K 0.00e+00  81s
+random          fno_hybrid_s2          repro 0.8568  stored 0.8567545039981923  runs 52/52  max run diff rmse_K 0.00e+00  81s

@@ -59,7 +59,7 @@ taken from the worker that produced its stored score, and is rescored from the f
 | Family | Checkpoints | Folder | Rescored |
 |---|---|---|---|
 | Tank (FNO, U-Net; 4 variants; 3 seeds; 4 splits) | 96 | `thermbench_ml/results_merged/ckpt` | 96 of 96 exact (`repro_all_2026-11-08`) |
-| PCM (FNO, U-Net, Transolver; plain and hybrid; 3 seeds; 6 splits) | 108 | `thermbench_ml/results_pcm_release/ckpt` (`repro_pcm_2026-11-08/collect_ckpt.sh`, sources and md5 in `ckpt_sources.tsv`) | `repro_pcm_2026-11-08` |
+| PCM (FNO, U-Net, Transolver; plain and hybrid; 3 seeds; 6 splits) | 108 | `thermbench_ml/results_pcm_release/ckpt` (`repro_pcm_2026-11-08/collect_ckpt.sh`, sources and md5 in `ckpt_sources.tsv`) | 108 of 108 exact on the training GPU type; about 1e-4 K across GPU types (`repro_pcm_2026-11-08`) |
 
 Do not ship `results_merged/ckpt_unet_s2_ood_flow.pt.WRONG_SOURCE_532c650e`, `results_pcm_merged/ckpt` (an
 earlier copy of the FNO hybrid checkpoints made by globbing all workers) or any pilot folder.

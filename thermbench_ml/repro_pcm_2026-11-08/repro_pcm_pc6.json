@@ -1,0 +1,279 @@
+{
+ "worker": "pc6",
+ "manifest_md5": "19397b78801e26909fe8d0e369cd9bca",
+ "device": "cuda",
+ "rows": [
+  {
+   "split": "random",
+   "name": "fno_hybrid_s1",
+   "n_test": 52,
+   "n_matched": 52,
+   "repro_rmse_K": 0.873440267107703,
+   "stored_rmse_K": 0.873440267107703,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "107b592dc39373534ec9682a536eea87"
+  },
+  {
+   "split": "random",
+   "name": "unet",
+   "n_test": 52,
+   "n_matched": 52,
+   "repro_rmse_K": 0.5791777679595683,
+   "stored_rmse_K": 0.5791777679595683,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "e5baaba638cde1f03e2b999939387b86"
+  },
+  {
+   "split": "random",
+   "name": "transolver_hybrid",
+   "n_test": 52,
+   "n_matched": 52,
+   "repro_rmse_K": 0.7352574666493893,
+   "stored_rmse_K": 0.7352574666493893,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "076f43ae3de3ed3e27dad0ad5f51aa91"
+  },
+  {
+   "split": "ood_fins",
+   "name": "unet_s2",
+   "n_test": 139,
+   "n_matched": 139,
+   "repro_rmse_K": 1.7273841201665177,
+   "stored_rmse_K": 1.7273841201665177,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "1643a5016b61fd1660e1ea2ed439b3f5"
+  },
+  {
+   "split": "ood_fins",
+   "name": "transolver_hybrid",
+   "n_test": 139,
+   "n_matched": 139,
+   "repro_rmse_K": 2.730254378567755,
+   "stored_rmse_K": 2.730254378567755,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "f9d23d0f0052fa11f6aee07e5ff6345e"
+  },
+  {
+   "split": "ood_drive",
+   "name": "fno_hybrid_s1",
+   "n_test": 51,
+   "n_matched": 51,
+   "repro_rmse_K": 1.4840607201864244,
+   "stored_rmse_K": 1.4840607201864244,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "f490c824008af8d23477b2075927bcec"
+  },
+  {
+   "split": "ood_drive",
+   "name": "unet_hybrid",
+   "n_test": 51,
+   "n_matched": 51,
+   "repro_rmse_K": 1.138155265176868,
+   "stored_rmse_K": 1.138155265176868,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "9cafee2ec2e987e9dec4a0d7e771df62"
+  },
+  {
+   "split": "ood_drive",
+   "name": "transolver_hybrid",
+   "n_test": 51,
+   "n_matched": 51,
+   "repro_rmse_K": 1.1933533510514676,
+   "stored_rmse_K": 1.1933533510514676,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "4c1a507160c88eeb173c931964067c8e"
+  },
+  {
+   "split": "ood_material",
+   "name": "unet_s1",
+   "n_test": 250,
+   "n_matched": 250,
+   "repro_rmse_K": 5.50804156573016,
+   "stored_rmse_K": 5.50804156573016,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "712eec47f2942f1a4f7164a5f35677b5"
+  },
+  {
+   "split": "ood_material",
+   "name": "transolver_hybrid",
+   "n_test": 250,
+   "n_matched": 250,
+   "repro_rmse_K": 7.275556014189729,
+   "stored_rmse_K": 7.275556014189729,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "d1f4c7f9d40b7c7f97c7dee6dd2c5d8f"
+  },
+  {
+   "split": "ood_material_r",
+   "name": "fno_s2",
+   "n_test": 250,
+   "n_matched": 250,
+   "repro_rmse_K": 28.833244674571578,
+   "stored_rmse_K": 28.833244674571578,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "3da0063ee73f0dbd28fc5e1e300e4207"
+  },
+  {
+   "split": "ood_material_r",
+   "name": "unet",
+   "n_test": 250,
+   "n_matched": 250,
+   "repro_rmse_K": 8.573224760086935,
+   "stored_rmse_K": 8.573224760086935,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "7eae50bbc657e6f9ceaec76271ef4645"
+  },
+  {
+   "split": "ood_material_r",
+   "name": "unet_hybrid_s2",
+   "n_test": 250,
+   "n_matched": 250,
+   "repro_rmse_K": 6.319260233994842,
+   "stored_rmse_K": 6.319260233994842,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "0d8e4f3a28df41a49e57ce9158caba14"
+  },
+  {
+   "split": "ood_material_r",
+   "name": "transolver_hybrid",
+   "n_test": 250,
+   "n_matched": 250,
+   "repro_rmse_K": 19.167875447368854,
+   "stored_rmse_K": 19.167875447368854,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "0758188a4bca11d3affb4179f40857ae"
+  },
+  {
+   "split": "ood_tilt",
+   "name": "fno",
+   "n_test": 150,
+   "n_matched": 150,
+   "repro_rmse_K": 6.458009596415765,
+   "stored_rmse_K": 6.458009596415765,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "eb6bf4cbaa26eeb674b2ad7597639cfe"
+  },
+  {
+   "split": "ood_tilt",
+   "name": "transolver_hybrid",
+   "n_test": 150,
+   "n_matched": 150,
+   "repro_rmse_K": 6.991180806534715,
+   "stored_rmse_K": 6.991180806534715,
+   "max_abs_run_diff": {
+    "rmse_K": 0.0,
+    "alpha_rmse": 0.0,
+    "liquid_iou": 0.0,
+    "energy_err": 0.0,
+    "t90_reached": 0.0,
+    "t90_err": 0.0
+   },
+   "ckpt_md5": "e067fbd5c4e0593385cf4c82157549e0"
+  }
+ ]
+}
