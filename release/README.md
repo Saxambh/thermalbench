@@ -1,6 +1,6 @@
 # Release preparation (state of 7 November 2026)
 
-What a user needs to reproduce or reuse ThermalStorageBench, collected ahead of the release. The license,
+What a user needs to reproduce or reuse HeatStoreBench, collected ahead of the release. The license,
 version tag, DOI and final project name are decided at the end (the renaming happens last).
 
 ## Frozen manifests (in the repository)

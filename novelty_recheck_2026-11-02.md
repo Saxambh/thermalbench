@@ -154,6 +154,8 @@ DOI 10.17632/dk9tktnk78.1, DNN training data for one paper).
   material-transfer result; cite as supporting context, not as precedent for storage.
   **Name clash:** "ThermBench" is used by this benchmark. Our release name is still open; avoid "ThermBench"
   alone (the working name ThermalStorageBench is distinct but close).
+  **Decision (8 November):** the benchmark is named **HeatStoreBench** (no hits on arXiv or the web;
+  "StorageBench" is taken by a BeeGFS file-system tool, "TESBench" had one arXiv hit).
 - **REALM** (arXiv 2512.18595): benchmark of neural surrogates on 11 realistic reactive-flow datasets,
   including spectral operators and Transformers; argues simplified proxies hide fragility. Cite with PDEBench
   and The Well as benchmark precedent.

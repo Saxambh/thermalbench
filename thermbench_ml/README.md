@@ -1,4 +1,4 @@
-# ThermalStorageBench ML benchmark (tank family, 2D)
+# HeatStoreBench ML benchmark (tank family, 2D)
 
 ## Task: forward surrogate
 Given a tank's inputs and a time t*, predict the temperature field at t*.
