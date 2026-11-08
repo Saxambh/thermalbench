@@ -1,6 +1,6 @@
-# Dataset card (draft): HeatStoreBench, PCM melting family
+# Dataset card (draft): ThermalStorageBench, PCM melting family
 
-Draft of 8 November 2026. Name: HeatStoreBench (decided 8 November 2026). The license is decided at release.
+Draft of 8 November 2026. The project name and license are decided at release.
 
 ## What it is
 
@@ -157,5 +157,5 @@ Three neural architectures (FNO, U-Net, a 4x4-patch Transolver), each plain and 
 
 ## Still missing for the release
 
-License, version tag and DOI, data hosting. The PCM ML results are in (above); release
+License, version tag and DOI, project name, data hosting. The PCM ML results are in (above); release
 checkpoints are taken from the worker that trained each one and checked by rescoring.

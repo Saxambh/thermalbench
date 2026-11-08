@@ -1,4 +1,4 @@
-# HeatStoreBench: tank dataset (draft dataset card, 2026-11-06)
+# ThermalStorageBench: tank dataset (draft dataset card, 2026-11-06)
 
 Draft for the release. Every number below was checked against the frozen manifest
 (`thermbench_ml/manifest_full_h5mm.json`, created 2026-11-05 05:14 UTC), the design list

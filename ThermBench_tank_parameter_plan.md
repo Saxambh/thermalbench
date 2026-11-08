@@ -1,4 +1,4 @@
-# HeatStoreBench: stratified tank family, parameter plan (DRAFT, 2026-10-30)
+# ThermalStorageBench: stratified tank family, parameter plan (DRAFT, 2026-10-30)
 
 Status: draft for Saxam's review. Nothing in this plan has been run yet except the pilot tests listed in section 8.
 

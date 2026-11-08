@@ -1,6 +1,6 @@
-# HeatStoreBench: validation dossier for independent review (7 November 2026)
+# ThermalStorageBench: validation dossier for independent review (7 November 2026)
 
-**Purpose.** This file collects, in one place, everything done so far on HeatStoreBench: the design
+**Purpose.** This file collects, in one place, everything done so far on ThermalStorageBench: the design
 logic, the numerical set-up, verification, validation, quality control, the ML benchmark and its results.
 It is written for an independent reviewer who has not seen the project. For every major choice it gives
 the reasoning, the evidence, what we accept, and what we do not claim.
@@ -53,8 +53,6 @@ and the corrected wording applies wherever the old one appears in the body. Deta
 This section records what was completed after the reviewed version. It supersedes §12 ("PCM ML: not trained
 yet") and §15 (replaced by the list at the end of this section). The body is otherwise unchanged. Each item
 was checked by the external reviewer (Astra), whose corrections are recorded in the linked notes.
-
-**Name.** The benchmark is released as **HeatStoreBench** (decided 8 November; was ThermalStorageBench, changed to avoid confusion with IC-ThermBench, a chip-thermal benchmark). Folder, code and file names (`thermbench_ml`, `thermbench.h5`) are renamed at release.
 
 **PCM freeze.** Done 7 November: `thermbench_ml/manifest_pcm.json` (md5 19397b78...), 500 runs, 0 excluded,
 source machine, path and h5 md5 per run (2e152d3).
@@ -123,7 +121,7 @@ discharge confirmation set is analysed (`thermbench_ml/confirmation_discharge_20
   0.08 to 0.20, consistent in sign with the experiment's heat loss.
 - Second tank experiment with discharge (Shah & Furbo 2003): only if needed.
 - The 3.33 mm multi-fidelity tank subset: planned, not delivered.
-- Release items: licence, environment specification, README, version tag, DOI, data hosting, renaming code and file names to HeatStoreBench;
+- Release items: licence, environment specification, README, project name, version tag, DOI, data hosting;
   release checkpoints are taken from the worker that produced each stored score and checked by rescoring.
 - arXiv novelty check before submission; the paper itself (written once every result is in).
 
