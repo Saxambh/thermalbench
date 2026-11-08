@@ -8,10 +8,16 @@ Output [B, cout, ny, nx_max]: theta at t* (tank, cout = 1) or theta and liquid f
   FNO2d  Fourier neural operator (Li et al. 2021): lifting, L spectral layers (keep the
          lowest modes x modes Fourier coefficients) with a pointwise skip, projection
   UNet   4-level convolutional U-Net, GroupNorm + GELU, padded to a multiple of 16
+  Transolver  physics-attention transformer (Wu et al., ICML 2024; added 8 November 2026,
+         extra_baselines_2026-11-08/PLAN.md): every grid cell is a token; each layer softly assigns the
+         cells to M learned slices, attends among the M slice tokens and maps back, so the cost is
+         linear in the number of cells. Width = 4 x base (base 32 -> width 128, the --width argument);
+         tokens are 4 x 4 cell patches (PLAN.md, amendment 1).
 """
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.utils.checkpoint import checkpoint
 
 
 class SpectralConv2d(nn.Module):
@@ -84,4 +90,72 @@ class UNet(nn.Module):
         return self.out(x)[..., :H, :W]
 
 
-MODELS = {"fno": FNO2d, "unet": UNet}
+class PhysicsAttention(nn.Module):
+    """Transolver physics attention for a point set [B, N, C] (the reference irregular-mesh form)."""
+
+    def __init__(self, dim, heads=8, slices=32):
+        super().__init__()
+        self.h, self.d = heads, dim // heads
+        self.temperature = nn.Parameter(torch.full((1, heads, 1, 1), 0.5))
+        self.in_x = nn.Linear(dim, dim)
+        self.in_fx = nn.Linear(dim, dim)
+        self.slice = nn.Linear(self.d, slices)
+        nn.init.orthogonal_(self.slice.weight)
+        self.q, self.k, self.v = (nn.Linear(self.d, self.d, bias=False) for _ in range(3))
+        self.out = nn.Linear(dim, dim)
+
+    def forward(self, x):
+        B, N, _ = x.shape
+        fx = self.in_fx(x).view(B, N, self.h, self.d).transpose(1, 2)          # [B, H, N, d]
+        xm = self.in_x(x).view(B, N, self.h, self.d).transpose(1, 2)
+        w = torch.softmax(self.slice(xm) / self.temperature, dim=-1)          # [B, H, N, M]
+        norm = w.sum(2)                                                        # [B, H, M]
+        tok = torch.einsum("bhnm,bhnd->bhmd", w, fx) / (norm[..., None] + 1e-5)
+        q, k, v = self.q(tok), self.k(tok), self.v(tok)
+        tok = F.scaled_dot_product_attention(q, k, v)                         # [B, H, M, d]
+        y = torch.einsum("bhmd,bhnm->bhnd", tok, w)
+        return self.out(y.transpose(1, 2).reshape(B, N, -1))
+
+
+class TransolverBlock(nn.Module):
+    def __init__(self, dim, heads, slices, mlp_ratio=4):
+        super().__init__()
+        self.n1, self.n2 = nn.LayerNorm(dim), nn.LayerNorm(dim)
+        self.attn = PhysicsAttention(dim, heads, slices)
+        self.mlp = nn.Sequential(nn.Linear(dim, dim * mlp_ratio), nn.GELU(), nn.Linear(dim * mlp_ratio, dim))
+
+    def forward(self, x):
+        x = x + self.attn(self.n1(x))
+        return x + self.mlp(self.n2(x))
+
+
+class Transolver(nn.Module):
+    """Grid in, grid out: [B, cin, H, W] -> [B, cout, H, W] (+ 2 coordinates as in FNO2d). Tokens are
+    patch x patch cell blocks (patch 1: every cell is a token), embedded by a patch convolution and decoded
+    per token to its patch x patch cells, as in vision transformers. Gradient checkpointing per block
+    while training saves memory only; the computation is identical."""
+
+    def __init__(self, cin, base=32, layers=6, heads=8, slices=32, patch=4, cout=1):
+        super().__init__()
+        dim, self.p, self.cout = 4 * base, patch, cout
+        self.embed = nn.Conv2d(cin + 2, dim, patch, stride=patch)
+        self.pre = nn.Sequential(nn.GELU(), nn.Linear(dim, dim))
+        self.blocks = nn.ModuleList(TransolverBlock(dim, heads, slices) for _ in range(layers))
+        self.head = nn.Sequential(nn.LayerNorm(dim), nn.Linear(dim, cout * patch * patch))
+
+    def forward(self, x):
+        B, _, H, W = x.shape
+        p = self.p
+        gy, gx = torch.meshgrid(torch.linspace(0, 1, H, device=x.device),
+                                torch.linspace(0, 1, W, device=x.device), indexing="ij")
+        x = torch.cat([x, gy.expand(B, 1, H, W), gx.expand(B, 1, H, W)], 1)
+        x = F.pad(x, (0, (-W) % p, 0, (-H) % p))
+        h, w = x.shape[-2] // p, x.shape[-1] // p
+        z = self.pre(self.embed(x).flatten(2).transpose(1, 2))                 # [B, h*w, dim]
+        for b in self.blocks:
+            z = checkpoint(b, z, use_reentrant=False) if self.training and torch.is_grad_enabled() else b(z)
+        y = self.head(z).transpose(1, 2).reshape(B, self.cout * p * p, h, w)
+        return F.pixel_shuffle(y, p)[..., :H, :W]
+
+
+MODELS = {"fno": FNO2d, "unet": UNet, "transolver": Transolver}

@@ -93,3 +93,34 @@ near zero.
   for dropping DeepONet).
 - Takamoto et al., PDEBench (NeurIPS 2022 Datasets and Benchmarks); Ohana et al., The Well (NeurIPS 2024
   Datasets and Benchmarks).
+
+## Amendment 1 (8 November, before any validation or test data was used)
+
+Code check (`overfit_timing.py`, training data only: 8 fixed training samples; timing at the job batch of 16
+on the largest grid; pc4 and lab, RTX 4070 Ti):
+
+| Tokens | Tank: s per step (FNO 0.067) | Tank: overfit RMSE | PCM: s per step (FNO 0.037) | PCM: overfit RMSE |
+|---|---|---|---|---|
+| every cell (as planned) | 1.016 | 0.112 after 400 steps | 0.612 | 0.235 after 400 steps |
+| 2 x 2 patches | 0.257 | 0.094 after 400 | 0.149 | 0.221 after 400 |
+| **4 x 4 patches** | **0.055** | 0.093 (1e-3 OneCycle) / 0.053 (3e-4 OneCycle), 1600 steps | **0.048** | **0.033** (1e-3 OneCycle), 1600 steps |
+| FNO, for reference | | 0.0042 after 400 | | 0.0167 after 400 |
+
+**Changes:**
+1. **Tokens are 4 x 4 cell patches.** They are embedded by a patch convolution and decoded per token to its
+   16 cells, as in vision transformers (models.py, `patch=4`). Per-cell tokens cost 15 times FNO and fit no
+   better.
+2. **Scope:**
+   - **PCM is run now.** It fits its training samples, and it is where the reason for this baseline lies:
+     material transfer.
+   - **The tank is run only if a tank overfit check passes,** with masked RMSE ≤ 0.01 on the same 8 samples
+     within 1600 steps.
+   - This allows at most 2 hours of architecture work, training data only. One candidate is local
+     convolutions in the slice projections, as in the reference structured-mesh Transolver.
+   - If the check fails, Transolver is reported for PCM only, with this table as the reason.
+3. **Cost:** about the same as FNO per step, so 36 PCM jobs take about 20 GPU-hours (3 to 4 h on 6 GPUs).
+
+**Unchanged:**
+- The learning-rate rule: {1e-3, 3e-4}, chosen by best validation loss on the PCM random split, plain
+  variant, seed 0. The test score that pcm_train.py also writes is not used for the choice.
+- Everything else in this plan.
