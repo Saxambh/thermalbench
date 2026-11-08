@@ -7,7 +7,8 @@ the reasoning, the evidence, what we accept, and what we do not claim.
 
 **Status.** No paper text has been written. Results come first. The tank family (CFD, verification and ML)
 is complete apart from the final statistical tables. The PCM family has all 500 simulations accepted, its
-verification and validation done, and its ML training not yet started.
+verification and validation done, and its ML training not yet started. *(Superseded 8 November: see
+"Status update" below; all results except the Lou outlet comparison are in.)*
 
 **How to read the numbers.**
 - Field errors are RMSE in % of the run's temperature difference ΔT unless stated otherwise.
@@ -44,6 +45,85 @@ and the corrected wording applies wherever the old one appears in the body. Deta
 | 10 | "the remaining +0.08 in the first hour is model error" (3 fins) | The remaining difference combines residual discretisation, properties, boundary conditions, experimental uncertainty and model form; these runs do not separate them [3.10] |
 | 8.4 | U-Net ood_flow 9.19 (2 seeds) | 9.21 with all 3 seeds (`thermbench_ml/repro_2026-11-07/RESULT.md`) |
 | 6 | Lou h_j "bias +2.4 mm ... within the measurement spread" | The mean hides a trend: −2.9 mm (50 to 300 s), −0.9 mm (350 to 450 s), **+10.8 mm (500 to 700 s)**, deeper than both PIV tests. The between-test spread is not an uncertainty band [3.7] (`validation_Lou2023_case_data.md`) |
+
+---
+
+## Status update (8 November): results since the review
+
+This section records what was completed after the reviewed version. It supersedes §12 ("PCM ML: not trained
+yet") and §15 (replaced by the list at the end of this section). The body is otherwise unchanged. Each item
+was checked by the external reviewer (Astra), whose corrections are recorded in the linked notes.
+
+**PCM freeze.** Done 7 November: `thermbench_ml/manifest_pcm.json` (md5 19397b78...), 500 runs, 0 excluded,
+source machine, path and h5 md5 per run (2e152d3).
+
+**PCM ML benchmark** (`thermbench_ml/pcm_final_2026-11-08/RESULT.md`, e9716a6, 34decfe, cb8811e).
+- 72 jobs (FNO and U-Net, plain and hybrid, 3 seeds, 6 splits) plus 7 baselines. Every entry's test IDs match
+  the frozen splits.
+- Field RMSE, best neural against best baseline:
+
+  | Split | Best neural | Best baseline |
+  |---|---|---|
+  | random | U-Net 0.59 K | RBF 1.98 K |
+  | held-out fins | U-Net 1.76 K | IDW 4.90 K |
+  | stronger heating | U-Net 1.05 K | RBF 4.02 K |
+  | unseen tilt | FNO 6.17 K | IDW 7.67 K |
+  | held-out lauric acid | U-Net hybrid 5.61 K | **IDW 5.35 K** |
+  | held-out n-octadecane | U-Net hybrid 7.48 K | **IDW 3.55 K** |
+
+- **The ranking reverses for material transfer.** IDW had lower field RMSE than the three-seed mean of every
+  neural variant in both directions. The two directions differ:
+  - held-out lauric acid: IDW better than the U-Net hybrid mean by 0.26 K [0.10, 0.43], but two of its three
+    seeds beat IDW;
+  - held-out n-octadecane: IDW better than every seed of every variant (U-Net hybrid by 3.94 K [3.67, 4.21]).
+- Paired intervals are over runs with the seed mean fixed (descriptive); seed results are listed with them.
+  The "best baseline" is chosen on test, so headlines use IDW by name.
+- **Solver-WARN sensitivity (review item 3.6):** removing the 39 WARN cases from scoring changes neural RMSE
+  by at most 0.10 K and baselines by at most 0.60 K; no neural ordering or conclusion changes. This tests
+  exclusion from scoring, not retraining.
+
+**Transolver as an extra neural baseline, PCM only** (`thermbench_ml/extra_baselines_2026-11-08/`, plan
+fcb9dc3 to 9294bcd, results d6f9876, review f824749).
+- 4x4-patch Transolver, plan and analysis committed before training. DeepONet dropped, with the reason.
+- The tank was not run: a pre-set overfit gate (masked RMSE <= 0.01 on 8 training samples) failed narrowly
+  (0.012). That was an implementation and resource decision, so whether it helps on unseen tank widths is open.
+- Results: between U-Net and FNO on field error in distribution; no geometry advantage (tilt, fins). Lowest
+  melt-time error on random, held-out fins and stronger heating. On held-out fins, U-Net has the lower field
+  RMSE (1.76 against 2.31 K) and Transolver the lower t90 error (5.6 against 10.2 %, all runs crossing), so
+  the ranking depends on the quantity predicted.
+- Material transfer: IDW had lower field RMSE than every seed of both Transolver variants in both directions.
+  On held-out n-octadecane only 2.0 % (plain) and 6.7 % (hybrid) of predictions reach t90 within the horizon.
+  The material-transfer limitation therefore holds for all three evaluated architectures.
+
+**Tank: physics baseline** (`thermbench_ml/multinode_2026-11-08/RESULT.md`, protocol 60223ee before any test
+score, result e4a0dbf). A calibrated multi-node 1D model. Both hybrid-canonical surrogates reduce vertical
+profile error by 3.6 to 4.1 pp of ΔT and midpoint error by 6.6 to 19.1 mm. The 1D model has lower near-outlet
+temperature error on held-out discharge and high-flow cases, so the benefit of full-field prediction depends on
+the thermal quantity required.
+
+**Tank: full reproduction from the release** (`thermbench_ml/repro_all_2026-11-08/RESULT.md`, a1d0ee8). All 96
+neural checkpoints rescored from the frozen data reproduce every stored per-run `rmse_theta` exactly (19,704
+scores) on different hardware. One released checkpoint (U-Net ood_flow, seed 2) came from an earlier attempt
+of the job and was replaced; no reported number changed. Also from this round: the U-Net ood_flow mean with
+all 3 seeds is 9.21 (§8.4), design-level intervals are in `thermbench_ml/stats_2026-11-07/`, and the
+discharge confirmation set is analysed (`thermbench_ml/confirmation_discharge_2026-11-07/`).
+
+**Errors found in our own work since the review** (added to §13):
+
+| What | How found | Effect and fix |
+|---|---|---|
+| Released checkpoint U-Net ood_flow s2 from the wrong attempt | full rescoring of all 96 checkpoints | replaced; no number changed |
+| Worker scripts never finished (bare `wait` waited on the log `tee`) | workers never logged "done" | fixed in `run_final_pcm.sh`; no effect on results |
+
+**What is not done yet (replaces §15):**
+- **Lou et al. outlet comparison:** the 3D run finishes about 9 November; then the comparison is rerun on the
+  full series. Interim reading: breakthrough timing matches; post-breakthrough outlet T* over-predicted by
+  0.08 to 0.20, consistent in sign with the experiment's heat loss.
+- Second tank experiment with discharge (Shah & Furbo 2003): only if needed.
+- The 3.33 mm multi-fidelity tank subset: planned, not delivered.
+- Release items: licence, environment specification, README, project name, version tag, DOI, data hosting;
+  release checkpoints are taken from the worker that produced each stored score and checked by rescoring.
+- arXiv novelty check before submission; the paper itself (written once every result is in).
 
 ---
 

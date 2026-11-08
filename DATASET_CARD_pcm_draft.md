@@ -116,6 +116,30 @@ validation dossier, §11.
 | ood_material_r | octadecane (train on lauric acid) | 226 / 24 / 250 |
 | ood_tilt | 45° and heated from below (train on side heating) | 317 / 33 / 150 |
 
+## Benchmark results (8 November; `thermbench_ml/pcm_final_2026-11-08/`, `thermbench_ml/extra_baselines_2026-11-08/`)
+
+Three neural architectures (FNO, U-Net, a 4x4-patch Transolver), each plain and with a front-model prior
+(hybrid), 3 seeds each, 108 jobs; 7 non-neural baselines. Field RMSE in K, mean of 3 seeds:
+
+| Split | FNO | U-Net | Transolver | Best hybrid | IDW | Best baseline |
+|---|---|---|---|---|---|---|
+| random | 0.82 | **0.59** | 0.66 | U-Net 0.68 | 2.55 | RBF 1.98 |
+| ood_fins | 3.79 | **1.76** | 2.31 | U-Net 1.82 | 4.90 | IDW 4.90 |
+| ood_drive | 1.40 | **1.05** | 1.11 | U-Net 1.12 | 4.13 | RBF 4.02 |
+| ood_tilt | **6.17** | 6.67 | 6.41 | FNO 6.66 | 7.67 | IDW 7.67 |
+| ood_material | 12.90 | 5.92 | 6.11 | U-Net 5.61 | **5.35** | IDW 5.35 |
+| ood_material_r | 34.45 | 9.19 | 16.66 | U-Net 7.48 | **3.55** | IDW 3.55 |
+
+- **Within one material** (random, fins, drive, tilt), every neural variant has lower field RMSE than IDW.
+- **Across materials,** IDW has lower field RMSE than the three-seed mean of every neural variant in both
+  directions; on held-out n-octadecane it beats every seed of every variant. Material transfer is the open
+  problem this family poses.
+- **Field accuracy and melt time can rank models differently:** on held-out fins U-Net has the lower field
+  RMSE and Transolver the lower t90 error (5.6 against 10.2 %, all runs crossing).
+- Seed spread is large on the material splits (FNO ± 8.7 and ± 9.6 K), so single-seed rankings there are not
+  reliable. Report seeds, not only means.
+- The 39 retained solver-WARN cases change no ordering or conclusion when excluded from scoring.
+
 ## Known limitations
 
 - **2D:** ideal adiabatic side walls, no 3D damping and constant properties.
@@ -133,5 +157,5 @@ validation dossier, §11.
 
 ## Still missing for the release
 
-License, version tag and DOI, project name, data hosting, and the PCM ML results (training in progress, 8
-November).
+License, version tag and DOI, project name, data hosting. The PCM ML results are in (above); release
+checkpoints are taken from the worker that trained each one and checked by rescoring.
