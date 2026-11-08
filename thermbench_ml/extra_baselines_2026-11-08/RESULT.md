@@ -54,6 +54,27 @@ git). FNO, U-Net and baseline numbers are unchanged from `pcm_final_2026-11-08`.
 4. **No new winner.** Transolver does not change any "best neural" entry for field error. It gives the
    lowest melt-time error on random, fins and drive.
 
+## Review (Astra, 8 November): extension accepted as complete
+
+- **Material-transfer wording, keeping seeds and means apart:**
+  - Seed level: IDW had lower field RMSE than every seed of both 4x4-patch Transolver variants in both
+    transfer directions.
+  - Mean level, all three architectures: IDW had lower field RMSE than the three-seed mean of every
+    evaluated variant of FNO, U-Net and Transolver in both directions. Not stated at seed level across
+    architectures, because two hybrid U-Net seeds beat IDW on held-out lauric acid.
+  - Strongest result: held-out n-octadecane, IDW 3.55 K against 12.52 to 20.52 K across the six Transolver
+    runs. Lead there with the crossing rates, 2.0 % (plain) and 6.7 % (hybrid) of runs reaching t90, seed
+    mean, not with the timing errors of the few runs that crossed.
+- **t90 is a secondary finding in the main text.** Held-out fins is the example: plain U-Net has the lower
+  field RMSE (1.76 against 2.31 K) but plain Transolver the lower t90 error (5.6 % against 10.2 %; paired
+  4.69 pp [3.43, 6.01]). All 139 runs crossed in every seed, so the timing advantage is not from dropped
+  crossings. The ranking changes with the predicted quantity, which is why the benchmark scores both field
+  accuracy and melting time. It earns its own sentence in the PCM section.
+- **Qualification, stronger heating:** "no clear t90 advantage over U-Net" holds for plain against plain,
+  0.20 pp [-0.03, 0.40]. Hybrid against hybrid gives 0.43 pp [0.17, 0.73]. Both are descriptive intervals
+  conditional on the fitted seeds.
+- **Placement:** material transfer in the PCM headline.
+
 ## WARN sensitivity
 
 - Removing the 39 solver-WARN cases changes Transolver field RMSE by at most 0.07 K.
