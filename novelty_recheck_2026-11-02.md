@@ -154,6 +154,13 @@ DOI 10.17632/dk9tktnk78.1, DNN training data for one paper).
   material-transfer result; cite as supporting context, not as precedent for storage.
   **Name clash:** "ThermBench" is used by this benchmark. Our release name is still open; avoid "ThermBench"
   alone (the working name ThermalStorageBench is distinct but close).
+  **Decision (8 November, after review by Astra): keep ThermalStorageBench** (chosen 5 November). A
+  tentative rename to HeatStoreBench was reverted: readers of thermal-energy journals search for "thermal
+  storage", and the name covers sensible (tank) and latent (PCM) storage. The collision risk with
+  IC-ThermBench is low for the full name; the risk is shortening ours to "ThermBench". **Rule:** the full
+  name ThermalStorageBench is used everywhere (paper, captions, repository, dataset deposit, citation
+  metadata), never "ThermBench". Suggested paper title: "ThermalStorageBench: A CFD benchmark for machine
+  learning in sensible and latent thermal energy storage".
 - **REALM** (arXiv 2512.18595): benchmark of neural surrogates on 11 realistic reactive-flow datasets,
   including spectral operators and Transformers; argues simplified proxies hide fragility. Cite with PDEBench
   and The Well as benchmark precedent.
@@ -182,5 +189,11 @@ or baselines.
 
 **Conclusion (unchanged):** no open, verified, multi-case CFD dataset with fixed out-of-distribution splits
 and ML baselines for thermal energy storage (stratified tanks or PCM melting) was found on arXiv or the web
-as of 8 November 2026. Safe wording stays "to our knowledge, the first open benchmark for ML in thermal
-energy storage". Rerun Scopus S1 to S8 just before submission.
+as of 8 November 2026. Rerun Scopus S1 to S8 just before submission.
+
+**Wording (revised after review, 8 November).** The search conclusion is narrower than a "first open
+benchmark" claim, so the paper leads with the verifiable contribution instead: "an open benchmark combining
+transient stratified-tank and PCM-melting fields with fixed design-level splits, engineering metrics, and
+released CFD verification cases". A priority claim ("to our knowledge, the first ...") is at most secondary
+and only if the final Scopus rerun supports it. This supersedes the "safe wording" above and in the
+2 November conclusion.

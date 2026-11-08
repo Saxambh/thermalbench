@@ -1,6 +1,6 @@
 # Dataset card (draft): ThermalStorageBench, PCM melting family
 
-Draft of 8 November 2026. The project name and license are decided at release.
+Draft of 8 November 2026. Name: ThermalStorageBench (confirmed 8 November; always in full, never "ThermBench"). The license is decided at release.
 
 ## What it is
 
