@@ -1,22 +1,24 @@
+# ThermalStorageBench: A CFD Benchmark for Machine Learning in Sensible and Latent Thermal Energy Storage
+
+**Saxam Bhattarai** ᵃ · **Bivek Baral** ᵃ · **Henrik Davidsson** ᵇ
+
+ᵃ Kathmandu University, Dhulikhel, Nepal · ᵇ Energy and Building Design, Lund University (LTH), Lund, Sweden
+
+*Corresponding author: to be decided before submission.*
+
+*E-mail addresses:* saxambhattarai1@gmail.com (S. Bhattarai), bivek@ku.edu.np (B. Baral), [TO CHECK] (H. Davidsson).
+
+*Draft v1, 9 November 2026, for co-author reading; not for circulation. Every number is generated from the committed result files and checked by an independent script (477 checks pass). Items marked [TO CHECK] are open.*
+
 ---
-title: "ThermalStorageBench: A CFD benchmark for machine learning in sensible and latent thermal energy storage"
----
 
-**Saxam Bhattarai**^a^, **Bivek Baral**^a^, **Henrik Davidsson**^b^
-
-^a^ Kathmandu University, Dhulikhel, Nepal
-
-^b^ Energy and Building Design, Lund University, Lund, Sweden
-
-Corresponding author: to be decided before submission.
-
-*Draft v1, 9 November 2026, for co-author reading. Not for circulation. Numbers are generated from the committed result files and checked by an independent script (474 checks pass, `paper_figures/out/VERIFY_REPORT.md`). Items marked [TO CHECK] are open.*
-
-# Abstract
+## Abstract
 
 Machine-learning surrogates for thermal energy storage are each trained and tested on their own small set of simulations, so their results cannot be compared. We present ThermalStorageBench, an open benchmark of transient two-dimensional OpenFOAM simulations for two storage families: 1,212 charging and discharging runs of stratified water tanks (sensible storage) and 500 melting runs of finned and tilted phase change material (PCM) cells with n-octadecane and lauric acid (latent storage). The release includes fixed design-level train/test splits that probe interpolation and five kinds of extrapolation, engineering metrics (temperature field, thermocline, outlet temperature, stored energy, melt fraction and melt time), baselines from one-dimensional storage models to three neural-operator architectures, pre-registered verification cases, and validation against four experiments. Neural operators reduce tank field error to 3.5 to 4.5 % of the charging temperature difference on interpolation, unseen widths and discharge, about half that of a calibrated multi-node model, and a change of frame using the charge/discharge symmetry is required for discharge prediction from charge-only training. For PCM melting, the best neural operator is 2 to 4 times more accurate than the best interpolation within a material, but inverse-distance interpolation has lower field error than every neural model when the material changes, in both directions. Which model is preferable depends on the predicted quantity: a one-dimensional model predicts outlet temperature better on discharge and high-flow cases, and the model with the lowest field error is not the one with the lowest melt-time error. All 204 released network checkpoints reproduce their reported scores.
 
 **Keywords:** thermal energy storage; benchmark dataset; phase change material; stratified tank; neural operator; computational fluid dynamics
+
+---
 
 # 1. Introduction
 
@@ -145,68 +147,6 @@ A three-seed tank prediction (120 snapshots) takes a median 1.45 s on a laptop R
 
 ThermalStorageBench provides 1,712 verified transient CFD simulations of sensible and latent thermal storage with fixed splits, engineering metrics, baselines and reproducible checkpoints. Applying it shows that neural operators are clearly better than interpolation and one-dimensional models within a storage family, that a simple change of frame from the charge/discharge symmetry is what makes discharge predictable from charging data, and that the preferred model depends on the quantity needed. It also shows a clear open problem: when the PCM material changes, simple interpolation beats every evaluated neural operator, most strongly for n-octadecane after training on lauric acid. The data, code, splits and checkpoints are released so that new models can be compared on equal terms.
 
-# Data availability
-
-[TO CHECK before submission: repository and DOI.] The data (1,712 runs, 63 GB), frozen manifests with md5 checksums, split definitions, training and evaluation code, all 204 checkpoints and the verification cases will be deposited in a public repository and cited here.
-
-# CRediT authorship contribution statement
-
-[TO AGREE with all authors.] Saxam Bhattarai: Conceptualization, Methodology, Software, Investigation, Data curation, Formal analysis, Validation, Visualization, Writing: original draft. Bivek Baral: [roles]. Henrik Davidsson: [roles].
-
-# Declaration of competing interest
-
-[TO CONFIRM] The authors declare no competing interests.
-
-# Funding
-
-[TO CONFIRM]
-
-# Declaration of generative AI and AI-assisted technologies in the manuscript preparation process
-
-[TO AGREE with all authors; the journal requires this section.] During the preparation of this work the authors used Claude (Anthropic) to assist with code, data analysis and drafting of the text. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article.
-
-# References
-
-[References are numbered in order of first citation. Details and DOIs of every entry are to be verified before submission; none is final.]
-
-[1] Shen, Wu, Duan, Machine learning for predicting the PCM melting process in a rectangular enclosure energy storage, AI Thermal Fluids 1 (2025) 100001.
-[2] Ma et al., Multi-objective optimization of fin-embedded concrete thermal energy storage systems using CFD and machine learning, J. Energy Storage 180 (2026) 124366.
-[3] An adaptive physics-driven deep learning framework for a two-phase Stefan problem, arXiv:2512.01011 (2025). [authors TO CHECK]
-[4] Chen, He, Song, J. Energy Storage 146 (2026) 120035. [title TO CHECK]
-[5] Takamoto et al., PDEBench: an extensive benchmark for scientific machine learning, NeurIPS Datasets and Benchmarks (2022).
-[6] Ohana et al., The Well: a large-scale collection of diverse physics simulations for machine learning, NeurIPS Datasets and Benchmarks (2024).
-[7] Bonnet et al., AirfRANS: high fidelity computational fluid dynamics dataset for approximating Reynolds-averaged Navier-Stokes solutions, NeurIPS Datasets and Benchmarks (2022).
-[8] Luo et al., CFDBench: a large-scale benchmark for machine learning methods in fluid dynamics, arXiv:2310.05963 (2023).
-[9] Hassan et al., BubbleML: a multiphase multiphysics dataset and benchmarks for machine learning, NeurIPS Datasets and Benchmarks (2023).
-[10] Benchmarking neural surrogates on realistic spatiotemporal multiphysics flows (REALM), arXiv:2512.18595 (2025). [authors TO CHECK]
-[11] IC-ThermBench: an open, progressive benchmark for generalizable 2.5D/3D-IC thermal learning, arXiv:2608.23977 (2026). [authors TO CHECK]
-[12] Open datasets and machine learning for two-phase heat transfer: a review following a spatial-temporal taxonomy, arXiv:2605.23037 (2026). [authors TO CHECK]
-[13] Menter, Two-equation eddy-viscosity turbulence models for engineering applications, AIAA J. 32 (1994) 1598-1605.
-[14] Voller, Prakash, A fixed grid numerical modelling methodology for convection-diffusion mushy region phase-change problems, Int. J. Heat Mass Transf. 30 (1987) 1709-1719.
-[15] Vogel, Thess, Validation of a numerical model with a benchmark experiment for melting governed by natural convection in latent thermal energy storage, Appl. Therm. Eng. (2019). [volume and pages TO CHECK]
-[16] Kamkari, Shokouhmand, Experimental investigation of phase change material melting in rectangular enclosures with horizontal partial fins, Int. J. Heat Mass Transf. (2014). [volume and pages TO CHECK]
-[17] Lou et al., J. Energy Storage 71 (2023) 108017. [title TO CHECK]
-[18] Kamkari, Shokouhmand, Bruno, Experimental investigation of the effect of inclination angle on convection-driven melting of phase change material in a rectangular enclosure, Int. J. Heat Mass Transf. (2014). [volume and pages TO CHECK]
-[19] Li et al., Fourier neural operator for parametric partial differential equations, ICLR (2021).
-[20] Ronneberger, Fischer, Brox, U-Net: convolutional networks for biomedical image segmentation, MICCAI (2015).
-[21] Wang, Walters, Yu, Incorporating symmetry into deep dynamics models for improved generalization, ICLR (2021).
-[22] Wang, Walters, Yu, Approximately equivariant networks for imperfectly symmetric dynamics, ICML, PMLR 162 (2022).
-[23] Wu, Luo, Wang, Wang, Long, Transolver: a fast transformer solver for PDEs on general geometries, ICML (2024).
-
-# Figure captions
-
-**Fig. 1.** ThermalStorageBench overview (schematic, not to scale). (a) Tank family: two-dimensional tank of height 1 m and width 0.25 to 1.0 m with side-wall (type A) or lid-and-bottom (type B) slots; charging shown, discharging reverses flow and temperatures. (b) PCM family: cell of height 100 mm and width 20 to 60 mm with 0 to 5 conducting fins on the heated wall, in three orientations. (c) The test splits and what each holds out of training.
-
-**Fig. 2.** Validation. (a) Jet penetration in the Lou et al. tank [17]: two PIV tests, their CFD and our three-dimensional SST run. (b) Outlet temperature in the same test: our run and the experimental curve reconstructed from the published Richardson number with constant β and with β at the mean of inlet and outlet temperature. (c) Liquid fraction for the plain wall, one fin and three fins of Kamkari and Shokouhmand [16] at the dataset settings (the final pressure-solver setting moves these curves by less than 0.005). (d) Liquid fraction for the plain wall of Vogel and Thess [15]: experiment, their two-dimensional model and our run.
-
-**Fig. 3.** Tank. (a) Field error on discharge, training on charging only, for each FNO and U-Net variant: dots are training seeds, bars the mean of three seeds; lines mark the best interpolation (RBF), the multi-node model and ideal stratification. (b) Field error of each test run (seed mean) for the two hybrid canonical models against the bulk Richardson number; filled markers SST runs, open markers laminar runs.
-
-**Fig. 4.** PCM material transfer. Field RMSE of each training seed (dots; filled plain, open hybrid) and the seed mean (bar) for every neural variant, against IDW (dashed). Right: share of test runs whose prediction reaches 90 % melting. Two U-Net seeds on held-out n-octadecane score 8.57 K and overlap.
-
-**Fig. 5.** The preferred model depends on the quantity. (a) PCM, held-out fin counts: field RMSE against t90 error for every model that reaches t90 in all 139 runs (seed means). (b) Tank: vertical-profile error against near-outlet temperature error per split for the multi-node model and the two hybrid canonical surrogates; grey lines connect each split's surrogate to the multi-node model.
-
-**Fig. 6.** Typical predictions: the median-error test run of each family at 25, 50 and 75 % of the run. Top: tank T0554 (discharge, U-Net hybrid canonical, mean of three seeds). Bottom: PCM P0401 (held-out fins, U-Net, mean of three seeds). Columns: CFD, prediction, absolute error in θ.
-
 # Appendices (to be written)
 
 A. Verification detail: pre-registered limits; tank mesh and settings (T0221, T0243, T0408, T0551); T0211 regime tests; PCM mesh, time step and GCI.
@@ -218,3 +158,71 @@ F. Uncertainty: seed spread against error and calibrated bounds.
 G. Multi-node one-dimensional model: formulation, calibration, results.
 H. Reproducibility audit: checkpoint provenance, rescoring, cross-GPU note.
 I. Metric definitions and proxies.
+
+---
+
+## Declarations
+
+**CRediT authorship contribution statement.** [TO AGREE with all authors.] Saxam Bhattarai: Conceptualization, Methodology, Software, Investigation, Data curation, Formal analysis, Validation, Visualization, Writing: original draft. Bivek Baral: [roles]. Henrik Davidsson: [roles].
+
+**Declaration of competing interest.** [TO CONFIRM] The authors declare no competing interests.
+
+**Declaration of generative AI and AI-assisted technologies in the manuscript preparation process.** [TO AGREE with all authors; the journal requires this section.] During the preparation of this work the authors used Claude (Anthropic) to assist with code, data analysis and drafting of the text. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article.
+
+**Data availability.** [TO CHECK before submission: repository and DOI.] The data (1,712 runs, 63 GB), frozen manifests with md5 checksums, split definitions, training and evaluation code, all 204 checkpoints and the verification cases will be deposited in a public repository and cited here.
+
+**Funding.** [TO CONFIRM] (RP2 acknowledged the SOLARFOOD project, Research Council of Norway, project 352437, and Erasmus+ ICM; whether either applies here is for the authors to decide.)
+
+---
+
+## References
+
+[References are numbered in order of first citation. Details and DOIs of every entry are to be verified before submission; none is final.]
+
+
+[1] Shen, Wu, Duan, Machine learning for predicting the PCM melting process in a rectangular enclosure energy storage, AI Thermal Fluids 1 (2025) 100001.
+
+[2] Ma et al., Multi-objective optimization of fin-embedded concrete thermal energy storage systems using CFD and machine learning, J. Energy Storage 180 (2026) 124366.
+
+[3] An adaptive physics-driven deep learning framework for a two-phase Stefan problem, arXiv:2512.01011 (2025). [authors TO CHECK]
+
+[4] Chen, He, Song, J. Energy Storage 146 (2026) 120035. [title TO CHECK]
+
+[5] Takamoto et al., PDEBench: an extensive benchmark for scientific machine learning, NeurIPS Datasets and Benchmarks (2022).
+
+[6] Ohana et al., The Well: a large-scale collection of diverse physics simulations for machine learning, NeurIPS Datasets and Benchmarks (2024).
+
+[7] Bonnet et al., AirfRANS: high fidelity computational fluid dynamics dataset for approximating Reynolds-averaged Navier-Stokes solutions, NeurIPS Datasets and Benchmarks (2022).
+
+[8] Luo et al., CFDBench: a large-scale benchmark for machine learning methods in fluid dynamics, arXiv:2310.05963 (2023).
+
+[9] Hassan et al., BubbleML: a multiphase multiphysics dataset and benchmarks for machine learning, NeurIPS Datasets and Benchmarks (2023).
+
+[10] Benchmarking neural surrogates on realistic spatiotemporal multiphysics flows (REALM), arXiv:2512.18595 (2025). [authors TO CHECK]
+
+[11] IC-ThermBench: an open, progressive benchmark for generalizable 2.5D/3D-IC thermal learning, arXiv:2608.23977 (2026). [authors TO CHECK]
+
+[12] Open datasets and machine learning for two-phase heat transfer: a review following a spatial-temporal taxonomy, arXiv:2605.23037 (2026). [authors TO CHECK]
+
+[13] Menter, Two-equation eddy-viscosity turbulence models for engineering applications, AIAA J. 32 (1994) 1598-1605.
+
+[14] Voller, Prakash, A fixed grid numerical modelling methodology for convection-diffusion mushy region phase-change problems, Int. J. Heat Mass Transf. 30 (1987) 1709-1719.
+
+[15] Vogel, Thess, Validation of a numerical model with a benchmark experiment for melting governed by natural convection in latent thermal energy storage, Appl. Therm. Eng. (2019). [volume and pages TO CHECK]
+
+[16] Kamkari, Shokouhmand, Experimental investigation of phase change material melting in rectangular enclosures with horizontal partial fins, Int. J. Heat Mass Transf. (2014). [volume and pages TO CHECK]
+
+[17] Lou et al., J. Energy Storage 71 (2023) 108017. [title TO CHECK]
+
+[18] Kamkari, Shokouhmand, Bruno, Experimental investigation of the effect of inclination angle on convection-driven melting of phase change material in a rectangular enclosure, Int. J. Heat Mass Transf. (2014). [volume and pages TO CHECK]
+
+[19] Li et al., Fourier neural operator for parametric partial differential equations, ICLR (2021).
+
+[20] Ronneberger, Fischer, Brox, U-Net: convolutional networks for biomedical image segmentation, MICCAI (2015).
+
+[21] Wang, Walters, Yu, Incorporating symmetry into deep dynamics models for improved generalization, ICLR (2021).
+
+[22] Wang, Walters, Yu, Approximately equivariant networks for imperfectly symmetric dynamics, ICML, PMLR 162 (2022).
+
+[23] Wu, Luo, Wang, Wang, Long, Transolver: a fast transformer solver for PDEs on general geometries, ICML (2024).
+
