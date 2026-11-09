@@ -1,29 +1,53 @@
-Subject: Draft paper on a shared test set for fast storage models: would value your view
+Subject: Would you like to join a paper on a shared test set for thermal storage models?
 
-Hi Henrik,
+Dear Henrik,
 
-I hope you are well. I have a first full draft of a paper I would like you to be part of, together with Bivek, and I would really value your view before it goes further.
+I hope you are well. I am writing to ask whether you would like to be a co-author on a paper I have been working on, together with Bivek. I have attached a first full draft, and I would really value your view on it.
 
-**What it is about, in short.** Many groups now train fast "learned" models to predict how storage tanks and PCM stores behave, so they can stand in for slow CFD runs. But every group tests its model on its own few simulations, so nobody can tell which approach is actually better. I built an open set of simulations that everyone can use for the same test:
-- 1,212 simulations of stratified hot-water tanks charging and discharging;
-- 500 simulations of PCM melting in cells with and without fins, at different tilts.
+**What the paper is about**
 
-They come with fixed rules for which cases are used for training and which for testing. The simulations are checked against four published experiments, including the Lou et al. tank and the Kamkari PCM tests.
+Many groups now train fast "learned" models that predict how hot-water tanks and PCM stores behave, so they can replace slow CFD runs in design and control. The problem is that every group tests its model on its own small set of simulations, so nobody can say which approach actually works better.
 
-**What came out when we tested common models on it.**
-- Within one type of store, the learned models are much better than simple interpolation and than a calibrated 1D multi-node tank model.
-- A tank discharging is like a tank charging turned upside down, with hot and cold swapped. Using that symmetry is what lets a model trained only on charging predict discharging.
-- When the PCM material changes (trained on one wax, tested on the other), simple interpolation beats every learned model. That seems to me the clearest open problem.
-- The best model depends on what you need. For example, the simple 1D model predicts the tank outlet temperature better in some cases, even though it gets the full temperature field wrong.
+I have built an open set of simulations that everyone can use as the same test:
+- 1,212 simulations of stratified hot-water tanks, charging and discharging;
+- 500 simulations of PCM melting, with and without fins and at different tilts.
 
-**The draft** is attached (`MANUSCRIPT_draft_v1.docx`). The target is the Journal of Energy Storage, and the main text is short. The appendices with the detailed checks are not written yet.
+They come with fixed rules for which cases are used for training and which for testing. The simulations are checked against four published experiments: the Lou et al. tank, the Kamkari PCM tests with fins and tilt, and the Vogel and Thess PCM cell.
 
-**Where your view would help most:**
-1. From the building and storage side, does the paper answer a question that people in your field actually care about? Is the way I frame it (a shared test set first, findings second) the right way round for those readers?
-2. Is there anything about how tanks or PCM stores are used in practice that I have missed or got wrong, especially in the tank set-up or in which quantities matter most (for example outlet temperature, stored energy, melting time)?
-3. Would you be comfortable being on the paper as the last author? And would you consider being the corresponding author? I ask because the journal decides open access by the corresponding author's university, and Lund's agreement may make it free to read for everyone. I completely understand if that is more than you want to take on; I can handle all the correspondence either way.
+**What we found when we tested common models on it**
 
-There is no rush. Even a short reaction to the first question would help me a lot.
+- Within one type of store, the learned models are clearly better than simple interpolation and than a calibrated 1D multi-node tank model.
+- A tank discharging is like a tank charging turned upside down, with hot and cold swapped. Using that symmetry is what allows a model trained only on charging to predict discharging.
+- When the PCM material changes (trained on one wax, tested on the other), simple interpolation beats every learned model. This seems to me the clearest open problem.
+- Which model is best depends on what you need. For example, the simple 1D model predicts the tank outlet temperature better in some cases, even though it gets the full temperature field wrong.
+
+**What I would like to ask you**
+
+1. **Co-authorship.** Would you be willing to be a co-author? The order I had in mind is Saxam Bhattarai, Bivek Baral, and you as the last author. Please tell me if you would prefer something different.
+
+2. **Your view as a storage and building-energy researcher.** This is where your input would matter most:
+   - Does the paper answer a question that people in your field care about?
+   - Is anything about how tanks or PCM stores are used in practice missing or wrong?
+   - Are we measuring the quantities that matter, such as outlet temperature, stored energy and melting time?
+
+3. **Corresponding author.** We plan to submit to the Journal of Energy Storage. The journal decides free open access by the corresponding author's university, and Lund's agreement may make the paper free to read for everyone. Would you consider being the corresponding author? I would still prepare all the files and draft all the replies, so it would mainly mean submitting under your name and forwarding the editor's messages. I fully understand if you would rather not; in that case I will be the corresponding author and we publish without the open-access option.
+
+4. **A few details for the paper:**
+   - the exact affiliation and e-mail address you would like us to use;
+   - your contribution roles for the author statement (the journal uses CRediT, for example "Writing: review and editing", "Validation", "Supervision");
+   - any funding or project you would like acknowledged, or confirmation that there is none to add.
+
+5. **Two points the journal asks all authors to agree on:**
+   - We used an AI assistant (Claude) to help with code, data analysis and drafting, and the journal requires a short statement saying so. All the numbers come from our own simulations and are checked by a separate script. Are you comfortable with that statement?
+   - Would you be happy for us to post a preprint (on arXiv or SSRN) when we submit, or would you prefer to wait?
+
+**Timeline**
+
+There is no rush. I am now writing the appendices and checking every reference, and I would like to submit within the next few weeks, after you and Bivek have read it. Even a short reaction to questions 1 and 2 would help me a lot.
+
+The draft is attached (MANUSCRIPT_draft_v1.docx, 20 pages; the appendices with the detailed checks are not written yet).
+
+Thank you very much for considering this.
 
 Best regards,
 Saxam
