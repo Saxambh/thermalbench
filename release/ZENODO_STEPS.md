@@ -67,7 +67,7 @@ operator; computational fluid dynamics; OpenFOAM
 1. Go to https://zenodo.org/support and choose the category **"File upload quota increase"**.
 2. Paste this message:
 
-> Subject: Quota increase request for a research dataset (69 GB, 15 files)
+> Subject: Quota increase request for a research dataset (69 GB, 17 files)
 >
 > Dear Zenodo team,
 >
@@ -79,8 +79,8 @@ operator; computational fluid dynamics; OpenFOAM
 > machine learning in thermal energy storage. It accompanies a research article that we will submit to the
 > Journal of Energy Storage, which requires the data to be deposited in a public repository.
 >
-> - Total size: about 69 GB (decimal), in 15 files: 13 tar archives of simulation runs, one archive of
->   trained model checkpoints and one archive of manifests, plus a SHA256SUMS file and a README.
+> - Total size: about 69 GB (decimal), in 17 files: 15 tar archives (13 of simulation runs, one of
+>   trained model checkpoints and one of manifests), a SHA256SUMS file and a README.
 > - The largest single file is about 5.4 GB.
 > - We would prefer to keep the dataset as one record, as it is one coherent dataset with one citation.
 >
