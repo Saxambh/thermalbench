@@ -71,4 +71,4 @@ See the dataset cards and the article.
 
 - **Data and checkpoints:** [CC BY 4.0, proposed].
 - **Code:** [MIT, proposed].
-- Please cite the article and this record ([DOI]); see CITATION.cff.
+- Please cite the article and this record (https://doi.org/10.5281/zenodo.24087719); see CITATION.cff.

@@ -1,3 +1,5 @@
+**Status 9 November 2026: draft created at https://zenodo.org/uploads/24087719, DOI reserved: 10.5281/zenodo.24087719.**
+
 # Zenodo: reserve the DOI now, request the quota increase, upload at submission (9 November 2026)
 
 Saxam does every step that needs his account (sign-in, saving, sending). Nothing is uploaded now. The draft

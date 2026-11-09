@@ -13,7 +13,7 @@ The manuscript makes four contributions:
 - findings that matter for storage modelling: the charge/discharge symmetry of a tank lets neural networks trained on charging predict discharge; the preferred model depends on the quantity needed (for example, a calibrated multi-node model predicts near-outlet temperature better on discharge); and simple interpolation beats every evaluated neural model when the PCM material changes, which identifies a clear open problem;
 - an auditable release: all 204 network checkpoints reproduce their reported per-run scores when rescored from the deposited data.
 
-The data, code, splits and checkpoints are deposited in [repository, DOI to be added] in line with the journal's research data policy.
+The data, splits and checkpoints are deposited in Zenodo (https://doi.org/10.5281/zenodo.24087719), and the code in [code repository, to be added], in line with the journal's research data policy.
 
 We confirm that this manuscript is original, has not been published previously, and is not under consideration for publication elsewhere. All authors have read and approved the submitted version, and there are no competing interests to declare. [Funding statement to be confirmed by the authors.] The use of generative AI tools in preparing the work is declared in the manuscript.
 

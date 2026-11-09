@@ -15,8 +15,8 @@ authors:
   - family-names: Davidsson
     given-names: Henrik
     affiliation: Lund University
-# license: CC-BY-4.0          # proposed for the data and checkpoints; code proposed MIT (decision pending)
-# doi: 10.5281/zenodo.XXXXXXX # reserved DOI, to be added
+license: CC-BY-4.0   # data and checkpoints; code proposed MIT
+doi: 10.5281/zenodo.24087719   # reserved 9 November 2026; registered when the record is published
 # repository-code: https://github.com/<owner>/<repo>
 keywords:
   - thermal energy storage
