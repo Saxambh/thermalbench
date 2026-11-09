@@ -117,10 +117,11 @@ discharge confirmation set is analysed (`thermbench_ml/confirmation_discharge_20
 
 **What is not done yet (replaces §15):**
 - ~~Lou et al. outlet comparison~~ **done 9 November** (`verification_data/lou_outlet_2026-11-07/RESULT.md`):
-  breakthrough onset within 0.01 t* (8.6 s); after breakthrough the simulated outlet T* exceeds the
-  measurement by 0.08 to 0.20 depending on the β used in the published Ri_bulk. The sign is consistent with
-  the experiment's heat loss (Lou's charging-efficiency plateau slope 0.81 instead of 1.0); wall loss is not
-  modelled because the paper gives no heat-transfer coefficient.
+  10 % onset within 0.01 t* under constant β (not under β at mean T); the simulated outlet warms faster
+  through breakthrough (50 % at t* 0.932 vs about 0.97 to 1.045) and is 0.08 to 0.20 warmer over t* 0.95 to
+  1.45 (observed range under two β reconstructions). Heat loss from the uninsulated tank is consistent in
+  direction (Lou's σ 0.750 vs ours 0.919 at t* 1.0) but cannot be isolated; wall loss is not modelled
+  because the paper gives no heat-transfer coefficient.
 - Second tank experiment with discharge (Shah & Furbo 2003): only if needed.
 - The 3.33 mm multi-fidelity tank subset: planned, not delivered.
 - Release items: licence, environment specification, README, project name, version tag, DOI, data hosting;

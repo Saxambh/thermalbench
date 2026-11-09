@@ -25,6 +25,23 @@ hybrid, 3 seeds, 6 splits. This completes the release check done for the tank in
   liquid IoU, energy error, t90 crossing and t90 error.
 - No missing files and no md5 mismatches.
 
+## Undefined values (review by Astra, 9 November)
+
+- **The check:** the comparison skips NaN differences, which on its own could hide a finite-versus-NaN
+  mismatch.
+- **Why no such mismatch is possible here:**
+  - The only metric that can be undefined is `t90_err`. By construction (`pcm_metrics.py`) it is NaN exactly
+    when `t90_reached` is 0.
+  - In the 16,056 stored per-run records, the other five compared metrics are never NaN, and `t90_err` is
+    NaN on exactly the runs with `t90_reached` 0 (2,261 records, no exception).
+  - `t90_reached`, which is never NaN, was compared on every run and matched exactly.
+  - So the defined/undefined masks of the rescored and stored values are identical. Every defined value
+    matched exactly.
+- **Not compared:** `melt_frac_err` was not in the compared set.
+- **Wording for the paper:** "PCM rescoring on the original training workers reproduced all compared finite
+  metric values exactly. In a six-checkpoint laptop spot check, the largest observed cross-GPU discrepancy
+  in per-run field RMSE was 1.6×10⁻⁴ K."
+
 ## On different hardware (the first, stopped run)
 
 - **The first attempt** rescored the release copies on the laptop alone (RTX 4060 Laptop). It was stopped by

@@ -155,8 +155,7 @@ a trend:
     depends on how Ri_bulk is converted back to T*, because the paper does not state which β it used:
     - constant β: +0.11 to +0.20 (largest +0.20 at t* 1.0 to 1.1);
     - β at the mean of inlet and outlet temperature: +0.08 to +0.12 from t* 0.95.
-    - (β at the outlet temperature is not a valid reading: it puts T* at 0.43 on the plateau, where the
-      outlet is at the initial temperature.)
+    - (β at the outlet temperature is not used: the inversion has two roots near the plateau.)
   - **50 % crossing:** t* 0.932 (ours) vs 1.045 (constant β) or about 0.97 (β at the mean temperature).
     Ours is earlier by 0.04 to 0.11 t*, 30 to 96 s.
   - **Independent check from Lou's charging-efficiency curve σ(t*)** (Fig. 15, same test):
@@ -164,11 +163,13 @@ a trend:
     - Lou's σ also stays below ours throughout (0.75 against 0.92 at t* 1.0).
     - This is consistent in sign with the experimental tank losing heat (uninsulated acrylic walls). That
       would lower the measured outlet temperature after breakthrough. Our simulation has adiabatic walls.
-- **Reading for the paper:** "Breakthrough timing is reproduced (onset within 0.01 t*); after breakthrough
-  the simulated outlet temperature exceeds the measured one by 0.08 to 0.20 in T*, depending on the
-  property assumption in the published Ri_bulk, consistent in sign with the experiment's heat loss from the
-  uninsulated tank. The published data do not allow a tighter bound." Wall heat loss is not modelled: the
-  paper gives no heat-transfer coefficient.
+- **Reading for the paper (agreed with Astra, 9 November):** onset agrees within 0.01 t* only under constant
+  β (about 0.04 t* apart under β at mean T); the simulated outlet warms faster through breakthrough under
+  both reconstructions (50 % at t* 0.932 vs about 0.97 to 1.045); over t* 0.95 to 1.45 it is 0.08 to 0.20
+  warmer (observed range, not a bound); heat loss from the uninsulated tank is consistent in direction but
+  cannot be isolated. Full wording in `verification_data/lou_outlet_2026-11-07/RESULT.md`. σ: one sentence
+  in the main text, details in the supplement. Wall heat loss is not modelled: the paper gives no
+  heat-transfer coefficient.
 
 ## Plan
 - 3D OpenFOAM case, quarter or eighth symmetry: buoyantPimpleFoam, real properties, kOmegaSST + buoyancyTurbSource (compressible path, correct sign), and laminar for comparison. Baffles as solid zones (chtMultiRegionFoam) or as thin adiabatic walls first.
