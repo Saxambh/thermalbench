@@ -64,7 +64,26 @@ operator; computational fluid dynamics; OpenFOAM
 
 **Related works:** add the article's DOI once it exists ("is supplement to").
 
-## Step 3. Request the quota increase (Saxam sends)
+## Step 3 (updated 9 November): extra storage is self-service now
+
+Zenodo's current help ("Manage storage quota", https://help.zenodo.org/docs/deposit/manage-quota/):
+- each record has 50 GB by default;
+- each account has an extra allowance of up to 150 GB to spread across its uploads;
+- the extra space is assigned on the draft with a **Manage storage** button at the top right of the Files
+  section (slider or field, then Apply).
+
+There is no request form to send.
+
+**Status on 9 November:**
+- The button was not shown on our empty draft.
+- The account quota page (zenodo.org/account/settings/quota/) returned "Page not found".
+
+**At upload time:**
+1. Look for **Manage storage** in the Files section and allocate about 75 GB to the record.
+2. Only if the button is still missing, use "Contact us" on help.zenodo.org with the message below. It is
+   kept as a fallback.
+
+## Step 3 (old, fallback). Request the quota increase (Saxam sends)
 
 1. Go to https://zenodo.org/support and choose the category **"File upload quota increase"**.
 2. Paste this message:
