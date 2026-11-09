@@ -79,4 +79,4 @@ earlier copy of the FNO hybrid checkpoints made by globbing all workers) or any 
 - Version tag and DOI.
 - Rename code, folder and file names to ThermalStorageBench; GitHub repos `thermalbench` and
   `thermalbench-data` (renamed by Saxam on github.com).
-- The data archive itself (h5 files, about 61 GB for the tank and 9.7 GB for PCM) with its hosting.
+- The data archive itself (h5 files: 54.4 GB for the tank and 10.3 GB for PCM; see PLAN.md) with its hosting.

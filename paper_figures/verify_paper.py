@@ -197,8 +197,10 @@ mp_ = json.load(open(os.path.join(ML, "manifest_pcm.json")))["runs"]
 ok("T1 tank runs 1,212", len(mt_) == 1212)
 ok("T1 tank design points 1,020", len({r["case_id"] for r in mt_}) == 1020)
 ok("T1 PCM runs 500", len(mp_) == 500)
-ok("T1 tank size 53.1 GB", close(sum(r["h5_MB"] for r in mt_) / 1024, 53.1, 0.05))
-ok("T1 PCM size 10.1 GB", close(sum(r["h5_MB"] for r in mp_) / 1024, 10.1, 0.05))
+ok("T1 tank size 54.4 GB (h5_MB is 10^6 bytes, checked on P0000 below)", close(sum(r["h5_MB"] for r in mt_) / 1000, 54.4, 0.05))
+ok("T1 PCM size 10.3 GB", close(sum(r["h5_MB"] for r in mp_) / 1000, 10.3, 0.05))
+p0 = [r for r in mp_ if r["run_id"] == "P0000"][0]
+ok("T1 h5_MB unit is 10^6 bytes (P0000)", close(os.path.getsize(os.path.join("D:/ThermBench_data/tb_data/pcm_frozen", "P0000", "thermbench.h5")) / 1e6, p0["h5_MB"], 0.01))
 import hashlib
 ok("T1 tank manifest md5 0e8b6d8d", hashlib.md5(open(os.path.join(ML, "manifest_full_h5mm.json"), "rb").read()).hexdigest().startswith("0e8b6d8d"))
 ok("T1 PCM manifest md5 19397b78", hashlib.md5(open(os.path.join(ML, "manifest_pcm.json"), "rb").read()).hexdigest().startswith("19397b78"))

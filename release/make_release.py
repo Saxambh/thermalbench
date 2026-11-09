@@ -67,12 +67,12 @@ def main():
     os.makedirs(os.path.join(HERE, "plan"), exist_ok=True)
     L = ["archive\truns\tfiles\tGB\tfirst_run\tlast_run"]
     for name, c, s in t + p:
-        L.append(f"{name}\t{len(c)}\t{sum(len(f) for _, f in c)}\t{s / 1024 ** 3:.2f}\t{c[0][0]['run_id']}\t{c[-1][0]['run_id']}")
+        L.append(f"{name}\t{len(c)}\t{sum(len(f) for _, f in c)}\t{s / 1e9:.2f}\t{c[0][0]['run_id']}\t{c[-1][0]['run_id']}")
     for name, files in ex:
-        L.append(f"{name}\t\t{len(files)}\t{sum(os.path.getsize(f) for f in files) / 1024 ** 3:.2f}\t\t")
+        L.append(f"{name}\t\t{len(files)}\t{sum(os.path.getsize(f) for f in files) / 1e9:.2f}\t\t")
     open(os.path.join(HERE, "plan", "archives.tsv"), "w").write("\n".join(L) + "\n")
     tot = sum(s for _, _, s in t + p) + sum(os.path.getsize(f) for _, fs in ex for f in fs)
-    print("\n".join(L)); print(f"total {tot / 1024 ** 3:.1f} GB in {len(t) + len(p) + len(ex)} archives; missing runs: tank {mt}, pcm {mp}")
+    print("\n".join(L)); print(f"total {tot / 1e9:.1f} GB in {len(t) + len(p) + len(ex)} archives; missing runs: tank {mt}, pcm {mp}")
     if not a.build:
         return
     os.makedirs(a.build, exist_ok=True)

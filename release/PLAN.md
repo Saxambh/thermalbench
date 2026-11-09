@@ -3,15 +3,17 @@
 The Journal of Energy Storage requires the data in a repository and cited with a link in the article
 (Guide for Authors, "Option C"), so the deposit must exist, at least as a reserved DOI, before submission.
 
+Sizes are in decimal GB (10⁹ bytes); the manifests record file sizes in MB of 10⁶ bytes.
+
 ## What is packed (dry run, `make_release.py`, plan in `plan/archives.tsv`)
 
 | Archives | Contents | Size |
 |---|---|---|
-| tank_runs_01 to 11 | 1,212 tank run folders: h5 file, case.json, metrics.json, qc.json, system/ | 53.7 GB |
-| pcm_runs_01 to 02 | 500 PCM run folders, same files | 9.6 GB |
-| checkpoints | 96 tank + 108 PCM checkpoints with provenance tables (the replaced WRONG_SOURCE file is excluded) | 3.9 GB |
+| tank_runs_01 to 11 | 1,212 tank run folders: h5 file, case.json, metrics.json, qc.json, system/ | 54.5 GB |
+| pcm_runs_01 to 02 | 500 PCM run folders, same files | 10.3 GB |
+| checkpoints | 96 tank + 108 PCM checkpoints with provenance tables (the replaced WRONG_SOURCE file is excluded) | 4.2 GB |
 | manifests | frozen manifests (md5 per run), split code, label flags, dataset cards | < 0.01 GB |
-| **Total** | **15 archives** | **64.2 GB** |
+| **Total** | **15 archives** | **69.0 GB** |
 
 - Every run in both manifests was found.
 - Archives are cut at about 5 GB.
@@ -30,10 +32,10 @@ The Journal of Energy Storage requires the data in a repository and cited with a
      - Apache-2.0 for the code (adds an explicit patent grant).
 2. **Repository.**
    - Proposal: **Zenodo** (free, gives a DOI, versioned, CERN-hosted, links to GitHub).
-   - Its standard limit per record is about 50 GB (check the current limit when uploading), so 64 GB needs
+   - Its standard limit per record is about 50 GB (check the current limit when uploading), so 69 GB needs
      either:
      - (a) a quota increase, which Zenodo grants on request for research data; or
-     - (b) two linked records: tank, and PCM + checkpoints + manifests.
+     - (b) three linked records: tank archives 01 to 06, tank archives 07 to 11, and PCM + checkpoints + manifests (the tank alone is 54.5 GB, above the limit).
    - A record can be created as a draft with a **reserved DOI** before upload, which is enough for the
      manuscript's data statement.
    - Alternatives with larger limits exist (e.g. institutional repositories, Hugging Face datasets), but

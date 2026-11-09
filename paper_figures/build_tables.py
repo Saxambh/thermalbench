@@ -109,7 +109,7 @@ TABLE1 = ["**Table 1.** The two families of ThermalStorageBench.", "",
           "| Runs (design points) | 1,212 (1,020) | 500 (500) |",
           "| Output per run | 121 snapshots of T, p_rgh, u (and k, ω, ν_t for SST); stored energy, exergy, MIX, thermocline midpoint and thickness, outlet temperature | 88 to 204 snapshots of T and liquid fraction; stored energy, Nusselt number, heat input, liquid fraction |",
           "| Quality control | 1,211 OK, 1 WARN; 5 planned runs excluded by pre-set rules | 498 OK, 2 WARN (field QC); 39 solver-WARN cases kept under a pre-registered rule; 34 reruns |",
-          "| Size, frozen manifest | 53.1 GB, md5 0e8b6d8d… | 10.1 GB, md5 19397b78… |"]
+          "| Size, frozen manifest | 54.4 GB, md5 0e8b6d8d… | 10.3 GB, md5 19397b78… |"]
 
 if __name__ == "__main__":
     L2, _ = tank(); L3, _ = pcm()

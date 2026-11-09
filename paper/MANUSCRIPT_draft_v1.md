@@ -279,7 +279,7 @@ Each released checkpoint was copied from the machine that trained it (the `sourc
 
 **Declaration of generative AI and AI-assisted technologies in the manuscript preparation process.** [TO AGREE with all authors; the journal requires this section.] During the preparation of this work the authors used Claude (Anthropic) to assist with code, data analysis and drafting of the text. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article.
 
-**Data availability.** [TO CHECK before submission: repository and DOI.] The data (1,712 runs, 63 GB), frozen manifests with md5 checksums, split definitions, training and evaluation code, all 204 checkpoints and the verification cases will be deposited in a public repository and cited here.
+**Data availability.** [TO CHECK before submission: repository and DOI.] The data (1,712 runs, 64.7 GB of run files; about 69 GB with checkpoints), frozen manifests with md5 checksums, split definitions, training and evaluation code, all 204 checkpoints and the verification cases will be deposited in a public repository and cited here.
 
 **Funding.** [TO CONFIRM] (RP2 acknowledged the SOLARFOOD project, Research Council of Norway, project 352437, and Erasmus+ ICM; whether either applies here is for the authors to decide.)
 

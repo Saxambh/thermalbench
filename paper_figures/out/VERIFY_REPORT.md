@@ -1,6 +1,6 @@
 # Paper numbers: independent cross-check
 
-477 checks, 0 failed.
+478 checks, 0 failed.
 
 | | Check | Detail |
 |---|---|---|
@@ -463,8 +463,9 @@
 | PASS | T1 tank runs 1,212 |  |
 | PASS | T1 tank design points 1,020 |  |
 | PASS | T1 PCM runs 500 |  |
-| PASS | T1 tank size 53.1 GB |  |
-| PASS | T1 PCM size 10.1 GB |  |
+| PASS | T1 tank size 54.4 GB (h5_MB is 10^6 bytes, checked on P0000 below) |  |
+| PASS | T1 PCM size 10.3 GB |  |
+| PASS | T1 h5_MB unit is 10^6 bytes (P0000) |  |
 | PASS | T1 tank manifest md5 0e8b6d8d |  |
 | PASS | T1 PCM manifest md5 19397b78 |  |
 | PASS | T1 tank: all manifest runs in design_v2_full.csv |  |
