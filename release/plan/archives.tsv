@@ -1,0 +1,16 @@
+archive	runs	files	GB	first_run	last_run
+tank_runs_01.tar	115	544	4.99	T0000_lam	T0096_sst
+tank_runs_02.tar	119	556	4.98	T0097_lam	T0196_sst
+tank_runs_03.tar	122	572	4.99	T0197_lam	T0298_lam
+tank_runs_04.tar	118	568	4.97	T0298_sst	T0399_sst
+tank_runs_05.tar	121	572	4.99	T0400_sst	T0499_sst
+tank_runs_06.tar	123	584	4.99	T0500_sst	T0605_lam
+tank_runs_07.tar	116	540	4.97	T0605_sst	T0702_lam
+tank_runs_08.tar	122	548	4.98	T0703_sst	T0807_sst
+tank_runs_09.tar	118	564	4.99	T0808_lam	T0905_lam
+tank_runs_10.tar	116	544	4.94	T0906_lam	T1006_lam
+tank_runs_11.tar	22	104	0.90	T1007_sst	T1023_sst
+pcm_runs_01.tar	260	1296	5.00	P0000	P0259
+pcm_runs_02.tar	240	1198	4.61	P0260	P0499
+checkpoints.tar		206	3.91		
+manifests.tar		7	0.00		
