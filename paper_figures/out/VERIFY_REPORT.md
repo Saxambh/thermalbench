@@ -1,6 +1,6 @@
 # Paper numbers: independent cross-check
 
-474 checks, 0 failed.
+477 checks, 0 failed.
 
 | | Check | Detail |
 |---|---|---|
@@ -431,6 +431,9 @@
 | PASS | F3b one point per test run (821) | 821 |
 | PASS | F3b FNO h+c: every run above 10 % is SST | 80 runs above 10 % |
 | PASS | F3b FNO h+c: runs above 10 % have Ri below about 9 | max Ri 8.44 |
+| PASS | Text: U-Net h+c 18 laminar runs above 10 %, 17 of them unseen widths W > 0.93 m | (99, 18, 17) |
+| PASS | Text: Spearman(Ri, error) FNO h+c -0.84 |  |
+| PASS | Text: FNO h+c 80 runs above 10 % | 80 |
 | PASS | F5a U-Net fins 1.76 K / 10.2 % |  |
 | PASS | F5a Transolver fins 2.31 K / 5.6 % |  |
 | PASS | F5a only models reaching t90 in all 139 runs are plotted |  |

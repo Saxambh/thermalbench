@@ -114,6 +114,27 @@ ok("F3b one point per test run (821)", npts == 821, npts)
 ok("F3b FNO h+c: every run above 10 % is SST", all(t == "kOmegaSST" for t, _ in hi), f"{len(hi)} runs above 10 %")
 ok("F3b FNO h+c: runs above 10 % have Ri below about 9", all(ri < 9.5 for _, ri in hi), f"max Ri {max(ri for _, ri in hi):.2f}")
 
+u_hi, u_lam, u_wide = 0, 0, 0
+for s in ("random", "ood_geom", "ood_mode", "ood_flow"):
+    r = json.load(open(os.path.join(ML, "results_merged", f"{s}.json")))["results"]
+    per = [{p["run_id"]: p["rmse_theta"] for p in r[f"unet_hybrid_canon{x}"]["per_run"]} for x in SEEDS]
+    for rid in per[0]:
+        if 100 * np.mean([d[rid] for d in per]) > 10:
+            u_hi += 1
+            if des[rid]["turb"] == "laminar":
+                u_lam += 1
+                u_wide += s == "ood_geom" and float(des[rid]["W"]) > 0.93
+ok("Text: U-Net h+c 18 laminar runs above 10 %, 17 of them unseen widths W > 0.93 m", (u_lam, u_wide) == (18, 17), (u_hi, u_lam, u_wide))
+from scipy.stats import spearmanr
+xs, ys = [], []
+for s in ("random", "ood_geom", "ood_mode", "ood_flow"):
+    r = json.load(open(os.path.join(ML, "results_merged", f"{s}.json")))["results"]
+    per = [{p["run_id"]: p["rmse_theta"] for p in r[f"fno_hybrid_canon{x}"]["per_run"]} for x in SEEDS]
+    for rid in per[0]:
+        xs.append(float(des[rid]["Ri"])); ys.append(np.mean([d[rid] for d in per]))
+ok("Text: Spearman(Ri, error) FNO h+c -0.84", close(spearmanr(xs, ys)[0], -0.84, 0.005))
+ok("Text: FNO h+c 80 runs above 10 %", len(hi) == 80, len(hi))
+
 # ---------------- Fig. 5 values against the result notes
 f = R["ood_fins"]["models"]
 ok("F5a U-Net fins 1.76 K / 10.2 %", close(f["unet"]["all"]["rmse_K"], 1.76, 0.005) and close(100 * f["unet"]["all"]["t90_err"], 10.2, 0.05))
