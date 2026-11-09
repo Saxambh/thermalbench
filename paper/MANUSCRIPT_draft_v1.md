@@ -41,7 +41,7 @@ Section 2 describes the dataset, Section 3 its validation, Section 4 the benchma
 
 The tank family contains 1,212 transient simulations of 1,020 design points in a two-dimensional rectangular tank of height H = 1 m and width 0.25 to 1.0 m (Fig. 1a, Table 1). Water enters and leaves through slots either in the side walls (type A, 844 runs) or in the lid and bottom (type B, 368 runs), with slot height 20 to 80 mm and port offset 0 to 0.2 H. A run either charges the tank (hot water in at the top, 849 runs) or discharges it (cold water in at the bottom, 363 runs), from a uniform (853) or pre-stratified (359) initial state. Inlet velocity spans 0.005 to 0.2 m/s and the inlet-to-tank temperature difference ΔT spans 5 to 50 K. The design points are a Sobol sample, snapped to a 10 mm grid.
 
-All runs use OpenFOAM v2606 (buoyantPimpleFoam) with temperature-dependent water properties rather than the Boussinesq approximation, a uniform 5 mm mesh, and PIMPLE with two outer and two pressure correctors and a maximum Courant number of 0.5. The flow model is set by the inlet Reynolds number: laminar below 1,500, k-ω SST above 3,000 [13], and both in between. This gives 432 laminar-only, 396 SST-only and 192 design points run with both closures; the 192 twin pairs differ by a median 3.9 % of ΔT in field, so the closure choice matters and the pairs form a closure-comparison subset. The SST runs use OpenFOAM's buoyancy production term; we found and reported a sign error in its Boussinesq branch, which these runs do not use.
+All runs use OpenFOAM v2606 (buoyantPimpleFoam) with temperature-dependent water properties rather than the Boussinesq approximation, a uniform 5 mm mesh, and PIMPLE with two outer and two pressure correctors and a maximum Courant number of 0.5. The flow model is set by the inlet Reynolds number: laminar below 1,500, k-ω SST above 3,000 [13], and both in between. This gives 432 laminar-only, 396 SST-only and 192 design points run with both closures; the 192 twin pairs differ by a median 3.9 % of ΔT in field, so the closure choice matters and the pairs form a closure-comparison subset. The SST runs use OpenFOAM's buoyancy production term; we found a sign error in its Boussinesq branch, which these runs do not use [TO CHECK: report the issue to the OpenFOAM developers before submission; a report is drafted].
 
 Each run stores 121 snapshots of temperature, pressure and velocity (and the turbulence fields for SST) on the native grid, with stored energy, exergy, MIX number, thermocline midpoint and thickness and outlet temperature per snapshot, and dense outlet series.
 
@@ -287,52 +287,48 @@ Each released checkpoint was copied from the machine that trained it (the `sourc
 
 ## References
 
-[References are numbered in order of first citation. Details and DOIs of every entry are to be verified before submission; none is final.]
+[1] S. Shen, C. Wu, F. Duan, Machine learning for predicting the PCM melting process in a rectangular enclosure energy storage, AI Thermal Fluids 1 (2025) 100001. https://doi.org/10.1016/j.aitf.2024.100001
 
+[2] H. Ma, Y. Liu, X. Zhang, S. Fan, H. Shu, X. Zhao, S. Tian, Multi-objective optimization of fin-embedded concrete thermal energy storage systems using computational fluid dynamics and machine learning, Journal of Energy Storage 180 (2026) 124366. https://doi.org/10.1016/j.est.2026.124366
 
-[1] Shen, Wu, Duan, Machine learning for predicting the PCM melting process in a rectangular enclosure energy storage, AI Thermal Fluids 1 (2025) 100001.
+[3] M. Hassanzadeh, E. Ghaderi, F. Fatahi, M.A. Bijarchi, An adaptive physics-driven deep learning framework for a two-phase Stefan problem, arXiv:2512.01011 (2025).
 
-[2] Ma et al., Multi-objective optimization of fin-embedded concrete thermal energy storage systems using CFD and machine learning, J. Energy Storage 180 (2026) 124366.
+[4] W. Chen, Y. He, Z. Song, Novel prediction model for solid-liquid phase change in latent thermal energy storage based on physics-informed neural networks, Journal of Energy Storage 146 (2026) 120035. https://doi.org/10.1016/j.est.2025.120035
 
-[3] An adaptive physics-driven deep learning framework for a two-phase Stefan problem, arXiv:2512.01011 (2025). [authors TO CHECK]
+[5] M. Takamoto, T. Praditia, R. Leiteritz, D. MacKinlay, F. Alesiani, D. Pflüger, M. Niepert, PDEBench: an extensive benchmark for scientific machine learning, Advances in Neural Information Processing Systems 35, Datasets and Benchmarks Track (2022). arXiv:2210.07182
 
-[4] Chen, He, Song, J. Energy Storage 146 (2026) 120035. [title TO CHECK]
+[6] R. Ohana, M. McCabe, L. Meyer, R. Morel, F.J. Agocs, M. Beneitez, et al., The Well: a large-scale collection of diverse physics simulations for machine learning, Advances in Neural Information Processing Systems 37, Datasets and Benchmarks Track (2024). arXiv:2412.00568
 
-[5] Takamoto et al., PDEBench: an extensive benchmark for scientific machine learning, NeurIPS Datasets and Benchmarks (2022).
+[7] F. Bonnet, A.J. Mazari, P. Cinnella, P. Gallinari, AirfRANS: high fidelity computational fluid dynamics dataset for approximating Reynolds-averaged Navier-Stokes solutions, Advances in Neural Information Processing Systems 35, Datasets and Benchmarks Track (2022). arXiv:2212.07564
 
-[6] Ohana et al., The Well: a large-scale collection of diverse physics simulations for machine learning, NeurIPS Datasets and Benchmarks (2024).
+[8] Y. Luo, Y. Chen, Z. Zhang, CFDBench: a large-scale benchmark for machine learning methods in fluid dynamics, arXiv:2310.05963 (2023).
 
-[7] Bonnet et al., AirfRANS: high fidelity computational fluid dynamics dataset for approximating Reynolds-averaged Navier-Stokes solutions, NeurIPS Datasets and Benchmarks (2022).
+[9] S.M.S. Hassan, A. Feeney, A. Dhruv, J. Kim, Y. Suh, J. Ryu, Y. Won, A. Chandramowlishwaran, BubbleML: a multiphase multiphysics dataset and benchmarks for machine learning, Advances in Neural Information Processing Systems 36, Datasets and Benchmarks Track (2023). arXiv:2307.14623
 
-[8] Luo et al., CFDBench: a large-scale benchmark for machine learning methods in fluid dynamics, arXiv:2310.05963 (2023).
+[10] R. Mao, R. Zhang, X. Bai, T. Wu, T. Zhang, Z. Chen, et al., Benchmarking neural surrogates on realistic spatiotemporal multiphysics flows, arXiv:2512.18595 (2025).
 
-[9] Hassan et al., BubbleML: a multiphase multiphysics dataset and benchmarks for machine learning, NeurIPS Datasets and Benchmarks (2023).
+[11] D. Hang, W. Yang, K. Ding, H. Xin, J. Wei, IC-ThermBench: an open, progressive benchmark for generalizable 2.5D/3D-IC thermal learning, arXiv:2608.23977 (2026).
 
-[10] Benchmarking neural surrogates on realistic spatiotemporal multiphysics flows (REALM), arXiv:2512.18595 (2025). [authors TO CHECK]
+[12] C. Dunlap, R. Olabiyi, F. Al-Hindawi, H. Pandey, S. Pierson, D. Curl, et al., Open datasets and machine learning for two-phase heat transfer: a review following a spatial-temporal taxonomy, Transport Phenomena 1 (2026) 20260081. https://doi.org/10.1515/tp-2026-0081
 
-[11] IC-ThermBench: an open, progressive benchmark for generalizable 2.5D/3D-IC thermal learning, arXiv:2608.23977 (2026). [authors TO CHECK]
+[13] F.R. Menter, Two-equation eddy-viscosity turbulence models for engineering applications, AIAA Journal 32 (1994) 1598-1605. https://doi.org/10.2514/3.12149
 
-[12] Open datasets and machine learning for two-phase heat transfer: a review following a spatial-temporal taxonomy, arXiv:2605.23037 (2026). [authors TO CHECK]
+[14] V.R. Voller, C. Prakash, A fixed grid numerical modelling methodology for convection-diffusion mushy region phase-change problems, International Journal of Heat and Mass Transfer 30 (1987) 1709-1719. https://doi.org/10.1016/0017-9310(87)90317-6
 
-[13] Menter, Two-equation eddy-viscosity turbulence models for engineering applications, AIAA J. 32 (1994) 1598-1605.
+[15] J. Vogel, A. Thess, Validation of a numerical model with a benchmark experiment for melting governed by natural convection in latent thermal energy storage, Applied Thermal Engineering 148 (2019) 147-159. https://doi.org/10.1016/j.applthermaleng.2018.11.032
 
-[14] Voller, Prakash, A fixed grid numerical modelling methodology for convection-diffusion mushy region phase-change problems, Int. J. Heat Mass Transf. 30 (1987) 1709-1719.
+[16] B. Kamkari, H. Shokouhmand, Experimental investigation of phase change material melting in rectangular enclosures with horizontal partial fins, International Journal of Heat and Mass Transfer 78 (2014) 839-851. https://doi.org/10.1016/j.ijheatmasstransfer.2014.07.056
 
-[15] Vogel, Thess, Validation of a numerical model with a benchmark experiment for melting governed by natural convection in latent thermal energy storage, Appl. Therm. Eng. (2019). [volume and pages TO CHECK]
+[17] W. Lou, N. Baudin, S. Roux, Y. Fan, L. Luo, Impact of buoyant jet entrainment on the thermocline behavior in a single-medium thermal energy storage tank, Journal of Energy Storage 71 (2023) 108017. https://doi.org/10.1016/j.est.2023.108017
 
-[16] Kamkari, Shokouhmand, Experimental investigation of phase change material melting in rectangular enclosures with horizontal partial fins, Int. J. Heat Mass Transf. (2014). [volume and pages TO CHECK]
+[18] B. Kamkari, H. Shokouhmand, F. Bruno, Experimental investigation of the effect of inclination angle on convection-driven melting of phase change material in a rectangular enclosure, International Journal of Heat and Mass Transfer 72 (2014) 186-200. https://doi.org/10.1016/j.ijheatmasstransfer.2014.01.014
 
-[17] Lou et al., J. Energy Storage 71 (2023) 108017. [title TO CHECK]
+[19] Z. Li, N. Kovachki, K. Azizzadenesheli, B. Liu, K. Bhattacharya, A. Stuart, A. Anandkumar, Fourier neural operator for parametric partial differential equations, International Conference on Learning Representations (2021). arXiv:2010.08895
 
-[18] Kamkari, Shokouhmand, Bruno, Experimental investigation of the effect of inclination angle on convection-driven melting of phase change material in a rectangular enclosure, Int. J. Heat Mass Transf. (2014). [volume and pages TO CHECK]
+[20] O. Ronneberger, P. Fischer, T. Brox, U-Net: convolutional networks for biomedical image segmentation, in: Medical Image Computing and Computer-Assisted Intervention (MICCAI 2015), Lecture Notes in Computer Science 9351, Springer, 2015, pp. 234-241. https://doi.org/10.1007/978-3-319-24574-4_28
 
-[19] Li et al., Fourier neural operator for parametric partial differential equations, ICLR (2021).
+[21] R. Wang, R. Walters, R. Yu, Incorporating symmetry into deep dynamics models for improved generalization, International Conference on Learning Representations (2021). arXiv:2002.03061
 
-[20] Ronneberger, Fischer, Brox, U-Net: convolutional networks for biomedical image segmentation, MICCAI (2015).
+[22] R. Wang, R. Walters, R. Yu, Approximately equivariant networks for imperfectly symmetric dynamics, Proceedings of the 39th International Conference on Machine Learning, PMLR 162 (2022). arXiv:2201.11969
 
-[21] Wang, Walters, Yu, Incorporating symmetry into deep dynamics models for improved generalization, ICLR (2021).
-
-[22] Wang, Walters, Yu, Approximately equivariant networks for imperfectly symmetric dynamics, ICML, PMLR 162 (2022).
-
-[23] Wu, Luo, Wang, Wang, Long, Transolver: a fast transformer solver for PDEs on general geometries, ICML (2024).
-
+[23] H. Wu, H. Luo, H. Wang, J. Wang, M. Long, Transolver: a fast transformer solver for PDEs on general geometries, Proceedings of the 41st International Conference on Machine Learning, PMLR 235 (2024). arXiv:2402.02366
