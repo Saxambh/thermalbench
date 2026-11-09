@@ -23,7 +23,7 @@
 | k-nearest neighbours | 9.50 | 11.87 | 63.73 | 15.45 |
 | Inverse-distance weighting | 9.32 | 11.92 | 63.50 | 15.24 |
 | Radial basis functions | 8.66 | 10.77 | 64.16 | 15.09 |
-| *Neural operators* | | | | |
+| *Neural models* | | | | |
 | FNO | 4.13 ± 0.17 | 4.70 ± 0.05 | 64.76 ± 0.47 | 10.21 ± 0.10 |
 | FNO, canonical | 3.92 ± 0.05 | 4.48 ± 0.06 | 12.36 ± 0.69 | 9.57 ± 0.10 |
 | FNO, hybrid | 4.17 ± 0.06 | 4.76 ± 0.05 | 12.98 ± 0.11 | 10.38 ± 0.05 |
@@ -33,7 +33,24 @@
 | U-Net, hybrid | 3.83 ± 0.15 | 5.39 ± 0.36 | 13.34 ± 0.70 | 9.95 ± 0.17 |
 | U-Net, hybrid + canonical | 3.62 ± 0.10 | 6.23 ± 0.25 | **4.37 ± 0.28** | 9.21 ± 0.13 |
 
-**Table 3.** PCM family. (a) Temperature-field RMSE (K) on the test runs. (b) Relative melt-time (t90) error in %, over the runs whose prediction reaches a liquid fraction of 0.9 within the input-only horizon (3 t_ref); the share of runs that reach it is given when it is below 100 %, and the error is not reported when fewer than 10 % of runs reach it. Neural models: mean ± SD over three training seeds (field RMSE). Bold: lowest field RMSE, and lowest t90 error among models reaching t90 in at least 90 % of runs. Test runs: random 52, held-out fins 139, stronger heating 51, unseen tilt 150, held-out lauric acid 250, held-out n-octadecane 250.
+**Table 3.** Tank family: engineering metrics on the test runs. Mean absolute errors; lowest per row in bold. The near-outlet temperature is the area-averaged temperature of the cells next to the outlet (Appendix I).
+
+| Split | Metric | Multi-node 1D | Ideal stratification | RBF | FNO hybrid + canonical | U-Net hybrid + canonical |
+|---|---|---|---|---|---|---|
+| Random | Stored energy, % of full charge | 0.55 | 2.59 | 0.77 | 0.50 | **0.38** |
+| Random | Near-outlet temperature, K | 0.83 | 1.75 | 2.13 | 0.85 | **0.67** |
+| Random | Thermocline midpoint, mm | 12.72 | 22.20 | 19.64 | 6.77 | **6.03** |
+| Unseen width | Stored energy, % of full charge | 0.70 | 2.96 | 1.34 | **0.56** | 0.85 |
+| Unseen width | Near-outlet temperature, K | **0.95** | 1.87 | 2.72 | 1.01 | 2.01 |
+| Unseen width | Thermocline midpoint, mm | 16.23 | 25.56 | 26.17 | **8.66** | 9.57 |
+| Discharge | Stored energy, % of full charge | 0.73 | 3.13 | 52.47 | **0.53** | 0.55 |
+| Discharge | Near-outlet temperature, K | **0.98** | 1.88 | 9.56 | 1.17 | 1.29 |
+| Discharge | Thermocline midpoint, mm | 15.12 | 27.06 | 518.31 | **7.74** | 8.23 |
+| Faster inflow | Stored energy, % of full charge | 2.04 | 5.30 | 2.13 | **1.28** | 1.45 |
+| Faster inflow | Near-outlet temperature, K | **1.46** | 3.37 | 3.09 | 1.80 | 1.62 |
+| Faster inflow | Thermocline midpoint, mm | 47.02 | 53.78 | 44.03 | **27.89** | 30.84 |
+
+**Table 4.** PCM family. (a) Temperature-field RMSE (K) on the test runs. (b) Relative melt-time (t90) error in %, over the runs whose prediction reaches a liquid fraction of 0.9 within the input-only horizon (3 t_ref); the share of runs that reach it is given when it is below 100 %, and the error is not reported when fewer than 10 % of runs reach it. Neural models: mean ± SD over three training seeds (field RMSE). Bold: lowest field RMSE, and lowest t90 error among models reaching t90 in at least 90 % of runs. Test runs: random 52, held-out fins 139, stronger heating 51, unseen tilt 150, held-out lauric acid 250, held-out n-octadecane 250.
 
 | Model | Random | Held-out fins | Stronger heating | Unseen tilt | Held-out lauric acid | Held-out n-octadecane |
 |---|---|---|---|---|---|---|
@@ -45,7 +62,7 @@
 | k-nearest neighbours | 2.54 | 4.96 | 4.25 | 7.71 | 5.53 | 3.60 |
 | Inverse-distance weighting | 2.55 | 4.90 | 4.13 | 7.67 | **5.35** | **3.55** |
 | Radial basis functions | 1.98 | 7.30 | 4.02 | 12.84 | 56.96 | 21.95 |
-| *Neural operators* | | | | | | |
+| *Neural models* | | | | | | |
 | FNO | 0.82 ± 0.00 | 3.79 ± 0.13 | 1.40 ± 0.02 | **6.17 ± 0.58** | 12.90 ± 8.72 | 34.45 ± 9.59 |
 | FNO, hybrid | 0.86 ± 0.01 | 3.05 ± 0.19 | 1.49 ± 0.01 | 6.66 ± 0.34 | 8.82 ± 3.02 | 11.61 ± 3.36 |
 | U-Net | **0.59 ± 0.01** | **1.76 ± 0.07** | **1.05 ± 0.06** | 6.67 ± 0.13 | 5.92 ± 0.61 | 9.19 ± 1.08 |
@@ -60,7 +77,7 @@
 | k-nearest neighbours | 11.9 | 35.9 | 16.0 | 20.9 | 17.1 | 27.8 |
 | Inverse-distance weighting | 12.9 | 36.0 | 16.2 | 20.7 | **16.9** | 27.9 |
 | Radial basis functions | 9.1 | 55.5 (94 % reach) | 8.4 | 29.5 (92 % reach) | 57.1 (71 % reach) | 32.9 (89 % reach) |
-| *Neural operators* | | | | | | |
+| *Neural models* | | | | | | |
 | FNO | 1.5 | 16.5 | 2.0 | 14.8 | 70.4 | 100.0 (33 % reach) |
 | FNO, hybrid | 1.2 | 7.9 | 2.0 | **13.5** | 55.1 | 32.0 (79 % reach) |
 | U-Net | 1.1 | 10.2 | 1.2 | 14.4 | 36.1 | 108.5 (78 % reach) |

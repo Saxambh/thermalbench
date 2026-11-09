@@ -12,7 +12,7 @@ is in `DEVELOPMENT_NOTES.md`.
 
 ```bash
 python example_evaluate.py --family tank --split random --model idw    # 9.32 % of dT (paper, Table 2)
-python example_evaluate.py --family pcm  --split random --model idw    # 2.55 K (paper, Table 3)
+python example_evaluate.py --family pcm  --split random --model idw    # 2.55 K (paper, Table 4)
 python example_evaluate.py --family tank --split ood_mode --model mine # your model: edit MyTankModel
 ```
 

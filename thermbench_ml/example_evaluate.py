@@ -1,7 +1,7 @@
 """Evaluate a model on ThermalStorageBench in the same way as every model in the paper.
 
     python example_evaluate.py --family tank --split random --model idw     # reproduces Table 2: 9.32 %
-    python example_evaluate.py --family pcm  --split random --model idw     # reproduces Table 3: 2.55 K
+    python example_evaluate.py --family pcm  --split random --model idw     # reproduces Table 4: 2.55 K
     python example_evaluate.py --family tank --split ood_mode --model mine  # your model (edit MyTankModel)
 
 A model needs two methods:

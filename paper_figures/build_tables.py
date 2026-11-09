@@ -2,7 +2,7 @@
 Table 1: dataset facts, each taken from the dataset cards / manifests (checked by verify_paper.py).
 Table 2: tank field error (% of dT) per model and split, from results_merged/<split>.json per-run scores
          (neural: per-seed mean over test runs, then mean +- SD over 3 seeds) and multinode_2026-11-08.
-Table 3: PCM field RMSE (K) and t90 error, from extra_baselines_2026-11-08/result_ts.json.
+Table 4: PCM field RMSE (K) and t90 error, from extra_baselines_2026-11-08/result_ts.json.
 """
 import json, os
 import numpy as np
@@ -43,7 +43,7 @@ def tank():
          "difference ΔT. Neural models: mean ± SD over three training seeds. Lowest value per split in bold. "
          "Test runs: random 131, unseen width 224, discharge 363, faster inflow 103.", "",
          "| Model | " + " | ".join(l for _, l in TANK_SPLITS) + " |", "|---|" + "---|" * len(TANK_SPLITS)]
-    for grp, rows in (("Baselines", TANK_BASE), ("Neural operators", TANK_NEURAL)):
+    for grp, rows in (("Baselines", TANK_BASE), ("Neural models", TANK_NEURAL)):
         L.append(f"| *{grp}* |" + " |" * len(TANK_SPLITS))
         for m, lab in rows:
             cells = []
@@ -65,7 +65,7 @@ def pcm():
     best = {s: min(vals[(m, s)][0] for m, _ in PCM_BASE + PCM_NEURAL) for s, _ in PCM_SPLITS}
     best_t = {s: min(vals[(m, s)][2] for m, _ in PCM_BASE + PCM_NEURAL
                      if vals[(m, s)][3] >= 0.9 * vals[(m, s)][4]) for s, _ in PCM_SPLITS}
-    L = ["**Table 3.** PCM family. (a) Temperature-field RMSE (K) on the test runs. (b) Relative melt-time (t90) "
+    L = ["**Table 4.** PCM family. (a) Temperature-field RMSE (K) on the test runs. (b) Relative melt-time (t90) "
          "error in %, over the runs whose prediction reaches a liquid fraction of 0.9 within the input-only "
          "horizon (3 t_ref); the share of runs that reach it is given when it is below 100 %, and the error is "
          "not reported when fewer than 10 % of runs reach it. Neural models: mean ± SD over three training "
@@ -75,7 +75,7 @@ def pcm():
     for block in ("field", "t90"):
         L.append(f"| **({'a' if block == 'field' else 'b'}) {'Field RMSE, K' if block == 'field' else 't90 error, %'}** |"
                  + " |" * len(PCM_SPLITS))
-        for grp, rows in (("Baselines", PCM_BASE), ("Neural operators", PCM_NEURAL)):
+        for grp, rows in (("Baselines", PCM_BASE), ("Neural models", PCM_NEURAL)):
             L.append(f"| *{grp}* |" + " |" * len(PCM_SPLITS))
             for m, lab in rows:
                 cells = []
@@ -99,6 +99,30 @@ def pcm():
     return L, vals
 
 
+def table4():
+    """Tank engineering metrics per split (multinode_2026-11-08/compare.json): stored-energy error, near-outlet
+    temperature error, thermocline-midpoint error, for the 1D models, the best interpolation (RBF) and the two
+    hybrid + canonical surrogates (means over test runs; neural: mean of 3 seeds)."""
+    C = json.load(open(os.path.join(ML, "multinode_2026-11-08", "compare.json")))
+    MODS = [("multinode", "Multi-node 1D"), ("ideal_stratified", "Ideal stratification"), ("rbf", "RBF"),
+            ("fno_hybrid_canon", "FNO hybrid + canonical"), ("unet_hybrid_canon", "U-Net hybrid + canonical")]
+    MET = [("energy_err", "Stored energy, % of full charge", 1), ("T_out_err_K", "Near-outlet temperature, K", 1),
+           ("y_mid_err_m", "Thermocline midpoint, mm", 1)]
+    L = ["**Table 3.** Tank family: engineering metrics on the test runs. Mean absolute errors; lowest per row in bold. "
+         "The near-outlet temperature is the area-averaged temperature of the cells next to the outlet (Appendix I).", "",
+         "| Split | Metric | " + " | ".join(l for _, l in MODS) + " |", "|---|---|" + "---|" * len(MODS)]
+    vals = {}
+    for s, sl in TANK_SPLITS:
+        for k, ml, sc in MET:
+            m = C[s]["metrics"][k]
+            row = [m["multinode_mean"] if mm == "multinode" else m[mm]["mean"] for mm, _ in MODS]
+            vals[(s, k)] = row
+            b = min(row)
+            cells = [f"**{v:.2f}**" if v == b else f"{v:.2f}" for v in row]
+            L.append(f"| {sl} | {ml} | " + " | ".join(cells) + " |")
+    return L, vals
+
+
 TABLE1 = ["**Table 1.** The two families of ThermalStorageBench.", "",
           "| | Stratified water tank (sensible) | PCM melting cell (latent) |", "|---|---|---|",
           "| Geometry | 2D rectangular tank, height 1 m, width 0.25 to 1.0 m; side-wall slots (A) or lid and bottom slots (B), slot height 20 to 80 mm, port offset 0 to 0.2 H | 2D enclosure, height 100 mm, width 20 to 60 mm, heated wall with 0 to 5 conducting aluminium fins (length 0.2 to 0.8 W, thickness 1 to 4 mm) |",
@@ -112,7 +136,7 @@ TABLE1 = ["**Table 1.** The two families of ThermalStorageBench.", "",
           "| Size, frozen manifest | 54.4 GB, md5 0e8b6d8d… | 10.3 GB, md5 19397b78… |"]
 
 if __name__ == "__main__":
-    L2, _ = tank(); L3, _ = pcm()
+    L2, _ = tank(); L3, _ = pcm(); L4, _ = table4()
     os.makedirs(OUT, exist_ok=True)
-    open(os.path.join(OUT, "tables.md"), "w", encoding="utf-8", newline="\n").write("\n".join(TABLE1 + [""] + L2 + [""] + L3) + "\n")
+    open(os.path.join(OUT, "tables.md"), "w", encoding="utf-8", newline="\n").write("\n".join(TABLE1 + [""] + L2 + [""] + L4 + [""] + L3) + "\n")
     print("\n".join(L2)); print(); print("\n".join(L3))

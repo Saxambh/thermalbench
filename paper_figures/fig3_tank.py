@@ -20,7 +20,8 @@ for j, arch in enumerate(("fno", "unet")):
         seeds = [100 * np.mean([p["rmse_theta"] for p in res[f"{arch}{v}{s}"]["per_run"]]) for s in ("", "_s1", "_s2")]
         a1.scatter([x] * 3, seeds, s=14, color=ARCH[arch], zorder=3, linewidth=0)
         a1.plot([x - 0.1, x + 0.1], [np.mean(seeds)] * 2, color=INK, lw=1.3, zorder=4)
-for ref, lab, ls in ((100 * np.mean([p["rmse_theta"] for p in res["rbf"]["per_run"]]), "best interpolation (RBF)", (0, (1, 1.5))),
+best_i = min(("knn", "nn", "idw", "rbf"), key=lambda m: np.mean([p["rmse_theta"] for p in res[m]["per_run"]]))
+for ref, lab, ls in ((100 * np.mean([p["rmse_theta"] for p in res[best_i]["per_run"]]), f"best interpolation ({best_i.upper()})", (0, (1, 1.5))),
                      (mn["ood_mode"]["metrics"]["rmse_theta"]["multinode_mean"], "multi-node 1D", (0, (4, 2))),
                      (100 * np.mean([p["rmse_theta"] for p in res["ideal_stratified"]["per_run"]]), "1D ideal stratification", (0, (6, 2, 1, 2)))):
     a1.axhline(ref, color=INK2, lw=0.9, ls=ls, zorder=1)
