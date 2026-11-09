@@ -1,0 +1,32 @@
+# Draft (9 November 2026). Fill in the licence, DOI and repository URL at release; author list to be
+# confirmed by all authors before submission.
+cff-version: 1.2.0
+message: "If you use ThermalStorageBench, please cite the article and the dataset."
+title: "ThermalStorageBench: A CFD benchmark for machine learning in sensible and latent thermal energy storage"
+type: dataset
+version: "1.0.0"
+authors:
+  - family-names: Bhattarai
+    given-names: Saxam
+    affiliation: Kathmandu University
+  - family-names: Baral
+    given-names: Bivek
+    affiliation: Kathmandu University
+  - family-names: Davidsson
+    given-names: Henrik
+    affiliation: Lund University
+# license: CC-BY-4.0          # proposed for the data and checkpoints; code proposed MIT (decision pending)
+# doi: 10.5281/zenodo.XXXXXXX # reserved DOI, to be added
+# repository-code: https://github.com/<owner>/<repo>
+keywords:
+  - thermal energy storage
+  - benchmark dataset
+  - phase change material
+  - stratified tank
+  - neural operator
+  - computational fluid dynamics
+abstract: >-
+  Transient two-dimensional OpenFOAM simulations for machine learning in thermal energy storage: 1,212
+  charging and discharging runs of stratified water tanks and 500 melting runs of finned and tilted PCM
+  cells (n-octadecane and lauric acid), with fixed design-level splits, engineering metrics, baselines,
+  verification cases, validation against experiments, and 204 rescored network checkpoints.

@@ -69,8 +69,8 @@ source notes.
    **a correlation-based PCM model**. The present 1D model is stated as reasonable, not optimal.
 2. **A resolution argument** for laminar heating from below at Ra_H up to 9 × 10⁸, and for the laminar tank
    band. Stated only as a limitation.
-3. **PCM parameter counts** for FNO and U-Net, and **the measured PCM CFD core-hours** (the plan estimate is
-   used).
+3. **The measured PCM CFD core-hours** (the plan estimate is used). Parameter counts are now given for both
+   families (FNO 4.2 M real-valued, U-Net 7.8 M, Transolver 1.16 M).
 4. **Glossing ML and CFD jargon** in the main text (PIMPLE, Courant, AdamW, one-cycle, bfloat16, physics
    attention). Partly moved to Appendix D; a pass for storage readers is still useful.
 5. **A short "Data records" subsection** (file format, loader, licence, version). Depends on the licence and
