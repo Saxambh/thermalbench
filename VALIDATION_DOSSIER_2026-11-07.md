@@ -8,7 +8,7 @@ the reasoning, the evidence, what we accept, and what we do not claim.
 **Status.** No paper text has been written. Results come first. The tank family (CFD, verification and ML)
 is complete apart from the final statistical tables. The PCM family has all 500 simulations accepted, its
 verification and validation done, and its ML training not yet started. *(Superseded 8 November: see
-"Status update" below; all results except the Lou outlet comparison are in.)*
+"Status update" below; all results are in, including the Lou outlet comparison (9 November).)*
 
 **How to read the numbers.**
 - Field errors are RMSE in % of the run's temperature difference ΔT unless stated otherwise.
@@ -116,9 +116,11 @@ discharge confirmation set is analysed (`thermbench_ml/confirmation_discharge_20
 | Worker scripts never finished (bare `wait` waited on the log `tee`) | workers never logged "done" | fixed in `run_final_pcm.sh`; no effect on results |
 
 **What is not done yet (replaces §15):**
-- **Lou et al. outlet comparison:** the 3D run finishes about 9 November; then the comparison is rerun on the
-  full series. Interim reading: breakthrough timing matches; post-breakthrough outlet T* over-predicted by
-  0.08 to 0.20, consistent in sign with the experiment's heat loss.
+- ~~Lou et al. outlet comparison~~ **done 9 November** (`verification_data/lou_outlet_2026-11-07/RESULT.md`):
+  breakthrough onset within 0.01 t* (8.6 s); after breakthrough the simulated outlet T* exceeds the
+  measurement by 0.08 to 0.20 depending on the β used in the published Ri_bulk. The sign is consistent with
+  the experiment's heat loss (Lou's charging-efficiency plateau slope 0.81 instead of 1.0); wall loss is not
+  modelled because the paper gives no heat-transfer coefficient.
 - Second tank experiment with discharge (Shah & Furbo 2003): only if needed.
 - The 3.33 mm multi-fidelity tank subset: planned, not delivered.
 - Release items: licence, environment specification, README, project name, version tag, DOI, data hosting;
