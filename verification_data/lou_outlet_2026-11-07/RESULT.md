@@ -35,7 +35,10 @@
 
 - **Onset depends on the reconstruction:** with constant β the 10 % crossing is at t* 0.796 (experiment) vs
   0.806 (ours), a difference of 0.0102 t*. With β at the mean temperature the experimental curve crosses
-  0.1 at about t* 0.765, so "breakthrough timing is reproduced" is too broad.
+  0.1 at about t* 0.77, so "breakthrough timing is reproduced" is too broad. (Correction, 9 November, from
+  the paper cross-check: the 0.765 first given came from the 0.05-step comparison grid. The digitised curve
+  has a gap between t* 0.768 (T* 0.096) and 0.788 (0.135); linear interpolation across it gives 0.770. The
+  onset difference under this reconstruction is therefore about 0.04 t*, as stated.)
 - **The stronger finding:** the simulated outlet warms faster through breakthrough under both
   reconstructions. It reaches 50 % at t* 0.932 against about 0.97 to 1.045 experimentally.
 - **0.08 to 0.20** is the observed range over t* 0.95 to 1.45 under the two reconstructions, not an
