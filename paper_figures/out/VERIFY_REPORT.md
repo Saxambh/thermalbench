@@ -1,6 +1,6 @@
 # Paper numbers: independent cross-check
 
-478 checks, 0 failed.
+479 checks, 0 failed.
 
 | | Check | Detail |
 |---|---|---|
@@ -480,5 +480,6 @@
 | PASS | T1 PCM design file readable | case_id, material, superheat_K, subcooling_K, W_m, nfins, fin_len_m, fin_t_m, tilt_deg, h_m, maxdt_s, Ra_H |
 | PASS | T1 PCM solver-WARN cases 39 |  |
 | PASS | T1 PCM field QC 498 OK / 2 WARN |  |
+| PASS | T1 SST runs 588, laminar 624 |  |
 | PASS | F6 tank shown snapshots near the run's stored error |  |
 | PASS | F6 PCM shown snapshots near the run's stored error |  |

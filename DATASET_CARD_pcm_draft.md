@@ -45,7 +45,7 @@ for cost (from about 12,400 to about 3,100 core-hours).
 ## Per run
 
 One `thermbench.h5` (median 19.9 MB; 10.3 GB in total) with:
-- 88 to 204 snapshots (median 122) of T and the liquid fraction alpha on the native grid;
+- 88 to 204 snapshots (median 122) of T, the liquid fraction alpha and the velocity (ux, uy) on the native grid;
 - the PCM/fin mask;
 - per snapshot: stored energy, Nusselt number, heat input, mean T, liquid fraction and energy-balance
   error;

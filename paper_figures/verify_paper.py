@@ -230,6 +230,10 @@ inv = list(csv.DictReader(open(os.path.join(ROOT, "pcm_inventory_2026-11-07.csv"
 ok("T1 PCM solver-WARN cases 39", sum(r["solver_qc"] == "WARN" for r in inv) == 39)
 ok("T1 PCM field QC 498 OK / 2 WARN", sum(r["qc"] == "OK" for r in mp_) == 498 and sum(r["qc"] == "WARN" for r in mp_) == 2)
 
+# Table 1 stored fields: checked over all 1,712 h5 files in WSL on 9 November 2026
+# (PCM: T, alpha, ux, uy in all 500; tank: T, p_rgh, ux, uy in all 1,212, plus k, omega, nut in the 588 SST runs)
+ok("T1 SST runs 588, laminar 624", sum("sst" in r["run_id"] for r in mt_) == 588 and sum("lam" in r["run_id"] for r in mt_) == 624)
+
 # ---------------- Fig. 6 recomputed errors are typical for the run shown
 f6 = json.load(open(os.path.join(OUT, "fig6_examples.json")))
 ok("F6 tank shown snapshots near the run's stored error", 0.3 < np.mean(f6["tank"]["rmse_theta_shown"]) / f6["tank"]["stored_seed_mean_rmse_theta"] < 3)

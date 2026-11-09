@@ -8,7 +8,7 @@
 | Flow regime | Laminar (Re < 1,500), k-ω SST (Re > 3,000), both between: 432 laminar-only, 396 SST-only, 192 with both | Laminar natural convection, Ra_H 1.5 × 10⁸ to 9.0 × 10⁸, Ste 0.07 to 0.37 |
 | Solver and mesh | OpenFOAM v2606 buoyantPimpleFoam, uniform 5 mm mesh | OpenFOAM v2606 buoyantPimpleFoam with enthalpy-porosity source, uniform 0.5 mm mesh |
 | Runs (design points) | 1,212 (1,020) | 500 (500) |
-| Output per run | 121 snapshots of T, p_rgh, u (and k, ω, ν_t for SST); stored energy, exergy, MIX, thermocline midpoint and thickness, outlet temperature | 88 to 204 snapshots of T and liquid fraction; stored energy, Nusselt number, heat input, liquid fraction |
+| Output per run | 121 snapshots of T, p_rgh, u (and k, ω, ν_t for SST); stored energy, exergy, MIX, thermocline midpoint and thickness, outlet temperature | 88 to 204 snapshots of T, liquid fraction and velocity; stored energy, Nusselt number, heat input, liquid fraction |
 | Quality control | 1,211 OK, 1 WARN; 5 planned runs excluded by pre-set rules | 498 OK, 2 WARN (field QC); 39 solver-WARN cases kept under a pre-registered rule; 34 reruns |
 | Size, frozen manifest | 54.4 GB, md5 0e8b6d8d… | 10.3 GB, md5 19397b78… |
 

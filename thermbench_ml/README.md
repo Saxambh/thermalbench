@@ -1,88 +1,102 @@
-# ThermalStorageBench ML benchmark (tank family, 2D)
+# ThermalStorageBench: benchmark code
 
-## Task: forward surrogate
-Given a tank's inputs and a time t*, predict the temperature field at t*.
+Code for loading the data, the fixed splits, the metrics, the baselines, training and evaluation of
+ThermalStorageBench. It has two families:
+- the **stratified water tank** (sensible storage): 1,212 runs;
+- the **PCM melting cell** (latent storage): 500 runs.
 
-- **Inputs.** All of these are known before the run:
-  - geometry: W, slot size, port offset, port type A/B;
-  - operation: charge/discharge, inflow speed, ΔT, cold temperature, pre-stratified start and its interface height;
-  - turbulence model flag, Re_in, Ri_H;
-  - the initial field.
-- **Target.** theta = (T − Tc)/(Th − Tc) on the native 5 mm grid (200 × W/0.005 cells). Snapshots are scored at every 10th of the 120 written times.
+The paper describes the dataset, its verification and validation, and the results. Development history
+is in `DEVELOPMENT_NOTES.md`.
 
-## Splits (`splits.py`)
-Assignment is by design point, so laminar/SST twins stay together, and it is fixed by parameters or a hash.
+## Quick start: score your model
 
-| split | test set | tests |
-|---|---|---|
-| random | 10 % of design points by hash | interpolation |
-| ood_flow | Re_in > 9007 (design 90th percentile) | faster inflow than seen; all its test runs are SST, so Re extrapolation and the turbulence closure are tested together |
-| ood_geom | W < 0.33 m or W > 0.93 m | unseen widths / aspect ratios of the same rectangular 2D geometry (not new geometry families) |
-| ood_mode | all discharge cases (train on charging) | unseen operation mode (transfer under an approximate charge/discharge symmetry) |
-
-## Metrics (`metrics.py`)
-- `rmse_K`, `rmse_theta`: the full field.
-- `profile_rmse`: the row-averaged profile, which is what a 1D tank model is judged on.
-- `y_mid_err_m`: thermocline height.
-- `energy_err`: stored energy error as a fraction of the tank's full capacity, from mean theta (constant rho cp). It matches the real-property energy error within +-1 % (`proxy_check_2026-11-07/RESULT.md`). It is not divided by the energy currently stored, which goes to about zero at the end of a discharge.
-- `T_out_err_K`: error of the **area-averaged** outlet temperature in K (mean of the cells next to the outlet, identical to the outlet-face average). It is not the flow-weighted (mixing-cup) temperature a system model receives: the two differ by a median 0.6 % of dT, 2.3 % around breakthrough and up to about 30 % in very-high-Ri laminar runs (`proxy_check_2026-11-07/RESULT.md`).
-
-Label sensitivity: the verification of 6 November (`../verification_criteria_2026-11-06.md`) measured how much the labels move under tighter solver settings, a finer mesh and a 0.01 % inlet change; it is small in most cases tested and about 6 to 7 % of dT in two flagged fast-jet SST runs (`label_flags_tank.json`). Scoring the same predictions against those alternative solutions changed no FNO/U-Net ranking except one 0.11-point case under the 2.5 mm mesh (`altref_2026-11-07/RESULT.md`). (An earlier version of this README described a 'noise floor' from early tests; it is superseded.)
-
-## Baselines
-| model | file | idea |
-|---|---|---|
-| initial | baselines.py | no change (lower bar) |
-| ideal_stratified | baselines.py | plug flow with a sharp interface from the energy balance (MIX = 0) |
-| knn | baselines.py | mean of the 5 nearest training runs in parameter space |
-| fno | models.py | Fourier neural operator, 4 layers, width 32, 16 modes |
-| unet | models.py | 4-level U-Net, base width 32 |
-
-## Use
 ```bash
-# environments (WSL): ~/venvs/tbml (CPU torch), ~/venvs/tbml-gpu (CUDA 12.6 torch, RTX 4060)
-python evaluate.py --roots ~/of_runs/full_h5mm --split random           # non-neural baselines
-python train.py --model fno --roots ~/of_runs/full_h5mm --split random --epochs 100
+python example_evaluate.py --family tank --split random --model idw    # 9.32 % of dT (paper, Table 2)
+python example_evaluate.py --family pcm  --split random --model idw    # 2.55 K (paper, Table 3)
+python example_evaluate.py --family tank --split ood_mode --model mine # your model: edit MyTankModel
 ```
-Results go to `results_<split>.json`.
 
-Runs come from `data.index`, which skips runs that failed QC and the lab's MOVED_TO_LAPTOP placeholders. Both machines' `full_h5mm` folders must be merged before training on the full set.
+A model needs `fit(train_runs)` and `predict(run, idx)`; see the docstring of `example_evaluate.py`.
+Scoring uses the same functions that produced every number in the paper.
 
-## Final training plan (decided 2026-11-01)
+## Data
 
-1. **Freeze the run list** once the batch and QC are complete: `python freeze_manifest.py`. Every model then uses exactly the runs in `manifest_full_h5mm.json`.
-2. **Epoch check:** `bash run_final.sh check`. This trains FNO hybrid on the random split at 60 and at 150 epochs. If the 150-epoch result is better by more than the seed spread, raise the epochs.
-3. **Full set:** `bash run_final.sh <worker> <nworkers>` on each GPU machine.
-   - Models: FNO and FNO hybrid at 60 epochs; U-Net and U-Net hybrid at 100 epochs (U-Net was still improving between 60 and 100 epochs in the test pass, by up to 17 %).
-   - 4 splits × 3 seeds.
-   - Settings: bf16, batch 16, data held on the GPU (`--gpu-data`).
-   - Expected cost: about 111 GPU-hours, about 2.3 days on the laptop and pc3 GPUs.
+- **Frozen manifests:** `manifest_full_h5mm.json` (tank, md5 0e8b6d8d...) and `manifest_pcm.json` (PCM,
+  md5 19397b78...).
+  - They list every run with the md5 of its h5 file.
+  - `check_data.py <manifest>` verifies a local copy.
+- **Per run:** one `thermbench.h5` with the fields and per-snapshot quantities, plus `case.json` with all
+  inputs.
+- **Loading:** `data.index(roots, manifest=...)` (tank) and `pcm_data.index(...)` (PCM) return run objects:
+  - `run.params()`: the design inputs;
+  - `run.times()`: the times;
+  - `run.field("T", idx, theta=True)`: the normalised temperature;
+  - PCM also `run.field("alpha", idx)` and `run.mask()`.
+- **Reading one run with h5py only:** `../release/load_example.py`.
 
-**Measured speed** (RTX 4060 laptop GPU). The old loader ran at 27 ms per sample; `--gpu-data --amp --batch 16` runs at 8.7 ms per sample. The raw model benchmark (`bench_train.py`) gives 7.3 ms per sample for FNO and 7.9 ms for U-Net.
+## Tasks
 
-## Not done yet
-- An autoregressive (rollout) task.
-- KPI-curve regression (E, MIX, T_out vs t*).
-- The 3.33 mm multi-fidelity task.
-- A measured noise floor per case.
+| Family | Input | Predict | Scored snapshots |
+|---|---|---|---|
+| Tank | design inputs, initial field, t* = tQ/V | θ = (T − T_c)/(T_h − T_c) on the native 5 mm grid | every 10th of 120 |
+| PCM | design inputs, τ = t/t_ref (t_ref from the inputs only) | temperature (as θ) and liquid fraction on the 0.5 mm grid | every 5th, plus melt time on a fixed grid up to τ = 3 |
 
-## PCM family (built 2026-11-02)
+## Splits (`splits.py`, `pcm_splits.py`)
 
-Separate modules that reuse the tank models (`models.py`, now with `cout`) and the hash helper:
+Assigned by design point (laminar and SST twins stay together), fixed by parameters or a hash of the
+case id. Do not change them; validation data come from the training side of each split.
 
-- **`pcm_data.py`:** loads runs from `export_pcm_case.py` (`PCMRun`: T, alpha, mask with fins = 0, times).
-  - Inputs: 13 scalar parameters (material, superheat, subcooling, W, fins, tilt, Ra, Ste, Pr, t_ref).
-  - Time input is tau = t / t_ref, where **t_ref is an a priori melting-time scale** from the inputs only (energy over laminar Nu ~ Ra^0.25 heat rate, calibrated on Vogel and Kamkari, with fin and tilt factors). The true melting time is an output, so it is never an input.
-  - Grid: 0.5 mm, H 100 mm, padded to W_MAX = 60 mm.
-- **`pcm_splits.py`:** random, ood_fins (N = 4 or 5), ood_drive (superheat > 27.81 K, the design q90, both materials), ood_material and ood_material_r, ood_tilt.
-- **`pcm_metrics.py`:** rmse_K, alpha_rmse, liquid_iou (melted region), melt_frac_err, energy_err (fraction of a full charge), t90_err (time to 90 % melted, relative).
-- **`pcm_baselines.py`:**
-  - initial (nothing melts);
-  - stefan (conduction only, exact two-phase Neumann solution);
-  - front (conduction-then-convection front: Stefan early, then f = min(1, s tau) with s fitted; the hybrid base);
-  - knn.
-- **`pcm_evaluate.py`, `pcm_train.py`** (`--hybrid` learns the correction to front). Results go to `results_pcm/<split>.json`.
+| Family | Split | Test set |
+|---|---|---|
+| Tank | `random` | 10 % of design points |
+| | `ood_geom` | width outside 0.33 to 0.93 m |
+| | `ood_mode` | all discharging runs (train on charging) |
+| | `ood_flow` | inlet Re above 9,007 (all SST) |
+| PCM | `random` | 10 % of cases |
+| | `ood_fins` | 4 and 5 fins (train on 0 to 3) |
+| | `ood_drive` | superheat above 27.81 K |
+| | `ood_tilt` | 45° and heated from below |
+| | `ood_material` | lauric acid (train on n-octadecane) |
+| | `ood_material_r` | n-octadecane (train on lauric acid) |
 
-**Tested 2026-11-02** on a 32-case development set: the real design at 1 mm, cut at 20 min (laptop `~/of_runs/pcm_mini`; results in `results_pcm_dev/`, not benchmark numbers).
-- All six splits and all baselines ran.
-- fno and fno_hybrid trained for 20 epochs on 24 runs. On the random test (3 runs), fno_hybrid gave 2.95 K, IoU 0.88, melt fraction error 0.019, against knn 4.72 K and front 6.21 K.
+## Metrics (`metrics.py`, `pcm_metrics.py`)
+
+- **Tank:**
+  - `rmse_theta` (field, fraction of ΔT) and `rmse_K`;
+  - `profile_rmse` (horizontally averaged);
+  - `y_mid_err_m` (thermocline midpoint; `y_mid_missing` counts snapshots without one);
+  - `energy_err` (fraction of a full charge, constant-ρc_p proxy);
+  - `T_out_err_K` (area-averaged outlet temperature).
+- **PCM:**
+  - `rmse_K`, `alpha_rmse`, `liquid_iou`, `melt_frac_err`, `energy_err`;
+  - `t90_reached` (share of runs whose prediction reaches 90 % melting within τ = 3);
+  - `t90_err` (relative, over those runs only).
+
+## Baselines and models
+
+- **Baselines:** `baselines.py` (tank: initial, ideal stratification, kNN, NN, IDW, RBF), `multinode.py`
+  (calibrated 1D model), `pcm_baselines.py` (initial, Stefan, front, kNN, NN, IDW, RBF).
+- **Neural models:** `models.py` (FNO, U-Net, Transolver).
+- **Training:** `train.py` / `pcm_train.py` with `--hybrid` (learn the correction to the physics base) and,
+  for the tank, `--canon` (charge/discharge frame).
+- **Settings used in the paper:** batch 16, bf16, 60 epochs (FNO, Transolver) or 100 (U-Net); 3 seeds.
+
+## Released checkpoints
+
+- 96 tank and 108 PCM checkpoints, each taken from the machine that trained it and rescored from the frozen
+  data (`repro_all_2026-11-08/`, `repro_pcm_2026-11-08/`).
+- Rescoring on the same GPU type reproduces every stored score exactly; across GPU types, expect agreement
+  to about 1e-4 K.
+- `predict.py` and `pcm_predict.py` run a checkpoint on a dataset run (`--from-run`) or on a new design.
+
+## Reporting results
+
+So that results stay comparable with the paper:
+- report every metric, per training seed as well as the mean;
+- for PCM, give the share of runs reaching t90 next to the t90 error;
+- report the two flagged tank runs (`label_flags_tank.json`: T0211_sst, T0052_sst) separately or note them.
+
+## Environment
+
+Python 3.12.3, PyTorch 2.14.1 (CUDA 12.6), numpy 1.26.4, h5py 3.10.0; the CFD used OpenFOAM v2606. Full
+package list: `../release/requirements_gpu_freeze.txt`.
