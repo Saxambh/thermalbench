@@ -156,8 +156,11 @@ fixed in amendment 1: masked RMSE ≤ 0.01.
 
 - **Training batch:** the PCM Transolver jobs train at batch 16 (`run_transolver_pcm.sh`, `--batch 16`), the
   same as every PCM FNO and U-Net job (`run_final_pcm.sh`, `--batch 16`; also the `pcm_train.py` default).
-  The "batch 8 (as FNO)" in the Training section is the tank pipeline's batch (`train.py` default) and was
-  written for the tank jobs, which were not run.
+  The "batch 8 (as FNO)" in the Training section is wrong for both families. **Correction (9 November, found
+  while checking the paper's methods):** the tank jobs also trained at batch 16 (`run_final.sh`,
+  `COMMON=... --batch 16`); 8 is only the `train.py` default, which the jobs override. The record above
+  (written 8 November) said 8 was the tank pipeline's batch; that was wrong. No job or result is affected:
+  every FNO, U-Net and Transolver job in both families ran at batch 16.
 - **Timing batch:** the timings in amendment 1 and the tank check were measured at batch 16. The overfit
   checks used a separate fixed batch of 8 training samples.
 - **Naming:** the model is reported as the 4×4-patch Transolver variant.
