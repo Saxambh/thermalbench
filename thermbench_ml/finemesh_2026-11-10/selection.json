@@ -1,0 +1,511 @@
+{
+ "cap_core_h": 36.0,
+ "salt": "finemesh-2026-11-10",
+ "quota": {
+  "random": 10,
+  "drive": 10,
+  "fins": 10,
+  "tilt45": 6,
+  "tilt90": 6,
+  "other": 18
+ },
+ "eligible_total": 216,
+ "strata": {
+  "random/lauric": {
+   "in_stratum": 23,
+   "eligible": 9,
+   "taken": [
+    "P0119",
+    "P0012",
+    "P0151",
+    "P0351",
+    "P0155"
+   ]
+  },
+  "random/octadecane": {
+   "in_stratum": 29,
+   "eligible": 15,
+   "taken": [
+    "P0385",
+    "P0477",
+    "P0386",
+    "P0053",
+    "P0001"
+   ]
+  },
+  "drive/lauric": {
+   "in_stratum": 24,
+   "eligible": 12,
+   "taken": [
+    "P0279",
+    "P0047",
+    "P0415",
+    "P0367",
+    "P0127"
+   ]
+  },
+  "drive/octadecane": {
+   "in_stratum": 23,
+   "eligible": 14,
+   "taken": [
+    "P0357",
+    "P0445",
+    "P0049",
+    "P0173",
+    "P0093"
+   ]
+  },
+  "fins/lauric": {
+   "in_stratum": 58,
+   "eligible": 27,
+   "taken": [
+    "P0252",
+    "P0231",
+    "P0311",
+    "P0204",
+    "P0251"
+   ]
+  },
+  "fins/octadecane": {
+   "in_stratum": 54,
+   "eligible": 30,
+   "taken": [
+    "P0050",
+    "P0422",
+    "P0462",
+    "P0002",
+    "P0437"
+   ]
+  },
+  "tilt45/lauric": {
+   "in_stratum": 23,
+   "eligible": 15,
+   "taken": [
+    "P0156",
+    "P0424",
+    "P0219"
+   ]
+  },
+  "tilt45/octadecane": {
+   "in_stratum": 20,
+   "eligible": 12,
+   "taken": [
+    "P0473",
+    "P0077",
+    "P0433"
+   ]
+  },
+  "tilt90/lauric": {
+   "in_stratum": 21,
+   "eligible": 10,
+   "taken": [
+    "P0031",
+    "P0467",
+    "P0139"
+   ]
+  },
+  "tilt90/octadecane": {
+   "in_stratum": 24,
+   "eligible": 14,
+   "taken": [
+    "P0229",
+    "P0209",
+    "P0321"
+   ]
+  },
+  "other/lauric": {
+   "in_stratum": 101,
+   "eligible": 26,
+   "taken": [
+    "P0447",
+    "P0128",
+    "P0040",
+    "P0380",
+    "P0468",
+    "P0115",
+    "P0444",
+    "P0083",
+    "P0167"
+   ]
+  },
+  "other/octadecane": {
+   "in_stratum": 100,
+   "eligible": 32,
+   "taken": [
+    "P0337",
+    "P0214",
+    "P0434",
+    "P0301",
+    "P0490",
+    "P0286",
+    "P0078",
+    "P0325",
+    "P0137"
+   ]
+  }
+ },
+ "predicted_core_h_total": 1265.6,
+ "predicted_core_h_max": 35.2,
+ "cases": [
+  {
+   "case_id": "P0119",
+   "stratum": "random",
+   "material": "lauric",
+   "pred_core_h": 26.4
+  },
+  {
+   "case_id": "P0012",
+   "stratum": "random",
+   "material": "lauric",
+   "pred_core_h": 34.4
+  },
+  {
+   "case_id": "P0151",
+   "stratum": "random",
+   "material": "lauric",
+   "pred_core_h": 20.8
+  },
+  {
+   "case_id": "P0351",
+   "stratum": "random",
+   "material": "lauric",
+   "pred_core_h": 12.0
+  },
+  {
+   "case_id": "P0155",
+   "stratum": "random",
+   "material": "lauric",
+   "pred_core_h": 31.2
+  },
+  {
+   "case_id": "P0385",
+   "stratum": "random",
+   "material": "octadecane",
+   "pred_core_h": 15.2
+  },
+  {
+   "case_id": "P0477",
+   "stratum": "random",
+   "material": "octadecane",
+   "pred_core_h": 6.4
+  },
+  {
+   "case_id": "P0386",
+   "stratum": "random",
+   "material": "octadecane",
+   "pred_core_h": 28.0
+  },
+  {
+   "case_id": "P0053",
+   "stratum": "random",
+   "material": "octadecane",
+   "pred_core_h": 13.6
+  },
+  {
+   "case_id": "P0001",
+   "stratum": "random",
+   "material": "octadecane",
+   "pred_core_h": 16.0
+  },
+  {
+   "case_id": "P0279",
+   "stratum": "drive",
+   "material": "lauric",
+   "pred_core_h": 7.2
+  },
+  {
+   "case_id": "P0047",
+   "stratum": "drive",
+   "material": "lauric",
+   "pred_core_h": 21.6
+  },
+  {
+   "case_id": "P0415",
+   "stratum": "drive",
+   "material": "lauric",
+   "pred_core_h": 24.0
+  },
+  {
+   "case_id": "P0367",
+   "stratum": "drive",
+   "material": "lauric",
+   "pred_core_h": 16.8
+  },
+  {
+   "case_id": "P0127",
+   "stratum": "drive",
+   "material": "lauric",
+   "pred_core_h": 30.4
+  },
+  {
+   "case_id": "P0357",
+   "stratum": "drive",
+   "material": "octadecane",
+   "pred_core_h": 5.6
+  },
+  {
+   "case_id": "P0445",
+   "stratum": "drive",
+   "material": "octadecane",
+   "pred_core_h": 26.4
+  },
+  {
+   "case_id": "P0049",
+   "stratum": "drive",
+   "material": "octadecane",
+   "pred_core_h": 31.2
+  },
+  {
+   "case_id": "P0173",
+   "stratum": "drive",
+   "material": "octadecane",
+   "pred_core_h": 17.6
+  },
+  {
+   "case_id": "P0093",
+   "stratum": "drive",
+   "material": "octadecane",
+   "pred_core_h": 8.8
+  },
+  {
+   "case_id": "P0252",
+   "stratum": "fins",
+   "material": "lauric",
+   "pred_core_h": 25.6
+  },
+  {
+   "case_id": "P0231",
+   "stratum": "fins",
+   "material": "lauric",
+   "pred_core_h": 35.2
+  },
+  {
+   "case_id": "P0311",
+   "stratum": "fins",
+   "material": "lauric",
+   "pred_core_h": 16.0
+  },
+  {
+   "case_id": "P0204",
+   "stratum": "fins",
+   "material": "lauric",
+   "pred_core_h": 6.4
+  },
+  {
+   "case_id": "P0251",
+   "stratum": "fins",
+   "material": "lauric",
+   "pred_core_h": 18.4
+  },
+  {
+   "case_id": "P0050",
+   "stratum": "fins",
+   "material": "octadecane",
+   "pred_core_h": 12.0
+  },
+  {
+   "case_id": "P0422",
+   "stratum": "fins",
+   "material": "octadecane",
+   "pred_core_h": 5.6
+  },
+  {
+   "case_id": "P0462",
+   "stratum": "fins",
+   "material": "octadecane",
+   "pred_core_h": 4.8
+  },
+  {
+   "case_id": "P0002",
+   "stratum": "fins",
+   "material": "octadecane",
+   "pred_core_h": 23.2
+  },
+  {
+   "case_id": "P0437",
+   "stratum": "fins",
+   "material": "octadecane",
+   "pred_core_h": 6.4
+  },
+  {
+   "case_id": "P0156",
+   "stratum": "tilt45",
+   "material": "lauric",
+   "pred_core_h": 35.2
+  },
+  {
+   "case_id": "P0424",
+   "stratum": "tilt45",
+   "material": "lauric",
+   "pred_core_h": 12.0
+  },
+  {
+   "case_id": "P0219",
+   "stratum": "tilt45",
+   "material": "lauric",
+   "pred_core_h": 32.0
+  },
+  {
+   "case_id": "P0473",
+   "stratum": "tilt45",
+   "material": "octadecane",
+   "pred_core_h": 30.4
+  },
+  {
+   "case_id": "P0077",
+   "stratum": "tilt45",
+   "material": "octadecane",
+   "pred_core_h": 28.8
+  },
+  {
+   "case_id": "P0433",
+   "stratum": "tilt45",
+   "material": "octadecane",
+   "pred_core_h": 32.0
+  },
+  {
+   "case_id": "P0031",
+   "stratum": "tilt90",
+   "material": "lauric",
+   "pred_core_h": 20.0
+  },
+  {
+   "case_id": "P0467",
+   "stratum": "tilt90",
+   "material": "lauric",
+   "pred_core_h": 17.6
+  },
+  {
+   "case_id": "P0139",
+   "stratum": "tilt90",
+   "material": "lauric",
+   "pred_core_h": 30.4
+  },
+  {
+   "case_id": "P0229",
+   "stratum": "tilt90",
+   "material": "octadecane",
+   "pred_core_h": 5.6
+  },
+  {
+   "case_id": "P0209",
+   "stratum": "tilt90",
+   "material": "octadecane",
+   "pred_core_h": 15.2
+  },
+  {
+   "case_id": "P0321",
+   "stratum": "tilt90",
+   "material": "octadecane",
+   "pred_core_h": 8.0
+  },
+  {
+   "case_id": "P0447",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 28.8
+  },
+  {
+   "case_id": "P0128",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 31.2
+  },
+  {
+   "case_id": "P0040",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 28.8
+  },
+  {
+   "case_id": "P0380",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 31.2
+  },
+  {
+   "case_id": "P0468",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 28.0
+  },
+  {
+   "case_id": "P0115",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 16.8
+  },
+  {
+   "case_id": "P0444",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 25.6
+  },
+  {
+   "case_id": "P0083",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 12.0
+  },
+  {
+   "case_id": "P0167",
+   "stratum": "other",
+   "material": "lauric",
+   "pred_core_h": 24.8
+  },
+  {
+   "case_id": "P0337",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 12.8
+  },
+  {
+   "case_id": "P0214",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 27.2
+  },
+  {
+   "case_id": "P0434",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 30.4
+  },
+  {
+   "case_id": "P0301",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 21.6
+  },
+  {
+   "case_id": "P0490",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 29.6
+  },
+  {
+   "case_id": "P0286",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 20.8
+  },
+  {
+   "case_id": "P0078",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 18.4
+  },
+  {
+   "case_id": "P0325",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 29.6
+  },
+  {
+   "case_id": "P0137",
+   "stratum": "other",
+   "material": "octadecane",
+   "pred_core_h": 33.6
+  }
+ ]
+}
