@@ -125,4 +125,15 @@ more seeds (s3, s4) give 5 seeds there, so the mean and spread are less sensitiv
 
 ## Amendments
 
-(none yet)
+**1 (10 November, after launch, before any fine case finished).** `compare_finemesh.py` written and tested on
+the 4 November spot runs P0083 and P0301 (both also in this selection). Two details the plan did not foresee:
+- the dataset run's last snapshot is its auto-stop time, off the write grid, so the fine fields there are
+  interpolated linearly in time between the two bracketing fine snapshots; all other snapshot times must
+  match exactly;
+- fins snap to the 0.25 mm mesh slightly differently (P0083: 9 of 8,200 cells differ after block averaging),
+  so the block-averaged fine mask may differ from the dataset mask in at most 1 % of the cells; scoring uses
+  the dataset mask, and the count is reported per case.
+
+Test result (two cases, not the check itself): field difference 5.5 and 6.7 % of ΔT, t90 later by 4.3 and
+6.5 % on the fine mesh, in line with the six-case spot check. The PCs run the 4 November export_pcm_case.py
+(md5 83074cda), which differs from the repository copy only in the project name in its docstring.
