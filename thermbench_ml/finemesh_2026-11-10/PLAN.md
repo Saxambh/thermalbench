@@ -137,3 +137,14 @@ the 4 November spot runs P0083 and P0301 (both also in this selection). Two deta
 Test result (two cases, not the check itself): field difference 5.5 and 6.7 % of ΔT, t90 later by 4.3 and
 6.5 % on the fine mesh, in line with the six-case spot check. The PCs run the 4 November export_pcm_case.py
 (md5 83074cda), which differs from the repository copy only in the project name in its docstring.
+
+**2 (10 November, before any seed 3 or 4 result exists).** Following an external referee read of draft v1:
+- *Material-transfer wording rule, fixed now:* with 5 seeds, "interpolation beats every network" may be written
+  for a held-out material only if IDW is better than every network's 5-seed mean AND better than each of that
+  network's 5 seeds, and the paired bootstrap over cases excludes zero. Otherwise the text says "no network
+  beats interpolation" for that material. The same rule is applied to both materials.
+- *Reading of Part A:* a "holds" verdict shows that a ranking is stable when the labels change from 0.5 to
+  0.25 mm. It does not show that the labels are accurate, because every network was trained on 0.5 mm
+  labels and so carries the same bias. The result will be worded that way.
+- *Checkpoint count:* the 24 new checkpoints raise the released total from 204 to 228. The abstract,
+  introduction, cover letter, data statement, CITATION.cff and the rescoring audit are updated together.
