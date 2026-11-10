@@ -12,7 +12,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PUB = os.path.dirname(os.path.dirname(HERE))
 FIG = os.path.join(os.path.dirname(HERE), "paper_figures", "out")
 REF = os.path.join(PUB, "Review_Paper_2", "MANUSCRIPT_RP2_numbered.docx")
-md = open(os.path.join(HERE, "MANUSCRIPT_draft_v1.md"), encoding="utf-8").read()
+import sys
+VER = sys.argv[1] if len(sys.argv) > 1 else "v1"   # 2026-11-10: "v2" builds the revised draft
+md = open(os.path.join(HERE, f"MANUSCRIPT_draft_{VER}.md"), encoding="utf-8").read()
 tables = open(os.path.join(FIG, "tables.md"), encoding="utf-8").read()
 blocks = {int(m.group(1)): m.group(0).strip() for m in re.finditer(r"\*\*Table (\d)\.\*\*.*?(?=\n\*\*Table \d\.\*\*|\Z)", tables, re.S)}
 for k, b in blocks.items():
@@ -29,7 +31,7 @@ for k in (1, 2, 3, 4, 5, 6):
     md = md[:i] + blk + md[i:]
 tmp = os.path.join(HERE, "_build.md")
 open(tmp, "w", encoding="utf-8").write(md)
-out = os.path.join(HERE, "MANUSCRIPT_draft_v1.docx")
+out = os.path.join(HERE, f"MANUSCRIPT_draft_{VER}.docx")
 subprocess.run(["pandoc", tmp, "-f", "markdown-implicit_figures", "-o", out, "--reference-doc", REF, "--resource-path", FIG], check=True)
 os.remove(tmp)
 
