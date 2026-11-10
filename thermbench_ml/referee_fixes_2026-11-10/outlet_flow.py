@@ -68,10 +68,10 @@ def score_run(pred, run, idx, cache):
             "n_snap": int(len(ok)), "n_no_outflow": int((~ok).sum()), "n_win": int(win.sum())}
 
 
-def main():
+def main(splits, outname):
     allruns = index(DEFAULT_ROOTS, manifest=MAN)
     res = {}
-    for split in SPLITS:
+    for split in splits:
         s = split_runs(allruns, split)
         test = s["test"]
         cache, per = {}, {}
@@ -99,8 +99,9 @@ def main():
             per[f"{arch}_hybrid_canon_mean"] = {rid: {k: float(np.nanmean([per[n][rid][k] for n in names])) for k in per[names[0]][rid]}
                                                 for rid in per[names[0]]}
         res[split] = {"n_test": len(test), "per_run": per}
-        json.dump(res, open(os.path.join(HERE, "outlet_flow.json"), "w"))
-    compare(res)
+        json.dump(res, open(os.path.join(HERE, outname), "w"))
+    if outname == "outlet_flow.json":
+        compare(res)
 
 
 def compare(res):
@@ -141,7 +142,17 @@ def compare(res):
 
 
 if __name__ == "__main__":
+    # 2026-11-10: the laptop run was stopped for memory after the random split; the other splits run on pc4
+    # ("python outlet_flow.py ood_geom ood_mode ood_flow" -> outlet_flow_<splits>.json), then "merge" combines the files.
     if sys.argv[1:] == ["compare"]:
         compare(json.load(open(os.path.join(HERE, "outlet_flow.json"))))
+    elif sys.argv[1:] == ["merge"]:
+        res = {}
+        for f in ("outlet_flow_random.json", "outlet_flow_ood_mode_ood_flow.json"):   # random file also holds ood_geom
+            res |= json.load(open(os.path.join(HERE, f)))
+        res = {k: res[k] for k in SPLITS}
+        json.dump(res, open(os.path.join(HERE, "outlet_flow.json"), "w"))
+        compare(res)
     else:
-        main()
+        sp = sys.argv[1:] or list(SPLITS)
+        main(sp, "outlet_flow.json" if sp == list(SPLITS) else "outlet_flow_" + "_".join(sp) + ".json")
