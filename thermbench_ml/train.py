@@ -26,7 +26,7 @@ import evaluate
 from baselines import IdealStratified
 from data import DEFAULT_ROOTS, PARAMS, index, pad, port_maps
 from models import MODELS
-from splits import SPLITS, split_runs, _u
+from splits import SPLITS, EXTRA_SPLITS, split_runs, _u
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -37,6 +37,7 @@ def plug(run, idx, nx_max):
 
 
 I_DISCHARGE = list(PARAMS).index("discharge")
+I_YINIT = list(PARAMS).index("y_init")
 
 
 def flipped(run, canon):
@@ -58,8 +59,10 @@ class Encoder:
     the correction to it (see Samples and Predictor). canon=True works in the charge frame
     (see the module docstring)."""
 
-    def __init__(self, train, hybrid=False, canon=False):
-        self.hybrid, self.canon = hybrid, canon
+    def __init__(self, train, hybrid=False, canon=False, canon_yi=False):
+        # canon_yi (diagnostic, 2026-11-10 referee fixes; off in every released model): in the canonical frame also
+        # mirror the pre-stratified interface height y_init -> 1 - y_init, as the initial field is mirrored
+        self.hybrid, self.canon, self.canon_yi = hybrid, canon, canon_yi
         P = np.array([self.params(r) for r in train])
         # a parameter that never varies in training (e.g. 'discharge' in ood_mode) keeps unit
         # scale: dividing by its ~0 spread would feed the test runs values of ~1e6
@@ -75,6 +78,8 @@ class Encoder:
         p = run.params()
         if flipped(run, self.canon):
             p[I_DISCHARGE] = 0.0
+            if self.canon_yi and run.meta["init"] != "uniform":
+                p[I_YINIT] = 1.0 - p[I_YINIT]
         return p
 
     def theta(self, run, a):
@@ -196,7 +201,7 @@ def main():
     ap.add_argument("--model", choices=list(MODELS), default="fno")
     ap.add_argument("--roots", nargs="+", default=DEFAULT_ROOTS)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--split", default="random", choices=SPLITS)
+    ap.add_argument("--split", default="random", choices=SPLITS + EXTRA_SPLITS)
     ap.add_argument("--stride", type=int, default=10)
     ap.add_argument("--epochs", type=int, default=50)
     ap.add_argument("--batch", type=int, default=8)
@@ -206,6 +211,7 @@ def main():
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--hybrid", action="store_true", help="learn the correction to plug flow")
     ap.add_argument("--canon", action="store_true", help="rotate discharge runs into the charge frame")
+    ap.add_argument("--canon-yi", action="store_true", help="diagnostic: with --canon, also mirror y_init (name suffix yi)")
     ap.add_argument("--outdir", default="results", help="results folder (merged into <outdir>/<split>.json)")
     ap.add_argument("--manifest", default=None, help="frozen run list (freeze_manifest.py)")
     ap.add_argument("--amp", action="store_true", help="mixed precision (bf16 autocast)")
@@ -225,8 +231,8 @@ def main():
         print(f"split {a.split}: not enough finished runs yet ({ {k: len(v) for k, v in s.items()} })")
         return
     print(f"train {len(s['train'])}, val {len(s['val'])}, test {len(s['test'])} runs; device {a.device}")
-    enc = Encoder(s["train"], hybrid=a.hybrid, canon=a.canon)
-    model_name = a.model + ("_hybrid" if a.hybrid else "") + ("_canon" if a.canon else "") + \
+    enc = Encoder(s["train"], hybrid=a.hybrid, canon=a.canon, canon_yi=a.canon_yi)
+    model_name = a.model + ("_hybrid" if a.hybrid else "") + ("_canon" if a.canon else "") + ("yi" if a.canon_yi else "") + \
         (f"_f{round(100 * a.train_frac)}" if a.train_frac < 1.0 else "")
     tr, va = Samples(s["train"], enc, a.stride), Samples(s["val"], enc, a.stride)
     if a.gpu_data:

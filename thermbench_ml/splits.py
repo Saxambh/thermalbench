@@ -16,6 +16,11 @@ import hashlib
 RE_Q90 = 9007.0
 W_Q10, W_Q90 = 0.33, 0.93
 SPLITS = ("random", "ood_flow", "ood_geom", "ood_mode")
+# Diagnostic splits, not part of the benchmark (referee fixes 2026-11-10):
+#   mode_ceiling  test: the discharge designs with _u(case_id, "ceiling") < 0.5 (about half of ood_mode's test
+#                 designs); train/val: everything else, including the other half of the discharge runs. The ceiling
+#                 for ood_mode: the same test runs, with discharge examples in training.
+EXTRA_SPLITS = ("mode_ceiling",)
 
 
 def _u(case_id, salt=""):
@@ -35,8 +40,10 @@ def side(run, split):
         test = not (W_Q10 <= m["W_m"] <= W_Q90)
     elif split == "ood_mode":
         test = m["mode"] == "discharge"
+    elif split == "mode_ceiling":
+        test = m["mode"] == "discharge" and _u(cid, "ceiling") < 0.5
     else:
-        raise ValueError(f"unknown split {split}; one of {SPLITS}")
+        raise ValueError(f"unknown split {split}; one of {SPLITS + EXTRA_SPLITS}")
     if test:
         return "test"
     return "val" if _u(cid, "val") < 0.1 else "train"

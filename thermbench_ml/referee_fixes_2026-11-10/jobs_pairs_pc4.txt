@@ -1,0 +1,6 @@
+T0336_lam rep
+T0496_lam rep
+T0194_lam rep
+T0306_lam rep
+T1021_lam rep
+T0665_lam rep

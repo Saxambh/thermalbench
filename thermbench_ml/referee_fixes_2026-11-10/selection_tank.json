@@ -1,0 +1,192 @@
+{
+ "salt": "referee-2026-11-10",
+ "cost_fit_runs": 246,
+ "eligible_pairs": 654,
+ "logRi_edges": [
+  -0.7678707267558817,
+  1.7606540471803758,
+  2.884744845364363,
+  4.094976173815307,
+  5.201740251797058,
+  6.407817329503291,
+  8.79130282358949
+ ],
+ "pairs": [
+  {
+   "run_id": "T0180_lam",
+   "Ri": 4.493,
+   "Re": 2555.9,
+   "turb": "laminar",
+   "pred_wall_h": 1.67
+  },
+  {
+   "run_id": "T0336_lam",
+   "Ri": 4.181,
+   "Re": 1840.3,
+   "turb": "laminar",
+   "pred_wall_h": 6.34
+  },
+  {
+   "run_id": "T0019_sst",
+   "Ri": 2.851,
+   "Re": 18331.9,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 9.15
+  },
+  {
+   "run_id": "T0524_sst",
+   "Ri": 0.794,
+   "Re": 15351.1,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 3.66
+  },
+  {
+   "run_id": "T0496_lam",
+   "Ri": 8.154,
+   "Re": 2969.8,
+   "turb": "laminar",
+   "pred_wall_h": 1.22
+  },
+  {
+   "run_id": "T0672_lam",
+   "Ri": 8.521,
+   "Re": 2460.2,
+   "turb": "laminar",
+   "pred_wall_h": 3.9
+  },
+  {
+   "run_id": "T0228_sst",
+   "Ri": 8.813,
+   "Re": 6999.4,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 8.46
+  },
+  {
+   "run_id": "T0992_sst",
+   "Ri": 7.509,
+   "Re": 3781.0,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 1.47
+  },
+  {
+   "run_id": "T0810_lam",
+   "Ri": 45.831,
+   "Re": 786.9,
+   "turb": "laminar",
+   "pred_wall_h": 0.92
+  },
+  {
+   "run_id": "T0194_lam",
+   "Ri": 41.841,
+   "Re": 1628.2,
+   "turb": "laminar",
+   "pred_wall_h": 2.75
+  },
+  {
+   "run_id": "T0626_sst",
+   "Ri": 50.039,
+   "Re": 2589.6,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 5.9
+  },
+  {
+   "run_id": "T0984_sst",
+   "Ri": 38.478,
+   "Re": 2320.4,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 6.43
+  },
+  {
+   "run_id": "T0306_lam",
+   "Ri": 76.672,
+   "Re": 954.9,
+   "turb": "laminar",
+   "pred_wall_h": 4.45
+  },
+  {
+   "run_id": "T0119_lam",
+   "Ri": 153.958,
+   "Re": 2676.1,
+   "turb": "laminar",
+   "pred_wall_h": 1.71
+  },
+  {
+   "run_id": "T0999_sst",
+   "Ri": 128.034,
+   "Re": 1998.6,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 1.2
+  },
+  {
+   "run_id": "T0975_sst",
+   "Ri": 65.327,
+   "Re": 3366.8,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 4.2
+  },
+  {
+   "run_id": "T0189_lam",
+   "Ri": 233.589,
+   "Re": 1513.2,
+   "turb": "laminar",
+   "pred_wall_h": 1.29
+  },
+  {
+   "run_id": "T1021_lam",
+   "Ri": 251.926,
+   "Re": 2126.4,
+   "turb": "laminar",
+   "pred_wall_h": 1.48
+  },
+  {
+   "run_id": "T0085_sst",
+   "Ri": 536.264,
+   "Re": 2046.4,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 6.87
+  },
+  {
+   "run_id": "T0733_sst",
+   "Ri": 224.221,
+   "Re": 1753.4,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 6.75
+  },
+  {
+   "run_id": "T0665_lam",
+   "Ri": 2338.393,
+   "Re": 716.2,
+   "turb": "laminar",
+   "pred_wall_h": 2.17
+  },
+  {
+   "run_id": "T0369_lam",
+   "Ri": 1448.399,
+   "Re": 244.8,
+   "turb": "laminar",
+   "pred_wall_h": 1.92
+  },
+  {
+   "run_id": "T0821_sst",
+   "Ri": 754.874,
+   "Re": 1822.4,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 5.68
+  },
+  {
+   "run_id": "T0645_sst",
+   "Ri": 856.359,
+   "Re": 1651.0,
+   "turb": "kOmegaSST",
+   "pred_wall_h": 5.1
+  }
+ ],
+ "inlet": {
+  "run_id": "T0851_sst",
+  "s": 0.02,
+  "Re": 5809.2,
+  "Ri": 6.043,
+  "pred_wall_h_2p5mm": 44.2,
+  "candidates": 48
+ }
+}

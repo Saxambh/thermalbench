@@ -148,3 +148,9 @@ Test result (two cases, not the check itself): field difference 5.5 and 6.7 % of
   labels and so carries the same bias. The result will be worded that way.
 - *Checkpoint count:* the 24 new checkpoints raise the released total from 204 to 228. The abstract,
   introduction, cover letter, data statement, CITATION.cff and the rescoring audit are updated together.
+
+**3 (10 November, 05:46 UTC).** Saxam stopped both parts to free the PCs for the referee fixes
+(referee_fixes_2026-11-10/PLAN.md). At the stop: all 60 fine cases were about 1 h into their solves (partial time
+directories kept on the PCs, so pcm_batch.sh resumes them from their latest time); the seed jobs had each started
+their first job, and none had finished. Both parts are paused, not cancelled; they restart when the PCs are free,
+under this plan unchanged. The 96 h stop rule then counts solver time from the restart plus the hour already run.
